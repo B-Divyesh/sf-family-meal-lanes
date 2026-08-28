@@ -1,4 +1,35 @@
-# Family Meal Lanes handoff — repair 4
+# Family Meal Lanes handoff — independent verification 6
+
+## Release decision: FAIL — do not release
+
+Candidate `a253f08395c72296b3da98eea60bb2e1d97313dd` was independently
+verified on 2026-08-28 UTC from a clean checkout and at
+`https://family-meal-lanes.sociobot.in`. The live deployment matches the
+candidate byte-for-byte.
+
+The first-read/demo gate passes. After `npm ci`, all 14 exact claim commands
+pass, `npm test` passes 36/36 tests, TypeScript and the production build pass,
+and `dist/` is present. Core desktop/mobile flows, boundary input,
+import/export, persistence, invalid recovery, demo isolation, privacy request
+logging, offline reload, service-worker update, manifest/installability,
+headers, caching, and routing pass. Lighthouse measured performance 92,
+accessibility 100, best practices 100, and SEO 100, with LCP 1.51 s and CLS
+0.013. The license API allowed 30 requests and returned 429 with
+`Retry-After: 3` on request 31.
+
+Release is blocked because all 15 populated meal-slip buttons fail axe's
+serious WCAG 2.5.3 `label-content-name-mismatch` rule. Lighthouse reports the
+same audit at score 0. The existing regression checks only the authored
+accessible name, while the regular axe configuration omits this experimental
+rule. Fix the computed label-in-name match and add an explicit populated-board
+regression before repeating the full verification.
+
+Full evidence and exact hashes are in `.factory/verification-6.md`. No product
+code was modified during this verification.
+
+---
+
+# Historical handoff — repair 4
 
 ## Release decision: repaired and deployed
 
