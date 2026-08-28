@@ -1,0 +1,191 @@
+{
+  "checks": [
+    {
+      "name": "one-click sample demo",
+      "passed": true,
+      "evidence": "https://family-meal-lanes.sociobot.in/demo"
+    },
+    {
+      "name": "persistent demo banner",
+      "passed": true,
+      "evidence": "Demo — sample data, nothing is saved\nReset demo\nStart for real"
+    },
+    {
+      "name": "demo edit appears",
+      "passed": true,
+      "evidence": "saved in demo board"
+    },
+    {
+      "name": "demo data absent from real plan",
+      "passed": true,
+      "evidence": "https://family-meal-lanes.sociobot.in/"
+    },
+    {
+      "name": "leaving demo discards edits",
+      "passed": false,
+      "evidence": "probe count after leaving and returning: 1"
+    },
+    {
+      "name": "reset demo restores sample",
+      "passed": true,
+      "evidence": "sample restored; probe absent"
+    },
+    {
+      "name": "invalid import preserves plan",
+      "passed": true,
+      "evidence": "recovery message and sample remain"
+    },
+    {
+      "name": "free boundary explains fourth person",
+      "passed": true,
+      "evidence": "The free plan includes Shared plus three people. Restore a license or buy unlimited lanes to add another person."
+    },
+    {
+      "name": "maximum valid input saves and shares",
+      "passed": true,
+      "evidence": "80 title / 60 prep / 240 note, Sunday, Ari + Bee"
+    },
+    {
+      "name": "real plan persists reload",
+      "passed": true,
+      "evidence": "lane and meal restored"
+    },
+    {
+      "name": "valid export contains boundary meal",
+      "passed": true,
+      "evidence": "4 lanes / 1 meals"
+    },
+    {
+      "name": "delete gives Undo",
+      "passed": true,
+      "evidence": "meal removed"
+    },
+    {
+      "name": "Undo restores meal",
+      "passed": true,
+      "evidence": "meal restored"
+    },
+    {
+      "name": "valid JSON import restores export",
+      "passed": true,
+      "evidence": "temporary meal removed; export restored"
+    },
+    {
+      "name": "reduced motion applied",
+      "passed": true,
+      "evidence": "1e-05s"
+    },
+    {
+      "name": "license request is token-only",
+      "passed": true,
+      "evidence": [
+        {
+          "method": "GET",
+          "url": "https://api.sociobot.in/api/v1/products/family-meal-lanes/verify?license=qa-public-invalid-token",
+          "body": null
+        }
+      ]
+    },
+    {
+      "name": "normal meal flows make no external data request",
+      "passed": true,
+      "evidence": []
+    },
+    {
+      "name": "normal flows have no console errors",
+      "passed": true,
+      "evidence": {
+        "consoleErrors": [],
+        "pageErrors": []
+      }
+    }
+  ],
+  "requestLog": [
+    {
+      "phase": "demo",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/",
+      "body": null
+    },
+    {
+      "phase": "demo",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-91EEJLnZ.js",
+      "body": null
+    },
+    {
+      "phase": "demo",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-CHNoADTO.css",
+      "body": null
+    },
+    {
+      "phase": "demo",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+      "body": null
+    },
+    {
+      "phase": "demo",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+      "body": null
+    },
+    {
+      "phase": "real",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/",
+      "body": null
+    },
+    {
+      "phase": "real",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-91EEJLnZ.js",
+      "body": null
+    },
+    {
+      "phase": "real",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-CHNoADTO.css",
+      "body": null
+    },
+    {
+      "phase": "real",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+      "body": null
+    },
+    {
+      "phase": "real",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+      "body": null
+    },
+    {
+      "phase": "real",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/",
+      "body": null
+    },
+    {
+      "phase": "real",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-91EEJLnZ.js",
+      "body": null
+    },
+    {
+      "phase": "real",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-CHNoADTO.css",
+      "body": null
+    },
+    {
+      "phase": "real",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+      "body": null
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": []
+}

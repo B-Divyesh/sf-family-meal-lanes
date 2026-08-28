@@ -1,0 +1,18 @@
+{
+  "tag": "A",
+  "text": "Skip to meal plan",
+  "focus": true,
+  "focusVisible": true,
+  "top": "16px",
+  "outline": "rgb(39, 88, 166) solid 3px",
+  "rect": {
+    "x": 16,
+    "y": 16,
+    "width": 150.734375,
+    "height": 44,
+    "top": 16,
+    "right": 166.734375,
+    "bottom": 60,
+    "left": 16
+  }
+}

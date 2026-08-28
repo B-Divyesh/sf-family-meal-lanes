@@ -1,0 +1,12 @@
+{
+  "before": true,
+  "afterInvalidSave": true,
+  "validation": {
+    "valid": false,
+    "message": "Please fill out this field.",
+    "focused": true
+  },
+  "afterCancel": true,
+  "afterCloseButton": true,
+  "errors": []
+}

@@ -1,0 +1,2 @@
+initial_js_gzip=8368 bytes
+css_gzip=3702 bytes

@@ -1,0 +1,32 @@
+CLAIM: shared-lanes
+COMMAND: npm test -- --grep @claim:shared-lanes
+START: 2026-08-28T22:11:00Z
+
+> family-meal-lanes@1.0.0 test
+> npm run build && playwright test --grep @claim:shared-lanes
+
+
+> family-meal-lanes@1.0.0 build
+> tsc -b && vite build
+
+vite v6.4.3 building for production...
+transforming...
+✓ 4 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                  1.36 kB │ gzip: 0.63 kB
+dist/assets/index-CHNoADTO.css  12.89 kB │ gzip: 3.69 kB
+dist/assets/index-91EEJLnZ.js   23.51 kB │ gzip: 8.34 kB
+✓ built in 219ms
+[WebServer] (node:7601) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+(node:7619) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:7619) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+·
+  1 passed (2.9s)
+END: 2026-08-28T22:11:07Z
+EXIT: 0

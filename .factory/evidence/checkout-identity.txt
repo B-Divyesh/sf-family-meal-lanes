@@ -1,0 +1,2 @@
+HTTP/2 303 
+location: https://checkout.dodopayments.com/session/cks_0NmOvZ9Ua6KxzggS44K6J

@@ -1,0 +1,38 @@
+{
+  "manifest": {
+    "url": "https://family-meal-lanes.sociobot.in/manifest.webmanifest",
+    "errors": [],
+    "data": "{\n  \"name\": \"Family Meal Lanes\",\n  \"short_name\": \"Meal Lanes\",\n  \"description\": \"A private weekly meal board for one household device.\",\n  \"start_url\": \"/?v=248dd5e3a1b6\",\n  \"display\": \"standalone\",\n  \"background_color\": \"#fff7e8\",\n  \"theme_color\": \"#fff7e8\",\n  \"icons\": [\n    {\n      \"src\": \"/icon-192.png\",\n      \"sizes\": \"192x192\",\n      \"type\": \"image/png\"\n    },\n    {\n      \"src\": \"/icon-512.png\",\n      \"sizes\": \"512x512\",\n      \"type\": \"image/png\",\n      \"purpose\": \"any maskable\"\n    }\n  ]\n}\n",
+    "parsed": {
+      "scope": "https://family-meal-lanes.sociobot.in/"
+    },
+    "manifest": {
+      "backgroundColor": "rgba(255,247,232,1)",
+      "description": "A private weekly meal board for one household device.",
+      "display": "kStandalone",
+      "icons": [
+        {
+          "url": "https://family-meal-lanes.sociobot.in/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "url": "https://family-meal-lanes.sociobot.in/icon-512.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ],
+      "id": "https://family-meal-lanes.sociobot.in/?v=248dd5e3a1b6",
+      "name": "Family Meal Lanes",
+      "orientation": "DEFAULT",
+      "preferRelatedApplications": false,
+      "scope": "https://family-meal-lanes.sociobot.in/",
+      "startUrl": "https://family-meal-lanes.sociobot.in/?v=248dd5e3a1b6",
+      "themeColor": "rgba(255,247,232,1)"
+    }
+  },
+  "installability": {
+    "installabilityErrors": []
+  },
+  "logs": []
+}

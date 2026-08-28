@@ -1,0 +1,750 @@
+{
+  "axe": [
+    {
+      "route": "/",
+      "colorScheme": "light",
+      "state": "page",
+      "violations": []
+    },
+    {
+      "route": "/demo",
+      "colorScheme": "light",
+      "state": "page",
+      "violations": []
+    },
+    {
+      "route": "/demo",
+      "colorScheme": "light",
+      "state": "meal dialog",
+      "violations": []
+    },
+    {
+      "route": "/privacy",
+      "colorScheme": "light",
+      "state": "page",
+      "violations": []
+    },
+    {
+      "route": "/terms",
+      "colorScheme": "light",
+      "state": "page",
+      "violations": []
+    },
+    {
+      "route": "/",
+      "colorScheme": "dark",
+      "state": "page",
+      "violations": []
+    },
+    {
+      "route": "/demo",
+      "colorScheme": "dark",
+      "state": "page",
+      "violations": []
+    },
+    {
+      "route": "/demo",
+      "colorScheme": "dark",
+      "state": "meal dialog",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "tags": [
+            "cat.color",
+            "wcag2aa",
+            "wcag143",
+            "TTv5",
+            "TT13.c",
+            "EN-301-549",
+            "EN-9.1.4.3",
+            "ACT",
+            "RGAAv4",
+            "RGAA-3.2.1"
+          ],
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#000000",
+                    "bgColor": "#172030",
+                    "contrastRatio": 1.28,
+                    "fontSize": "27.6pt (36.8px)",
+                    "fontWeight": "bold",
+                    "messageKey": null,
+                    "expectedContrastRatio": "3:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<form method=\"dialog\" class=\"dialog-sheet\" data-form=\"meal\">",
+                      "target": [
+                        "form"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 27.6pt (36.8px), font weight: bold). Expected contrast ratio of 3:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<h2 id=\"meal-dialog-title\">Add a meal</h2>",
+              "target": [
+                "#meal-dialog-title"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 27.6pt (36.8px), font weight: bold). Expected contrast ratio of 3:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#000000",
+                    "bgColor": "#172030",
+                    "contrastRatio": 1.28,
+                    "fontSize": "12.0pt (16px)",
+                    "fontWeight": "bold",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<form method=\"dialog\" class=\"dialog-sheet\" data-form=\"meal\">",
+                      "target": [
+                        "form"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<label>Meal name<input name=\"title\" required=\"\" maxlength=\"80\" value=\"\" autocomplete=\"off\" autofocus=\"\"></label>",
+              "target": [
+                "form > label:nth-child(5)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#000000",
+                    "bgColor": "#202c40",
+                    "contrastRatio": 1.49,
+                    "fontSize": "12.0pt (16px)",
+                    "fontWeight": "bold",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<input name=\"title\" required=\"\" maxlength=\"80\" value=\"\" autocomplete=\"off\" autofocus=\"\">",
+                      "target": [
+                        "input[name=\"title\"]"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 1.49 (foreground color: #000000, background color: #202c40, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<input name=\"title\" required=\"\" maxlength=\"80\" value=\"\" autocomplete=\"off\" autofocus=\"\">",
+              "target": [
+                "input[name=\"title\"]"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.49 (foreground color: #000000, background color: #202c40, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#000000",
+                    "bgColor": "#172030",
+                    "contrastRatio": 1.28,
+                    "fontSize": "12.0pt (16px)",
+                    "fontWeight": "bold",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<form method=\"dialog\" class=\"dialog-sheet\" data-form=\"meal\">",
+                      "target": [
+                        "form"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<label>Day<select name=\"day\"><option value=\"0\" selected=\"\">Mon 24</option><option value=\"1\">Tue 25</option><option value=\"2\">Wed 26</option><option value=\"3\">Thu 27</option><option value=\"4\">Fri 28</option><option value=\"5\">Sat 29</option><option value=\"6\">Sun 30</option></select></label>",
+              "target": [
+                ".form-grid > label:nth-child(1)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#000000",
+                    "bgColor": "#202c40",
+                    "contrastRatio": 1.49,
+                    "fontSize": "12.0pt (16px)",
+                    "fontWeight": "bold",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<select name=\"day\"><option value=\"0\" selected=\"\">Mon 24</option><option value=\"1\">Tue 25</option><option value=\"2\">Wed 26</option><option value=\"3\">Thu 27</option><option value=\"4\">Fri 28</option><option value=\"5\">Sat 29</option><option value=\"6\">Sun 30</option></select>",
+                      "target": [
+                        "select[name=\"day\"]"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 1.49 (foreground color: #000000, background color: #202c40, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<select name=\"day\"><option value=\"0\" selected=\"\">Mon 24</option><option value=\"1\">Tue 25</option><option value=\"2\">Wed 26</option><option value=\"3\">Thu 27</option><option value=\"4\">Fri 28</option><option value=\"5\">Sat 29</option><option value=\"6\">Sun 30</option></select>",
+              "target": [
+                "select[name=\"day\"]"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.49 (foreground color: #000000, background color: #202c40, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#000000",
+                    "bgColor": "#172030",
+                    "contrastRatio": 1.28,
+                    "fontSize": "12.0pt (16px)",
+                    "fontWeight": "bold",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<form method=\"dialog\" class=\"dialog-sheet\" data-form=\"meal\">",
+                      "target": [
+                        "form"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<label>Lane<select name=\"laneId\"><option value=\"shared\" selected=\"\">Shared</option><option value=\"mara\">Mara</option><option value=\"jon\">Jon</option><option value=\"kids\">Kids</option></select></label>",
+              "target": [
+                ".form-grid > label:nth-child(2)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#000000",
+                    "bgColor": "#202c40",
+                    "contrastRatio": 1.49,
+                    "fontSize": "12.0pt (16px)",
+                    "fontWeight": "bold",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<select name=\"laneId\"><option value=\"shared\" selected=\"\">Shared</option><option value=\"mara\">Mara</option><option value=\"jon\">Jon</option><option value=\"kids\">Kids</option></select>",
+                      "target": [
+                        "select[name=\"laneId\"]"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 1.49 (foreground color: #000000, background color: #202c40, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<select name=\"laneId\"><option value=\"shared\" selected=\"\">Shared</option><option value=\"mara\">Mara</option><option value=\"jon\">Jon</option><option value=\"kids\">Kids</option></select>",
+              "target": [
+                "select[name=\"laneId\"]"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.49 (foreground color: #000000, background color: #202c40, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#000000",
+                    "bgColor": "#172030",
+                    "contrastRatio": 1.28,
+                    "fontSize": "12.0pt (16px)",
+                    "fontWeight": "bold",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<form method=\"dialog\" class=\"dialog-sheet\" data-form=\"meal\">",
+                      "target": [
+                        "form"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<label>Prep label <span class=\"hint\">Optional</span><input name=\"prep\" maxlength=\"60\" value=\"\" placeholder=\"Chop vegetables\"></label>",
+              "target": [
+                "label:nth-child(7)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#000000",
+                    "bgColor": "#202c40",
+                    "contrastRatio": 1.49,
+                    "fontSize": "12.0pt (16px)",
+                    "fontWeight": "bold",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<input name=\"prep\" maxlength=\"60\" value=\"\" placeholder=\"Chop vegetables\">",
+                      "target": [
+                        "input[name=\"prep\"]"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 1.49 (foreground color: #000000, background color: #202c40, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<input name=\"prep\" maxlength=\"60\" value=\"\" placeholder=\"Chop vegetables\">",
+              "target": [
+                "input[name=\"prep\"]"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.49 (foreground color: #000000, background color: #202c40, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#000000",
+                    "bgColor": "#172030",
+                    "contrastRatio": 1.28,
+                    "fontSize": "12.0pt (16px)",
+                    "fontWeight": "bold",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<form method=\"dialog\" class=\"dialog-sheet\" data-form=\"meal\">",
+                      "target": [
+                        "form"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<label>Note <span class=\"hint\">Optional</span><textarea name=\"note\" maxlength=\"240\" rows=\"3\" placeholder=\"A small reminder for this meal\"></textarea></label>",
+              "target": [
+                "label:nth-child(8)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#000000",
+                    "bgColor": "#172030",
+                    "contrastRatio": 1.28,
+                    "fontSize": "12.0pt (16px)",
+                    "fontWeight": "bold",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<form method=\"dialog\" class=\"dialog-sheet\" data-form=\"meal\">",
+                      "target": [
+                        "form"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<legend>Also show this meal in</legend>",
+              "target": [
+                "legend"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#000000",
+                    "bgColor": "#172030",
+                    "contrastRatio": 1.28,
+                    "fontSize": "12.0pt (16px)",
+                    "fontWeight": "normal",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<form method=\"dialog\" class=\"dialog-sheet\" data-form=\"meal\">",
+                      "target": [
+                        "form"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<label><input type=\"checkbox\" name=\"sharedWith\" value=\"shared\"> Shared</label>",
+              "target": [
+                ".checks > label:nth-child(1)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#000000",
+                    "bgColor": "#172030",
+                    "contrastRatio": 1.28,
+                    "fontSize": "12.0pt (16px)",
+                    "fontWeight": "normal",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<form method=\"dialog\" class=\"dialog-sheet\" data-form=\"meal\">",
+                      "target": [
+                        "form"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<label><input type=\"checkbox\" name=\"sharedWith\" value=\"mara\"> Mara</label>",
+              "target": [
+                ".checks > label:nth-child(2)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#000000",
+                    "bgColor": "#172030",
+                    "contrastRatio": 1.28,
+                    "fontSize": "12.0pt (16px)",
+                    "fontWeight": "normal",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<form method=\"dialog\" class=\"dialog-sheet\" data-form=\"meal\">",
+                      "target": [
+                        "form"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<label><input type=\"checkbox\" name=\"sharedWith\" value=\"jon\"> Jon</label>",
+              "target": [
+                "label:nth-child(3)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#000000",
+                    "bgColor": "#172030",
+                    "contrastRatio": 1.28,
+                    "fontSize": "12.0pt (16px)",
+                    "fontWeight": "normal",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<form method=\"dialog\" class=\"dialog-sheet\" data-form=\"meal\">",
+                      "target": [
+                        "form"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<label><input type=\"checkbox\" name=\"sharedWith\" value=\"kids\"> Kids</label>",
+              "target": [
+                "label:nth-child(4)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.28 (foreground color: #000000, background color: #172030, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "route": "/privacy",
+      "colorScheme": "dark",
+      "state": "page",
+      "violations": []
+    },
+    {
+      "route": "/terms",
+      "colorScheme": "dark",
+      "state": "page",
+      "violations": []
+    }
+  ],
+  "keyboard": {
+    "firstTab": {
+      "text": "Skip to meal plan",
+      "outline": "rgb(39, 88, 166) solid 3px",
+      "box": {
+        "x": 16,
+        "y": 16,
+        "width": 150.734375,
+        "height": 44,
+        "top": 16,
+        "right": 166.734375,
+        "bottom": 60,
+        "left": 16
+      }
+    },
+    "skipTarget": {
+      "id": "hero-title",
+      "tag": "H1"
+    },
+    "dialogInitialFocus": {
+      "name": "title",
+      "tag": "INPUT"
+    },
+    "dialogEscapeClosed": true,
+    "returnedToOpener": true,
+    "routeFocus": {
+      "text": "Your meal plan stays on this device",
+      "tag": "H1"
+    }
+  },
+  "dialogTargets": [
+    {
+      "tag": "LABEL",
+      "type": null,
+      "label": "Shared",
+      "width": 84.59375,
+      "height": 26
+    },
+    {
+      "tag": "INPUT",
+      "type": "checkbox",
+      "label": "sharedWith",
+      "width": 20,
+      "height": 20
+    },
+    {
+      "tag": "LABEL",
+      "type": null,
+      "label": "Mara",
+      "width": 69.453125,
+      "height": 26
+    },
+    {
+      "tag": "INPUT",
+      "type": "checkbox",
+      "label": "sharedWith",
+      "width": 20,
+      "height": 20
+    },
+    {
+      "tag": "LABEL",
+      "type": null,
+      "label": "Jon",
+      "width": 58.796875,
+      "height": 26
+    },
+    {
+      "tag": "INPUT",
+      "type": "checkbox",
+      "label": "sharedWith",
+      "width": 20,
+      "height": 20
+    },
+    {
+      "tag": "LABEL",
+      "type": null,
+      "label": "Kids",
+      "width": 64.125,
+      "height": 26
+    },
+    {
+      "tag": "INPUT",
+      "type": "checkbox",
+      "label": "sharedWith",
+      "width": 20,
+      "height": 20
+    },
+    {
+      "tag": "LABEL",
+      "type": null,
+      "label": "Shared",
+      "width": 84.59375,
+      "height": 26
+    },
+    {
+      "tag": "INPUT",
+      "type": "checkbox",
+      "label": "sharedWith",
+      "width": 20,
+      "height": 20
+    },
+    {
+      "tag": "LABEL",
+      "type": null,
+      "label": "Mara",
+      "width": 69.453125,
+      "height": 26
+    },
+    {
+      "tag": "INPUT",
+      "type": "checkbox",
+      "label": "sharedWith",
+      "width": 20,
+      "height": 20
+    },
+    {
+      "tag": "LABEL",
+      "type": null,
+      "label": "Jon",
+      "width": 58.796875,
+      "height": 26
+    },
+    {
+      "tag": "INPUT",
+      "type": "checkbox",
+      "label": "sharedWith",
+      "width": 20,
+      "height": 20
+    },
+    {
+      "tag": "LABEL",
+      "type": null,
+      "label": "Kids",
+      "width": 64.125,
+      "height": 26
+    },
+    {
+      "tag": "INPUT",
+      "type": "checkbox",
+      "label": "sharedWith",
+      "width": 20,
+      "height": 20
+    }
+  ],
+  "offline": {
+    "title": "Demo — Family Meal Lanes",
+    "sampleVisible": true,
+    "cacheNames": [
+      "family-meal-lanes-248dd5e3a1b6"
+    ],
+    "failedRequests": [],
+    "consoleErrors": []
+  },
+  "errors": []
+}

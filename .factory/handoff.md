@@ -1,4 +1,47 @@
-# Family Meal Lanes handoff — repair 3
+# Family Meal Lanes handoff — independent verification 5
+
+## Current release decision: FAIL
+
+Do not release candidate
+`57b73aac4ca49b3de48c2dff9feddc1f0c7e5d9f` as tested on 2026-08-28 UTC at
+`https://family-meal-lanes.sociobot.in`.
+
+The live deployment exactly matches the candidate. All 14 declared claim
+commands, clean install, TypeScript, production build, and 31/31 repository
+tests pass. The first screen also clearly says what the product does, who it is
+for, and offers the required one-click sample demo.
+
+Independent interaction testing found release blockers outside the committed
+suite:
+
+- the open meal dialog has serious 1.28–1.49:1 dark-mode contrast failures;
+- after an empty required name, both Cancel and × fail to dismiss the meal
+  dialog;
+- sample meal slips fail WCAG 2.5.3 label-in-name, and sharing targets are
+  20×20px with 26px-high labels instead of 44×44px;
+- demo edits survive **Start for real** and reappear on return, contradicting
+  the required discard lifecycle and “nothing is saved” copy;
+- the valid-import part of `json-import-safety` is not exercised by its tagged
+  test.
+
+Additional defects: **Board** is a dead `#board` link on `/privacy` and
+`/terms`, and those routes retain the root canonical URL.
+
+Passing evidence includes normal/boundary meal planning, reload persistence,
+valid and invalid import behavior, export, shared lanes, delete/Undo,
+same-origin request privacy, token-only license checks, exact deployment
+hashes, security/cache headers, offline reload, controlled service-worker
+update, Dodo checkout, and the API allowance. The verify endpoint allowed 30
+requests and returned request 31 as 429 with `Retry-After: 3`. Lighthouse on
+live `/demo` scored 91 performance, 100 closed-page accessibility, 100 best
+practices, and 92 SEO; LCP was 1.21s and CLS 0.013.
+
+See `.factory/verification-5.md` and `.factory/evidence/` for exact evidence
+and required retests. No product code was modified during verification.
+
+---
+
+# Historical handoff — repair 3
 
 **Repair base:** independent-verifier report commit
 `41304b8ebb4e1eae7a5a97a42ade164998017af1`, for candidate

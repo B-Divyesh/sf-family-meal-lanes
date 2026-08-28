@@ -1,0 +1,57 @@
+{
+  "categories": {
+    "performance": 0.91,
+    "accessibility": 1,
+    "best-practices": 1,
+    "seo": 0.92
+  },
+  "metrics": {
+    "fcp": 767.823,
+    "lcp": 1206.8229999999999,
+    "cls": 0.012670860861908297,
+    "tbt": 140,
+    "speedIndex": 8184.661514834305
+  },
+  "deficits": [
+    {
+      "id": "speed-index",
+      "title": "Speed Index",
+      "score": 0.2
+    },
+    {
+      "id": "total-blocking-time",
+      "title": "Total Blocking Time",
+      "score": 0.95
+    },
+    {
+      "id": "max-potential-fid",
+      "title": "Max Potential First Input Delay",
+      "score": 0.7
+    },
+    {
+      "id": "label-content-name-mismatch",
+      "title": "Elements with visible text labels do not have matching accessible names.",
+      "score": 0
+    },
+    {
+      "id": "canonical",
+      "title": "Document does not have a valid `rel=canonical`",
+      "score": 0
+    },
+    {
+      "id": "lcp-breakdown-insight",
+      "title": "LCP breakdown",
+      "score": 0
+    },
+    {
+      "id": "lcp-discovery-insight",
+      "title": "LCP request discovery",
+      "score": 0
+    },
+    {
+      "id": "network-dependency-tree-insight",
+      "title": "Network dependency tree",
+      "score": 0
+    }
+  ]
+}

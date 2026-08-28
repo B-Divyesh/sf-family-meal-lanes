@@ -1,0 +1,99 @@
+
+URL /
+HTTP/2 200 
+content-type: text/html
+cache-control: public, must-revalidate, max-age=30
+etag: "15213783"
+last-modified: Fri, 28 Aug 2026 21:41:24 GMT
+strict-transport-security: max-age=10886400; includeSubDomains; preload
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+content-security-policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'
+
+URL /demo
+HTTP/2 200 
+content-type: text/html
+cache-control: public, must-revalidate, max-age=30
+etag: "15213783"
+last-modified: Fri, 28 Aug 2026 21:41:24 GMT
+strict-transport-security: max-age=10886400; includeSubDomains; preload
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+content-security-policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'
+
+URL /privacy
+HTTP/2 200 
+content-type: text/html
+cache-control: public, must-revalidate, max-age=30
+etag: "15213783"
+last-modified: Fri, 28 Aug 2026 21:41:24 GMT
+strict-transport-security: max-age=10886400; includeSubDomains; preload
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+content-security-policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'
+
+URL /terms
+HTTP/2 200 
+content-type: text/html
+cache-control: public, must-revalidate, max-age=30
+etag: "15213783"
+last-modified: Fri, 28 Aug 2026 21:41:24 GMT
+strict-transport-security: max-age=10886400; includeSubDomains; preload
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+content-security-policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'
+
+URL /not-a-page
+HTTP/2 404 
+content-type: text/html
+cache-control: public, must-revalidate, max-age=30
+etag: "15213783"
+last-modified: Fri, 28 Aug 2026 21:41:24 GMT
+strict-transport-security: max-age=10886400; includeSubDomains; preload
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+content-security-policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'
+
+URL /sw.js
+HTTP/2 200 
+content-type: text/javascript
+cache-control: no-cache
+etag: "15213783"
+last-modified: Fri, 28 Aug 2026 21:41:24 GMT
+strict-transport-security: max-age=10886400; includeSubDomains; preload
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+content-security-policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'
+
+URL /manifest.webmanifest
+HTTP/2 200 
+content-type: application/octet-stream
+cache-control: no-cache
+etag: "15213783"
+last-modified: Fri, 28 Aug 2026 21:41:24 GMT
+strict-transport-security: max-age=10886400; includeSubDomains; preload
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+content-security-policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'
+
+URL /assets/index-91EEJLnZ.js
+HTTP/2 200 
+content-type: text/javascript
+cache-control: public, max-age=31536000, immutable
+etag: "15213783"
+last-modified: Fri, 28 Aug 2026 21:41:24 GMT
+strict-transport-security: max-age=10886400; includeSubDomains; preload
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+content-security-policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'
+
+URL /assets/index-CHNoADTO.css
+HTTP/2 200 
+content-type: text/css
+cache-control: public, max-age=31536000, immutable
+etag: "15213783"
+last-modified: Fri, 28 Aug 2026 21:41:24 GMT
+strict-transport-security: max-age=10886400; includeSubDomains; preload
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+content-security-policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'

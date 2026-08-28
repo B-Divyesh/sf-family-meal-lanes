@@ -1,0 +1,144 @@
+[
+  {
+    "name": "desktop",
+    "status": 200,
+    "url": "https://family-meal-lanes.sociobot.in/",
+    "title": "Family Meal Lanes — plan meals by person",
+    "h1": [
+      "Plan meals by person, not guesswork"
+    ],
+    "actions": [
+      {
+        "text": "FamilyMeal Lanes",
+        "tag": "A",
+        "href": "https://family-meal-lanes.sociobot.in/"
+      },
+      {
+        "text": "Demo",
+        "tag": "A",
+        "href": "https://family-meal-lanes.sociobot.in/demo"
+      },
+      {
+        "text": "Board",
+        "tag": "A",
+        "href": "https://family-meal-lanes.sociobot.in/#board"
+      },
+      {
+        "text": "Privacy",
+        "tag": "A",
+        "href": "https://family-meal-lanes.sociobot.in/privacy"
+      },
+      {
+        "text": "Try it with sample data",
+        "tag": "A",
+        "href": "https://family-meal-lanes.sociobot.in/demo"
+      },
+      {
+        "text": "Add a meal",
+        "tag": "BUTTON",
+        "href": null
+      },
+      {
+        "text": "People",
+        "tag": "BUTTON",
+        "href": null
+      },
+      {
+        "text": "Print",
+        "tag": "BUTTON",
+        "href": null
+      },
+      {
+        "text": "Export JSON",
+        "tag": "BUTTON",
+        "href": null
+      }
+    ],
+    "aboveFold": "Skip to meal plan\nFamily\nMeal Lanes\nDemo\nBoard\nPrivacy\n\nA WEEKLY BOARD FOR ONE KITCHEN\n\nPlan meals by person, not guesswork\n\nFor households with different meals, so everyone can see what is theirs and what they share.\n\nTry it with sample data\nSee a filled week. Nothing is saved.\nWorks offline after setup\nMeal plan saved only on this device\nExport a JSON copy\nPlan one meal in more than one lane.\n\nTHIS WEEK\n\nWho eats what\n\nAdd people, then put the first meal in a lane.\n\nAdd a meal\nPeople\nPrint\nExport JSON\nImport JSON\nLane\tMon 24\tTue 25\tWed 26\tThu 27\tFri 28\tSat 29\tSun 30\nShared\t\n+\n\t\n+\n\t\n+\n\t\n+\n\t\n+\n\t\n+\n\t\n+\n\nHOW IT WORKS\n\nKeep the whole kitchen in view\nName each lane.\nAdd each person and one shared lane.\nPlace the meal.\nPick a day, a lane, and who shares it.\nMark the prep.\nLeave the small task that saves time later.\nWhat this does not do\n\nIt does not store recipes, order groceries, score nutrition, or send your plan anywhere. It keeps a clear weekly view on one device.\n\nRead the privacy details\n\nONE-TIME PURCHASE\n\nAdd as many lanes as your household needs\n\nFree plans include Shared plus three people. Pay $12 once for unlimited lanes on this device.\n\nBuy unlimited lanes for $12\nHave a license?\nRestore license\n\nSociobot and Dodo handle the hosted checkout. A restored license is checked with Sociobot when you are online.\n\nOne weekly meal board for a shared kitchen device.\n\nPrivacy · Terms · Built by Param Factory · v1.0.0\n\nOriginal illustration generated for this product.",
+    "requests": [
+      {
+        "method": "GET",
+        "url": "https://family-meal-lanes.sociobot.in/",
+        "resourceType": "document"
+      },
+      {
+        "method": "GET",
+        "url": "https://family-meal-lanes.sociobot.in/assets/index-91EEJLnZ.js",
+        "resourceType": "script"
+      },
+      {
+        "method": "GET",
+        "url": "https://family-meal-lanes.sociobot.in/assets/index-CHNoADTO.css",
+        "resourceType": "stylesheet"
+      },
+      {
+        "method": "GET",
+        "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+        "resourceType": "image"
+      }
+    ],
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "name": "mobile",
+    "status": 200,
+    "url": "https://family-meal-lanes.sociobot.in/",
+    "title": "Family Meal Lanes — plan meals by person",
+    "h1": [
+      "Plan meals by person, not guesswork"
+    ],
+    "actions": [
+      {
+        "text": "FamilyMeal Lanes",
+        "tag": "A",
+        "href": "https://family-meal-lanes.sociobot.in/"
+      },
+      {
+        "text": "Demo",
+        "tag": "A",
+        "href": "https://family-meal-lanes.sociobot.in/demo"
+      },
+      {
+        "text": "Board",
+        "tag": "A",
+        "href": "https://family-meal-lanes.sociobot.in/#board"
+      },
+      {
+        "text": "Privacy",
+        "tag": "A",
+        "href": "https://family-meal-lanes.sociobot.in/privacy"
+      },
+      {
+        "text": "Try it with sample data",
+        "tag": "A",
+        "href": "https://family-meal-lanes.sociobot.in/demo"
+      }
+    ],
+    "aboveFold": "Skip to meal plan\nFamily\nMeal Lanes\nDemo\nBoard\nPrivacy\n\nA WEEKLY BOARD FOR ONE KITCHEN\n\nPlan meals by person, not guesswork\n\nFor households with different meals, so everyone can see what is theirs and what they share.\n\nTry it with sample data\nSee a filled week. Nothing is saved.\nWorks offline after setup\nMeal plan saved only on this device\nExport a JSON copy\nPlan one meal in more than one lane.\n\nTHIS WEEK\n\nWho eats what\n\nAdd people, then put the first meal in a lane.\n\nAdd a meal\nPeople\nPrint\nExport JSON\nImport JSON\nLane\tMon 24\tTue 25\tWed 26\tThu 27\tFri 28\tSat 29\tSun 30\nShared\t\n+\n\t\n+\n\t\n+\n\t\n+\n\t\n+\n\t\n+\n\t\n+\n\nHOW IT WORKS\n\nKeep the whole kitchen in view\nName each lane.\nAdd each person and one shared lane.\nPlace the meal.\nPick a day, a lane, and who shares it.\nMark the prep.\nLeave the small task that saves time later.\nWhat this does not do\n\nIt does not store recipes, order groceries, score nutrition, or send your plan anywhere. It keeps a clear weekly view on one device.\n\nRead the privacy details\n\nONE-TIME PURCHASE\n\nAdd as many lanes as your household needs\n\nFree plans include Shared plus three people. Pay $12 once for unlimited lanes on this device.\n\nBuy unlimited lanes for $12\nHave a license?\nRestore license\n\nSociobot and Dodo handle the hosted checkout. A restored license is checked with Sociobot when you are online.\n\nOne weekly meal board for a shared kitchen device.\n\nPrivacy · Terms · Built by Param Factory · v1.0.0\n\nOriginal illustration generated for this product.",
+    "requests": [
+      {
+        "method": "GET",
+        "url": "https://family-meal-lanes.sociobot.in/",
+        "resourceType": "document"
+      },
+      {
+        "method": "GET",
+        "url": "https://family-meal-lanes.sociobot.in/assets/index-91EEJLnZ.js",
+        "resourceType": "script"
+      },
+      {
+        "method": "GET",
+        "url": "https://family-meal-lanes.sociobot.in/assets/index-CHNoADTO.css",
+        "resourceType": "stylesheet"
+      },
+      {
+        "method": "GET",
+        "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+        "resourceType": "image"
+      }
+    ],
+    "consoleErrors": [],
+    "pageErrors": []
+  }
+]

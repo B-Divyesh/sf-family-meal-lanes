@@ -1,0 +1,67 @@
+[
+  {
+    "href": "https://family-meal-lanes.sociobot.in/#main",
+    "status": 200,
+    "location": null
+  },
+  {
+    "href": "https://family-meal-lanes.sociobot.in/",
+    "status": 200,
+    "location": null
+  },
+  {
+    "href": "https://family-meal-lanes.sociobot.in/demo",
+    "status": 200,
+    "location": null
+  },
+  {
+    "href": "https://family-meal-lanes.sociobot.in/#board",
+    "status": 200,
+    "location": null
+  },
+  {
+    "href": "https://family-meal-lanes.sociobot.in/privacy",
+    "status": 200,
+    "location": null
+  },
+  {
+    "href": "https://api.sociobot.in/api/v1/products/family-meal-lanes/checkout",
+    "status": 303,
+    "location": "https://checkout.dodopayments.com/session/cks_0NmOxHovsHN7xvLI1w4n6"
+  },
+  {
+    "href": "https://family-meal-lanes.sociobot.in/terms",
+    "status": 200,
+    "location": null
+  },
+  {
+    "href": "https://family-meal-lanes.sociobot.in/demo#main",
+    "status": 200,
+    "location": null
+  },
+  {
+    "href": "https://family-meal-lanes.sociobot.in/demo#board",
+    "status": 200,
+    "location": null
+  },
+  {
+    "href": "https://family-meal-lanes.sociobot.in/privacy#main",
+    "status": 200,
+    "location": null
+  },
+  {
+    "href": "https://family-meal-lanes.sociobot.in/privacy#board",
+    "status": 200,
+    "location": null
+  },
+  {
+    "href": "https://family-meal-lanes.sociobot.in/terms#main",
+    "status": 200,
+    "location": null
+  },
+  {
+    "href": "https://family-meal-lanes.sociobot.in/terms#board",
+    "status": 200,
+    "location": null
+  }
+]

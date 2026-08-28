@@ -1,0 +1,14 @@
+demo-sandbox	0	npm test -- --grep @claim:demo-sandbox
+json-export	0	npm test -- --grep @claim:json-export
+json-import-safety	0	npm test -- --grep @claim:json-import-safety
+offline-reload	0	npm test -- --grep @claim:offline-reload
+local-only	0	npm test -- --grep @claim:local-only
+shared-lanes	0	npm test -- --grep @claim:shared-lanes
+prep-labels	0	npm test -- --grep @claim:prep-labels
+print-plan	0	npm test -- --grep @claim:print-plan
+named-lanes	0	npm test -- --grep @claim:named-lanes
+paid-unlock	0	npm test -- --grep @claim:paid-unlock
+free-lane-limit	0	npm test -- --grep @claim:free-lane-limit
+paid-unlimited-lanes	0	npm test -- --grep @claim:paid-unlimited-lanes
+license-invalid-cache	0	npm test -- --grep @claim:license-invalid-cache
+license-request-privacy	0	npm test -- --grep @claim:license-request-privacy
