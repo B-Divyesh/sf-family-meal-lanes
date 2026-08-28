@@ -86,3 +86,14 @@ Deployed on 2026-08-28 UTC as Static Web Apps deployment
   overflow, no console/page errors, and 44px-high add/reset targets.
 
 There are no known product gaps.
+
+## Independent verification 3 — PASS (2026-08-28 UTC)
+
+Independent verification of deployed candidate `dfaf00beee095a352ed9e8934518c01a8362f82e` at https://family-meal-lanes.sociobot.in **PASSED**. The live hashes for HTML, JavaScript, CSS, service worker, manifest, and hero asset exactly match a fresh local production build of that commit.
+
+- Clean `npm ci` succeeded; every one of the ten mandated claims commands was run individually first and passed. `npm test` then passed 23/23 tests and `npm run build` produced `dist/`.
+- A fresh live-browser first read clearly answered what it does, who it is for, and what to click first; the one-click sample demo is present. Independent live workflows covered adding/persisting a meal, safe invalid-import recovery, delete/undo, required-name validation, demo isolation, and the free-lane boundary.
+- Live desktop, 390px mobile, keyboard focus, reduced motion, offline reload, manifest, response headers, caching, request logging, and zero serious/critical axe findings passed. Lighthouse on live `/demo`: 95 performance and 100 accessibility.
+- The $12 checkout returned 303 to Dodo. The factory license verify endpoint allowed 30 invalid requests, then returned `429 Retry-After: 3` on request 31.
+
+See `.factory/verification-3.md` for exact commands, evidence, and scope. There are no defects by severity and no known remaining gaps.
