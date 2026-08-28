@@ -73,8 +73,28 @@ with:
 /opt/fleet/lib/deploy-static.sh family-meal-lanes dist
 ```
 
-Deployment and fresh live evidence are recorded below after this repair is
-pushed.
+Deployed on 2026-08-28 UTC as Static Web Apps deployment
+`9566c1bd-a751-4346-b230-2944f59d7fc7` to
+`https://family-meal-lanes.sociobot.in`.
+
+- Fresh live `verify-url.sh` completed with HTTP 200, load 915ms, one h1,
+  main landmark, `lang="en"`, zero missing alt text, zero unlabeled buttons,
+  and zero console/page errors.
+- Fresh live 390px browser evidence found no sub-44px visible interactive
+  target, `Export JSON` as both the visible label and accessible name, and
+  focus on the Privacy route h1 after navigation.
+- Fresh live `/not-a-page` returned HTTP 404 with Paper background
+  `rgb(255, 247, 232)`, Arial styling, and no CSP/inline-style console error.
+- `/`, `/demo`, `/privacy`, and `/terms` returned 200; `/not-a-page` returned
+  404. Live CSP is self-only except the disclosed Sociobot API; HSTS, nosniff,
+  and strict-origin referrer headers are present. Hashed assets are immutable.
+- Live SHA-256 bytes match this build for `index.html`, hashed JS and CSS,
+  service worker, manifest, `404.html`, and `404.css`. The checkout identity
+  check returned 303 to a Dodo hosted session.
+
+Known gaps: none. The application has no product backend, package-consumer
+surface, account flow, or Entra identity integration, so those checks are not
+applicable.
 
 ---
 
