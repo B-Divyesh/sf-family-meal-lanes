@@ -1,47 +1,85 @@
-# Family Meal Lanes handoff — independent verification 5
+# Family Meal Lanes handoff — repair 4
 
-## Current release decision: FAIL
+## Release decision: repaired and deployed
 
-Do not release candidate
-`57b73aac4ca49b3de48c2dff9feddc1f0c7e5d9f` as tested on 2026-08-28 UTC at
-`https://family-meal-lanes.sociobot.in`.
+This repair addresses every release-blocking finding in independent verifier
+report commit `3767e37ffbcf38a1ed98106fb077166e92e1e6f5`, for candidate
+`57b73aac4ca49b3de48c2dff9feddc1f0c7e5d9f`. It preserves the static,
+local-first PWA artifact and static deployment class.
 
-The live deployment exactly matches the candidate. All 14 declared claim
-commands, clean install, TypeScript, production build, and 31/31 repository
-tests pass. The first screen also clearly says what the product does, who it is
-for, and offers the required one-click sample demo.
+### What changed
 
-Independent interaction testing found release blockers outside the committed
-suite:
+- The meal dialog now explicitly inherits the Night palette, including labels,
+  fields, legend, and controls. Open-dialog axe runs in light and dark modes.
+  Sharing checkboxes and their labels are now 44px targets.
+- **Cancel** and **Close meal form** are non-submit controls, so native required
+  validation cannot trap a blank form. The invalid-name recovery path is
+  exercised at 390px with pointer clicks.
+- Meal slips are native buttons rather than invalid `article role="button"`
+  controls. Their accessible names contain the visible lane, meal, and prep
+  text in order.
+- Leaving demo mode clears `family-meal-lanes:demo`; returning to `/demo`
+  creates the shipped sample again. The claim, README, and demo documentation
+  now cover that lifecycle.
+- The `json-import-safety` claim now imports a complete plan before proving an
+  incomplete follow-up file leaves it unchanged.
+- Legal-page **Board** links route to `/#board` and scroll to the board.
+  `/demo`, `/privacy`, and `/terms` set their own canonical URLs.
 
-- the open meal dialog has serious 1.28–1.49:1 dark-mode contrast failures;
-- after an empty required name, both Cancel and × fail to dismiss the meal
-  dialog;
-- sample meal slips fail WCAG 2.5.3 label-in-name, and sharing targets are
-  20×20px with 26px-high labels instead of 44×44px;
-- demo edits survive **Start for real** and reappear on return, contradicting
-  the required discard lifecycle and “nothing is saved” copy;
-- the valid-import part of `json-import-safety` is not exercised by its tagged
-  test.
+### Verification
 
-Additional defects: **Board** is a dead `#board` link on `/privacy` and
-`/terms`, and those routes retain the root canonical URL.
+From a clean `npm ci` install (20 packages, 0 vulnerabilities), all commands
+below passed on 2026-08-28 UTC:
 
-Passing evidence includes normal/boundary meal planning, reload persistence,
-valid and invalid import behavior, export, shared lanes, delete/Undo,
-same-origin request privacy, token-only license checks, exact deployment
-hashes, security/cache headers, offline reload, controlled service-worker
-update, Dodo checkout, and the API allowance. The verify endpoint allowed 30
-requests and returned request 31 as 429 with `Retry-After: 3`. Lighthouse on
-live `/demo` scored 91 performance, 100 closed-page accessibility, 100 best
-practices, and 92 SEO; LCP was 1.21s and CLS 0.013.
+```sh
+npm ci
+npm test                         # 36/36 Playwright tests
+npx tsc -b --pretty false
+npm run build                    # dist/ with index.html at its root
+```
 
-See `.factory/verification-5.md` and `.factory/evidence/` for exact evidence
-and required retests. No product code was modified during verification.
+All 14 exact commands listed in `.factory/claims.json` passed independently,
+including demo exit/discard, valid-plus-invalid JSON import, offline reload,
+local-only request logging, controlled service-worker update, paid boundary,
+and token-only license privacy. The app has no product backend, package API,
+account flow, Entra integration, or response-policy endpoint; those checks do
+not apply to this static local-first product.
+
+- `verify-url.sh` passed locally and live: title, `lang`, one h1, main landmark,
+  image alt text, labelled buttons, desktop/390px loading, and zero console
+  errors.
+- Standalone `@axe-core/cli` 4.11.0 reported **0 violations** for local
+  `/demo`; the committed suite additionally checks all routes plus the open
+  dialog in light and dark. Fresh live desktop-light and 390px-dark browser
+  checks found no serious/critical open-dialog axe issue, the blank form stayed
+  open, and Cancel dismissed it in both states.
+- Local mobile Lighthouse on `/demo`: performance **100**, accessibility
+  **100**, best practices **100**, SEO **100**; LCP **1.42s**, CLS **0.013**.
+- Privacy, offline, update, keyboard, reduced motion, import/export, and
+  touch-target coverage remain in the 36-test suite. The live checkout identity
+  check returned HTTP 303 to `checkout.dodopayments.com`.
+
+### Deployment
+
+Built `dist/` was deployed with:
+
+```sh
+/opt/fleet/lib/deploy-static.sh family-meal-lanes dist
+```
+
+Deployment `97f27c93-ab37-4adc-9618-6b66927221c8` succeeded on 2026-08-28 UTC.
+`https://family-meal-lanes.sociobot.in` returned 200 for the app and `/demo`,
+and 404 for a missing route, with HSTS, nosniff, strict-origin referrer policy,
+and the expected self-only CSP plus the disclosed Sociobot API. Live SHA-256
+values match this build for `index.html`, hashed JS/CSS, `sw.js`, and the
+manifest. The deployed app remains a static PWA with no server-side product
+data.
+
+Known gaps: none.
 
 ---
 
-# Historical handoff — repair 3
+# Historical handoff — verification 5 FAIL (superseded by repair 4)
 
 **Repair base:** independent-verifier report commit
 `41304b8ebb4e1eae7a5a97a42ade164998017af1`, for candidate

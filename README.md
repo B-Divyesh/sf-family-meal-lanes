@@ -17,8 +17,8 @@ Sociobot and Dodo handle the hosted checkout.
 
 Run the app and open [http://localhost:5173/demo](http://localhost:5173/demo),
 or use the deployed `/demo` URL. The demo has six sample meals for a small
-household. It uses a separate IndexedDB store, so starting for real never copies
-the sample into your plan.
+household. It uses a separate IndexedDB store. Starting for real discards that
+demo store and never copies the sample into your plan.
 
 ## Run and test
 
@@ -48,8 +48,8 @@ meal-plan data is never sent with that check. Read the in-app `/privacy` and
 
 ## Claims checked in the demo
 
-The automated browser suite checks the separate demo store, JSON export and
-safe import rejection, shared meals, prep labels, printing, an offline reload,
+The automated browser suite checks the separate demo store and exit lifecycle,
+JSON export and complete/safe import rejection, shared meals, prep labels, printing, an offline reload,
 local-only meal saves, and the paid license boundary and privacy behavior. The
 exact checks are listed in `.factory/claims.json`.
 

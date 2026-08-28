@@ -27,13 +27,20 @@ test('@claim:offline-reload works offline after the first visit', async ({ page,
   await expect(page.getByText('Lemon chicken tray bake').first()).toBeVisible();
 });
 
-test('@claim:demo-sandbox sample data stays separate from a new plan', async ({ page }) => {
+test('@claim:demo-sandbox sample data is separate and discarded when starting for real', async ({ page }) => {
   await page.goto('/demo');
   await expect(page.getByText('Demo — sample data, nothing is saved')).toBeVisible();
   await expect(page.getByText('Lemon chicken tray bake').first()).toBeVisible();
+  await page.getByRole('button', { name: 'Add a meal' }).click();
+  await page.getByLabel('Meal name').fill('Demo persistence probe');
+  await page.getByRole('button', { name: 'Save meal' }).click();
+  await expect(page.getByText('Demo persistence probe').first()).toBeVisible();
   await page.getByRole('link', { name: 'Start for real' }).click();
   await expect(page.getByRole('heading', { name: 'Who eats what' })).toBeVisible();
   await expect(page.getByText('Lemon chicken tray bake')).toHaveCount(0);
+  await page.goto('/demo');
+  await expect(page.getByText('Demo persistence probe')).toHaveCount(0);
+  await expect(page.getByText('Lemon chicken tray bake').first()).toBeVisible();
 });
 
 test('@claim:json-export exports the visible meal plan as JSON', async ({ page }) => {
@@ -49,17 +56,27 @@ test('@claim:json-export exports the visible meal plan as JSON', async ({ page }
   expect(exported.plan.meals[0].title).toBe('Lemon chicken tray bake');
 });
 
-test('@claim:json-import-safety rejects a structurally incomplete plan and keeps the current plan', async ({ page }) => {
+test('@claim:json-import-safety imports a complete plan and rejects an incomplete replacement', async ({ page }) => {
   const pageErrors: string[] = [];
   page.on('pageerror', error => pageErrors.push(error.message));
   await page.goto('/demo');
+  await page.locator('input[type=file]').setInputFiles({
+    name: 'complete-plan.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify({ version: 1, plan: {
+      lanes: [{ id: 'shared', name: 'Shared', color: 'blue' }],
+      meals: [{ id: 'imported-1', day: 4, laneId: 'shared', title: 'Imported tomato soup', prep: 'Buy basil', sharedWith: [], note: 'Serve with toast.', createdAt: '2026-08-28T08:00:00.000Z' }],
+      weekOf: '2026-08-24'
+    }}))
+  });
+  await expect(page.getByText('Imported tomato soup').first()).toBeVisible();
   await page.locator('input[type=file]').setInputFiles({
     name: 'broken-plan.json',
     mimeType: 'application/json',
     buffer: Buffer.from('{"lanes":[{"id":"shared","name":"Shared","color":"blue"}],"meals":[{"id":"bad","day":0,"laneId":"missing","title":"broken"}],"weekOf":"2026-08-24"}')
   });
   await expect(page.getByText('That file is not a complete Family Meal Lanes plan. Your current plan is unchanged.')).toBeVisible();
-  await expect(page.getByText('Lemon chicken tray bake').first()).toBeVisible();
+  await expect(page.getByText('Imported tomato soup').first()).toBeVisible();
   expect(pageErrors).toEqual([]);
 });
 
@@ -77,13 +94,14 @@ test('@claim:local-only sends no meal plan data away from this device', async ({
 test('@claim:shared-lanes shows a shared meal in every selected lane', async ({ page }) => {
   await page.goto('/demo');
   for (const lane of ['Shared', 'Mara', 'Jon', 'Kids']) {
-    await expect(page.locator(`article[aria-label="Edit Lemon chicken tray bake for ${lane}"]`)).toBeVisible();
+    const row = page.locator('tbody tr').filter({ has: page.getByRole('rowheader', { name: lane }) });
+    await expect(row.locator('button[data-meal="m1"]')).toBeVisible();
   }
 });
 
 test('@claim:prep-labels shows prep labels on meal slips', async ({ page }) => {
   await page.goto('/demo');
-  await expect(page.locator('article[aria-label="Edit Lemon chicken tray bake for Shared"] .prep')).toHaveText('Prep: Chop vegetables');
+  await expect(page.locator('button[data-meal="m1"]').first().locator('.prep')).toHaveText('Prep: Chop vegetables');
 });
 
 test('@claim:print-plan prints the weekly meal board', async ({ page }) => {
@@ -97,7 +115,7 @@ test('@claim:print-plan prints the weekly meal board', async ({ page }) => {
 
 test('@regression:undo-delete gives the promised recovery action', async ({ page }) => {
   await page.goto('/demo');
-  await page.locator('article[aria-label="Edit Lemon chicken tray bake for Shared"]').press('Enter');
+  await page.locator('button[data-meal="m1"]').first().press('Enter');
   await page.getByRole('button', { name: 'Delete meal' }).click();
   await expect(page.getByRole('status')).toContainText('Meal removed.');
   await page.getByRole('button', { name: 'Undo' }).click();

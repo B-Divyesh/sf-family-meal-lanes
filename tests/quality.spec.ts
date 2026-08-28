@@ -37,7 +37,7 @@ test('@regression:mobile keyboard path keeps the board reachable at 390px', asyn
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/demo');
   expect(await page.locator('body').evaluate(body => body.scrollWidth <= window.innerWidth)).toBe(true);
-  await page.locator('article[aria-label="Edit Lemon chicken tray bake for Shared"]').focus();
+  await page.locator('button[data-meal="m1"]').first().focus();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('dialog')).toBeVisible();
   await expect(page.getByLabel('Meal name')).toBeFocused();
@@ -79,6 +79,49 @@ test('@regression:visible Export JSON label is its accessible name', async ({ pa
   await expect(page.getByRole('button', { name: 'Export JSON', exact: true })).toHaveAccessibleName('Export JSON');
 });
 
+test('@regression:meal slips include their visible lane and prep text in their accessible name', async ({ page }) => {
+  await page.goto('/demo');
+  await expect(page.locator('button[data-meal="m1"]').first()).toHaveAccessibleName('Shared Lemon chicken tray bake Prep: Chop vegetables. Edit meal.');
+});
+
+test('@regression:cancel and close dismiss an invalid meal form with pointer input at 390px', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Add a meal' }).click();
+  await page.getByRole('button', { name: 'Save meal' }).click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await expect(page.getByLabel('Meal name')).toBeFocused();
+  await page.getByRole('button', { name: 'Cancel' }).click();
+  await expect(page.getByRole('dialog')).not.toBeVisible();
+  await page.getByRole('button', { name: 'Add a meal' }).click();
+  await page.getByRole('button', { name: 'Save meal' }).click();
+  await page.getByRole('button', { name: 'Close meal form' }).click();
+  await expect(page.getByRole('dialog')).not.toBeVisible();
+});
+
+const dialogSchemes: ('light' | 'dark')[] = ['light', 'dark'];
+for (const colorScheme of dialogSchemes) {
+  test.describe(`meal dialog ${colorScheme} accessibility`, () => {
+    test.use({ colorScheme });
+    test(`@regression:open meal dialog has no serious or critical axe violations in ${colorScheme}`, async ({ page }) => {
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.goto('/demo');
+      await page.getByRole('button', { name: 'Add a meal' }).click();
+      await page.addScriptTag({ content: axe.source });
+      const violations = await page.evaluate(async () => {
+        const result = await (window as Window & { axe: typeof axe }).axe.run('#meal-dialog', { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa'] } });
+        return result.violations.filter(violation => violation.impact === 'serious' || violation.impact === 'critical');
+      });
+      expect(violations).toEqual([]);
+      const tooSmall = await page.locator('#meal-dialog input:not([type="hidden"]), #meal-dialog select, #meal-dialog textarea, #meal-dialog button').evaluateAll(elements => elements.map(element => {
+        const box = element.getBoundingClientRect();
+        return { name: element.getAttribute('aria-label') || element.getAttribute('name') || element.tagName, width: box.width, height: box.height };
+      }).filter(target => target.width < 44 || target.height < 44));
+      expect(tooSmall).toEqual([]);
+    });
+  });
+}
+
 test('@regression:route navigation focuses and announces the destination h1', async ({ page }) => {
   await page.goto('/');
   await page.getByLabel('Main navigation').getByRole('link', { name: 'Privacy' }).click();
@@ -86,6 +129,17 @@ test('@regression:route navigation focuses and announces the destination h1', as
   await expect(page.locator('#route-announcer')).toHaveText('Your meal plan stays on this device');
   await page.goBack();
   await expect(page.getByRole('heading', { level: 1, name: 'Plan meals by person, not guesswork' })).toBeFocused();
+});
+
+test('@regression:legal Board links open the board and every route has its own canonical URL', async ({ page }) => {
+  for (const route of ['/', '/demo', '/privacy', '/terms']) {
+    await page.goto(route);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://family-meal-lanes.sociobot.in${route === '/' ? '/' : route}`);
+  }
+  await page.goto('/privacy');
+  await page.getByLabel('Main navigation').getByRole('link', { name: 'Board' }).click();
+  await expect(page).toHaveURL(/\/#board$/);
+  await expect(page.getByRole('heading', { name: 'Who eats what' })).toBeVisible();
 });
 
 test('@regression:direct 404 is styled with a self-hosted stylesheet and is CSP clean', async ({ page }) => {

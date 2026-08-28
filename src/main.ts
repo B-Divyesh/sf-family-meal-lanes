@@ -84,8 +84,16 @@ function pageTitle(path: string) {
   if (path === '/terms') return 'Terms — Family Meal Lanes';
   return 'Family Meal Lanes — plan meals by person';
 }
+function canonicalUrl(path: string) {
+  const route = path === '/demo' || path === '/privacy' || path === '/terms' ? path : '/';
+  return `https://family-meal-lanes.sociobot.in${route}`;
+}
 function navigate(path: string) { history.pushState({}, '', path); void loadRoute(true); }
-function header() { return `<header class="site-header"><a class="wordmark" href="/" data-route>Family<br><strong>Meal Lanes</strong></a><nav aria-label="Main navigation"><a href="/demo" data-route>Demo</a><a href="#board">Board</a><a href="/privacy" data-route>Privacy</a></nav></header>`; }
+function header() {
+  const onBoardRoute = location.pathname === '/' || location.pathname === '/demo';
+  const boardHref = onBoardRoute ? '#board' : '/#board';
+  return `<header class="site-header"><a class="wordmark" href="/" data-route>Family<br><strong>Meal Lanes</strong></a><nav aria-label="Main navigation"><a href="/demo" data-route>Demo</a><a href="${boardHref}"${onBoardRoute ? '' : ' data-route'}>Board</a><a href="/privacy" data-route>Privacy</a></nav></header>`;
+}
 function footer() { return `<footer><p>One weekly meal board for a shared kitchen device.</p><p><a href="/privacy" data-route>Privacy</a> · <a href="/terms" data-route>Terms</a> · Built by Param Factory · v1.0.0</p><p class="generated-note">Original illustration generated for this product.</p></footer>`; }
 
 function renderLanding() {
@@ -119,7 +127,9 @@ function boardHtml() {
 }
 function mealHtml(meal: Meal, shownIn: Lane) {
   const original = meal.laneId !== shownIn.id;
-  return `<article class="meal-slip ${plan.lanes.find(l => l.id === meal.laneId)?.color || 'blue'}" data-meal="${meal.id}" tabindex="0" role="button" aria-label="Edit ${esc(meal.title)} for ${esc(shownIn.name)}"><span class="slip-top">${original ? `Shared from ${esc(laneName(meal.laneId))}` : esc(laneName(meal.laneId))}</span><strong>${esc(meal.title)}</strong>${meal.prep ? `<span class="prep">Prep: ${esc(meal.prep)}</span>` : ''}</article>`;
+  const laneText = original ? `Shared from ${laneName(meal.laneId)}` : laneName(meal.laneId);
+  const prepText = meal.prep ? ` Prep: ${meal.prep}` : '';
+  return `<button type="button" class="meal-slip ${plan.lanes.find(l => l.id === meal.laneId)?.color || 'blue'}" data-meal="${meal.id}" aria-label="${esc(`${laneText} ${meal.title}${prepText}. Edit meal.`)}"><span class="slip-top">${original ? `Shared from ${esc(laneName(meal.laneId))}` : esc(laneName(meal.laneId))}</span><strong>${esc(meal.title)}</strong>${meal.prep ? `<span class="prep">Prep: ${esc(meal.prep)}</span>` : ''}</button>`;
 }
 function dialogs() { return `<dialog id="meal-dialog" aria-labelledby="meal-dialog-title"></dialog><dialog id="lanes-dialog" aria-labelledby="lanes-dialog-title"></dialog><dialog id="import-dialog" aria-labelledby="import-dialog-title"></dialog>`; }
 
@@ -128,9 +138,16 @@ function openMeal(id?: string, day?: number, laneId?: string) {
   const dialog = document.querySelector<HTMLDialogElement>('#meal-dialog')!;
   const currentLane = meal?.laneId || laneId || plan.lanes[0]?.id;
   const shares = meal?.sharedWith || [];
-  dialog.innerHTML = `<form method="dialog" class="dialog-sheet" data-form="meal"><button class="dialog-close" value="cancel" aria-label="Close meal form">×</button><p class="eyebrow">Meal slip</p><h2 id="meal-dialog-title">${meal ? 'Change this meal' : 'Add a meal'}</h2><input type="hidden" name="id" value="${meal?.id || ''}"><label>Meal name<input name="title" required maxlength="80" value="${esc(meal?.title || '')}" autocomplete="off" autofocus></label><div class="form-grid"><label>Day<select name="day">${dayNames.map((name, i) => `<option value="${i}" ${Number(meal?.day ?? day ?? 0) === i ? 'selected' : ''}>${dateLabel(i)}</option>`).join('')}</select></label><label>Lane<select name="laneId">${plan.lanes.map(l => `<option value="${l.id}" ${currentLane === l.id ? 'selected' : ''}>${esc(l.name)}</option>`).join('')}</select></label></div><label>Prep label <span class="hint">Optional</span><input name="prep" maxlength="60" value="${esc(meal?.prep || '')}" placeholder="Chop vegetables"></label><label>Note <span class="hint">Optional</span><textarea name="note" maxlength="240" rows="3" placeholder="A small reminder for this meal">${esc(meal?.note || '')}</textarea></label><fieldset><legend>Also show this meal in</legend><div class="checks">${plan.lanes.map(l => `<label><input type="checkbox" name="sharedWith" value="${l.id}" ${shares.includes(l.id) ? 'checked' : ''}> ${esc(l.name)}</label>`).join('')}</div></fieldset><div class="dialog-actions">${meal ? '<button class="button danger" type="button" data-action="delete-meal" data-id="' + meal.id + '">Delete meal</button>' : ''}<span></span><button class="button ink" value="cancel">Cancel</button><button class="button primary" value="default">Save meal</button></div><p class="form-error" aria-live="polite"></p></form>`;
+  dialog.innerHTML = `<form method="dialog" class="dialog-sheet" data-form="meal"><button class="dialog-close" type="button" data-action="cancel-meal" aria-label="Close meal form">×</button><p class="eyebrow">Meal slip</p><h2 id="meal-dialog-title">${meal ? 'Change this meal' : 'Add a meal'}</h2><input type="hidden" name="id" value="${meal?.id || ''}"><label>Meal name<input name="title" required maxlength="80" value="${esc(meal?.title || '')}" autocomplete="off" autofocus></label><div class="form-grid"><label>Day<select name="day">${dayNames.map((name, i) => `<option value="${i}" ${Number(meal?.day ?? day ?? 0) === i ? 'selected' : ''}>${dateLabel(i)}</option>`).join('')}</select></label><label>Lane<select name="laneId">${plan.lanes.map(l => `<option value="${l.id}" ${currentLane === l.id ? 'selected' : ''}>${esc(l.name)}</option>`).join('')}</select></label></div><label>Prep label <span class="hint">Optional</span><input name="prep" maxlength="60" value="${esc(meal?.prep || '')}" placeholder="Chop vegetables"></label><label>Note <span class="hint">Optional</span><textarea name="note" maxlength="240" rows="3" placeholder="A small reminder for this meal">${esc(meal?.note || '')}</textarea></label><fieldset><legend>Also show this meal in</legend><div class="checks">${plan.lanes.map(l => `<label><input type="checkbox" name="sharedWith" value="${l.id}" ${shares.includes(l.id) ? 'checked' : ''}> ${esc(l.name)}</label>`).join('')}</div></fieldset><div class="dialog-actions">${meal ? '<button class="button danger" type="button" data-action="delete-meal" data-id="' + meal.id + '">Delete meal</button>' : ''}<span></span><button class="button ink" type="button" data-action="cancel-meal">Cancel</button><button class="button primary" type="submit" value="default">Save meal</button></div><p class="form-error" aria-live="polite"></p></form>`;
   dialog.showModal();
   dialog.addEventListener('close', () => { if (dialog.returnValue === 'default') void saveMeal(dialog); }, { once: true });
+  dialog.querySelectorAll<HTMLElement>('[data-action="cancel-meal"]').forEach(button => button.addEventListener('click', () => dialog.close('cancel')));
+  dialog.querySelector<HTMLInputElement>('[name="title"]')?.addEventListener('invalid', event => {
+    (event.currentTarget as HTMLInputElement).setAttribute('aria-describedby', 'meal-form-error');
+    const error = dialog.querySelector<HTMLElement>('.form-error')!;
+    error.id = 'meal-form-error';
+    error.textContent = 'Give this meal a name, then save it.';
+  });
   dialog.querySelector('[data-action="delete-meal"]')?.addEventListener('click', () => { const found = plan.meals.find(m => m.id === meal?.id); if (found) void deleteMeal(found); dialog.close(); });
 }
 async function saveMeal(dialog: HTMLDialogElement) {
@@ -143,7 +160,8 @@ async function saveMeal(dialog: HTMLDialogElement) {
   plan.meals = plan.meals.filter(m => m.id !== id); plan.meals.push(record); await persist('Meal saved.');
 }
 function lanesForm(dialog: HTMLDialogElement, draft: Lane[]) {
-  dialog.innerHTML = `<form method="dialog" class="dialog-sheet" data-form="lanes"><button class="dialog-close" value="cancel" aria-label="Close people form">×</button><p class="eyebrow">People and lanes</p><h2 id="lanes-dialog-title">Name the people who eat here</h2><p class="dialog-intro">Keep Shared for meals several people eat. Add a lane for each person.</p><div class="lane-list">${draft.map(lane => `<div class="lane-edit"><span class="lane-dot ${lane.color}"></span><label class="sr-only" for="lane-${lane.id}">Lane name</label><input id="lane-${lane.id}" name="lane-name" data-lane-id="${lane.id}" value="${esc(lane.name)}" maxlength="24"><label class="sr-only" for="color-${lane.id}">Lane color</label><select id="color-${lane.id}" name="lane-color" data-lane-id="${lane.id}">${colors.map(c => `<option value="${c}" ${c === lane.color ? 'selected' : ''}>${c}</option>`).join('')}</select>${lane.id === 'shared' ? '<span class="fixed">Shared</span>' : `<button type="button" class="remove-lane" data-action="remove-lane" data-id="${lane.id}" aria-label="Remove ${esc(lane.name)}">×</button>`}</div>`).join('')}</div><p class="lane-limit" data-lane-limit role="status" aria-live="polite" tabindex="-1"></p><button type="button" class="button ink" data-action="add-lane">Add person</button><div class="dialog-actions"><span></span><button class="button ink" value="cancel">Cancel</button><button class="button primary" value="default">Save people</button></div></form>`;
+  dialog.innerHTML = `<form method="dialog" class="dialog-sheet" data-form="lanes"><button class="dialog-close" type="button" data-action="cancel-lanes" aria-label="Close people form">×</button><p class="eyebrow">People and lanes</p><h2 id="lanes-dialog-title">Name the people who eat here</h2><p class="dialog-intro">Keep Shared for meals several people eat. Add a lane for each person.</p><div class="lane-list">${draft.map(lane => `<div class="lane-edit"><span class="lane-dot ${lane.color}"></span><label class="sr-only" for="lane-${lane.id}">Lane name</label><input id="lane-${lane.id}" name="lane-name" data-lane-id="${lane.id}" value="${esc(lane.name)}" maxlength="24"><label class="sr-only" for="color-${lane.id}">Lane color</label><select id="color-${lane.id}" name="lane-color" data-lane-id="${lane.id}">${colors.map(c => `<option value="${c}" ${c === lane.color ? 'selected' : ''}>${c}</option>`).join('')}</select>${lane.id === 'shared' ? '<span class="fixed">Shared</span>' : `<button type="button" class="remove-lane" data-action="remove-lane" data-id="${lane.id}" aria-label="Remove ${esc(lane.name)}">×</button>`}</div>`).join('')}</div><p class="lane-limit" data-lane-limit role="status" aria-live="polite" tabindex="-1"></p><button type="button" class="button ink" data-action="add-lane">Add person</button><div class="dialog-actions"><span></span><button class="button ink" type="button" data-action="cancel-lanes">Cancel</button><button class="button primary" type="submit" value="default">Save people</button></div></form>`;
+  dialog.querySelectorAll<HTMLElement>('[data-action="cancel-lanes"]').forEach(button => button.addEventListener('click', () => dialog.close('cancel')));
   dialog.querySelector('[data-action="add-lane"]')?.addEventListener('click', () => {
     syncLaneDraft(dialog, draft);
     if (!licensed && draft.length >= 4) {
@@ -217,7 +235,7 @@ async function importPlan(file: File) { try { const raw: unknown = JSON.parse(aw
 function bindEvents() {
   app.querySelectorAll<HTMLAnchorElement>('[data-route]').forEach(link => link.addEventListener('click', event => { event.preventDefault(); navigate(link.getAttribute('href')!); }));
   app.querySelectorAll<HTMLElement>('[data-action="add-meal"]').forEach(button => button.addEventListener('click', () => openMeal(undefined, Number(button.dataset.day || 0), button.dataset.lane)));
-  app.querySelectorAll<HTMLElement>('[data-meal]').forEach(element => { const open = () => openMeal(element.dataset.meal); element.addEventListener('click', open); element.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); open(); } }); });
+  app.querySelectorAll<HTMLElement>('[data-meal]').forEach(element => { const open = () => openMeal(element.dataset.meal); element.addEventListener('click', open); });
   app.querySelector<HTMLElement>('[data-action="manage-lanes"]')?.addEventListener('click', openLanes);
   app.querySelector<HTMLElement>('[data-action="print"]')?.addEventListener('click', () => window.print());
   app.querySelector<HTMLElement>('[data-action="export"]')?.addEventListener('click', downloadPlan);
@@ -261,9 +279,14 @@ function renderLegal(kind: 'privacy' | 'terms') {
 }
 function renderNotFound() { app.innerHTML = `${header()}<main id="main" class="legal" tabindex="-1"><p class="eyebrow">Family Meal Lanes</p><h1>This paper slip is missing</h1><p>The page you asked for is not here. Go back to the weekly meal board.</p><a class="button primary" href="/" data-route>Go to the meal board</a></main>${footer()}`; bindEvents(); }
 async function loadRoute(moveFocus = false) {
+  const wasDemo = demo;
   const path = location.pathname === '/demo' || new URLSearchParams(location.search).get('demo') === '1' ? '/demo' : location.pathname;
   document.title = pageTitle(path);
+  document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.setAttribute('href', canonicalUrl(path));
   demo = path === '/demo';
+  if (wasDemo && !demo) {
+    try { await clearPlan(true); } catch { /* The real plan still remains isolated if demo storage is unavailable. */ }
+  }
   if (!demo) {
     const query = new URLSearchParams(location.search);
     const incoming = query.get('license');
@@ -278,6 +301,7 @@ async function loadRoute(moveFocus = false) {
     try { const stored = await readPlan(demo); const restored = stored && parsePlan(stored); plan = restored || (demo ? seedPlan() : emptyPlan()); if (!restored) { await writePlan(); if (stored) liveMessage = 'An incomplete saved plan was reset safely.'; } } catch { plan = demo ? seedPlan() : emptyPlan(); liveMessage = 'Storage is unavailable. Changes will not survive this tab.'; }
     renderLanding();
   } else if (path === '/privacy' || path === '/terms') renderLegal(path.slice(1) as 'privacy' | 'terms'); else renderNotFound();
+  if (location.hash === '#board') requestAnimationFrame(() => document.querySelector('#board')?.scrollIntoView());
   if (!moveFocus) return;
   requestAnimationFrame(() => {
     const heading = document.querySelector<HTMLElement>('main h1');
