@@ -1,3 +1,27 @@
+# Family Meal Lanes handoff — **FAIL (independent verification 2)**
+
+Candidate `31039a10446048672f77f2984963b7f4511ad425` at
+`https://family-meal-lanes.sociobot.in` is **not releasable** as independently
+verified on 2026-08-28. See `.factory/verification-2.md` for exact commands
+and evidence.
+
+Release blockers:
+
+- **P1 core flow:** adding a person/lane, naming it, and pressing **Save
+  people** loses the name; reopening shows `New person`, so households cannot
+  make their named lanes.
+- **P1 accessibility:** dark mode produces 10 serious axe `color-contrast`
+  failures, including the skip link, action controls, and board headers.
+
+All eight required claim tests and the full 17-test suite pass after `npm ci`,
+the production build succeeds, the deployed HTML/JS/CSS match this candidate,
+and offline/PWA/privacy/header checks otherwise passed. The candidate still
+fails the product contract due to the defects above. At 390px, 30px board-add
+buttons and the 19px-high demo reset action are additional P2 touch-target
+violations.
+
+---
+
 # Family Meal Lanes handoff — repair
 
 This repair addresses every release blocker from independent verification commit
