@@ -1,7 +1,10 @@
 [
   {"id":"demo-sandbox","claim":"Sample data is separate from a new plan","where":"demo banner, README","test":"npm test -- --grep @claim:demo-sandbox","sandbox":"fresh browser context; open /demo then start for real and assert sample meal is absent"},
-  {"id":"json-export","claim":"Exports the visible meal plan as JSON","where":"board toolbar, README","test":"npm test -- --grep @claim:json-export","sandbox":"demo data; download and parse the JSON, then assert all six sample meals"},
+  {"id":"json-export","claim":"Exports the visible meal plan as JSON","where":"landing fact, board toolbar, README","test":"npm test -- --grep @claim:json-export","sandbox":"demo data; download and parse the JSON, then assert all six sample meals"},
+  {"id":"json-import-safety","claim":"Imports complete Family Meal Lanes JSON without replacing the current plan when a file is incomplete","where":"board import control, README","test":"npm test -- --grep @claim:json-import-safety","sandbox":"demo data; import the verifier's JSON-valid malformed file and assert the recovery message, original meal, and no page error"},
   {"id":"offline-reload","claim":"Works offline after the first visit","where":"landing facts, README","test":"npm test -- --grep @claim:offline-reload","sandbox":"fresh browser context; visit /demo, wait for the service worker, reload, set offline, and reload"},
   {"id":"local-only","claim":"Saved only on this device","where":"landing facts, privacy page, README","test":"npm test -- --grep @claim:local-only","sandbox":"record all requests during a demo meal save and assert only the app origin is used"},
-  {"id":"paid-unlock","claim":"Offers a $12 unlimited-lanes checkout","where":"paid section, README","test":"npm test -- --grep @claim:paid-unlock","sandbox":"fresh real plan; assert the visible price and the hosted Sociobot checkout URL"}
+  {"id":"shared-lanes","claim":"Shows a shared meal in every selected lane","where":"landing figure caption, README","test":"npm test -- --grep @claim:shared-lanes","sandbox":"demo data; assert Lemon chicken tray bake appears in Shared, Mara, Jon, and Kids lanes"},
+  {"id":"prep-labels","claim":"Shows prep labels on meal slips","where":"how-it-works section, README","test":"npm test -- --grep @claim:prep-labels","sandbox":"demo data; assert the sample meal's prep label is visible"},
+  {"id":"print-plan","claim":"Prints the weekly meal board","where":"README","test":"npm test -- --grep @claim:print-plan","sandbox":"demo data; click Print and assert the browser print method is called"}
 ]

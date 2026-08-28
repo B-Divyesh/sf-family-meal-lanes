@@ -9,10 +9,6 @@ a short prep label. Plans stay in your browser and can be printed or moved as
 a JSON file. It is not a recipe book, grocery service, nutrition tool, or
 allergen checker.
 
-The free plan includes Shared plus three people. A $12 one-time license adds
-unlimited lanes on that device. Export, import, print, and all accessibility
-features remain free.
-
 ## Try it
 
 Run the app and open [http://localhost:5173/demo](http://localhost:5173/demo),
@@ -32,6 +28,12 @@ npm run build
 `npm run build` writes the static site to `dist/`, with `index.html` at its
 root. Preview the production build with `npm run preview`.
 
+## Deploy
+
+The factory deploys the built `dist/` directory as a static PWA. The checked-in
+`staticwebapp.config.json` supplies the security headers, immutable hashed-asset
+caching, real route rewrites, and the HTTP 404 response.
+
 ## Privacy and transfer
 
 No account or analytics are used. Meal lanes, titles, notes, and prep labels
@@ -41,9 +43,10 @@ then use **Import JSON** on another device. Read the in-app `/privacy` and
 
 ## Claims checked in the demo
 
-The automated browser suite checks the separate demo store, JSON export, an
-offline reload after the first visit, and that saving a meal makes no request
-outside the app origin. The exact checks are listed in `.factory/claims.json`.
+The automated browser suite checks the separate demo store, JSON export and
+safe import rejection, shared meals, prep labels, printing, an offline reload
+after the first visit, and that saving a meal makes no request outside the app
+origin. The exact checks are listed in `.factory/claims.json`.
 
 ## License
 
