@@ -1,0 +1,7 @@
+[
+  {"id":"demo-sandbox","claim":"Sample data is separate from a new plan","where":"demo banner, README","test":"npm test -- --grep @claim:demo-sandbox","sandbox":"fresh browser context; open /demo then start for real and assert sample meal is absent"},
+  {"id":"json-export","claim":"Exports the visible meal plan as JSON","where":"board toolbar, README","test":"npm test -- --grep @claim:json-export","sandbox":"demo data; download and parse the JSON, then assert all six sample meals"},
+  {"id":"offline-reload","claim":"Works offline after the first visit","where":"landing facts, README","test":"npm test -- --grep @claim:offline-reload","sandbox":"fresh browser context; visit /demo, wait for the service worker, reload, set offline, and reload"},
+  {"id":"local-only","claim":"Saved only on this device","where":"landing facts, privacy page, README","test":"npm test -- --grep @claim:local-only","sandbox":"record all requests during a demo meal save and assert only the app origin is used"},
+  {"id":"paid-unlock","claim":"Offers a $12 unlimited-lanes checkout","where":"paid section, README","test":"npm test -- --grep @claim:paid-unlock","sandbox":"fresh real plan; assert the visible price and the hosted Sociobot checkout URL"}
+]
