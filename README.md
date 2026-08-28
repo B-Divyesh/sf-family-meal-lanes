@@ -10,8 +10,8 @@ a JSON file. It is not a recipe book, grocery service, nutrition tool, or
 allergen checker.
 
 The free plan includes Shared plus three people. A $12 one-time license adds
-unlimited lanes on that device. Export, import, print, and accessibility
-features remain free. Sociobot and Dodo handle checkout and refunds.
+unlimited lanes on that device. Export, import, and print remain free.
+Sociobot and Dodo handle the hosted checkout.
 
 ## Try it
 
@@ -40,18 +40,18 @@ caching, real route rewrites, and the HTTP 404 response.
 
 ## Privacy and transfer
 
-No account or analytics are used. Meal lanes, titles, notes, and prep labels
-are stored locally in IndexedDB. Use **Export JSON** to make a transfer copy,
-then use **Import JSON** on another device. If you restore a paid license, its
-token is checked with Sociobot; meal-plan data is never sent with that check.
-Read the in-app `/privacy` and `/terms` pages before relying on the board.
+Meal lanes, titles, notes, and prep labels are stored locally in IndexedDB. Use
+**Export JSON** to make a transfer copy, then use **Import JSON** on another
+device. If you restore a paid license, its token is checked with Sociobot;
+meal-plan data is never sent with that check. Read the in-app `/privacy` and
+`/terms` pages before relying on the board.
 
 ## Claims checked in the demo
 
 The automated browser suite checks the separate demo store, JSON export and
-safe import rejection, shared meals, prep labels, printing, an offline reload
-after the first visit, and that saving a meal makes no request outside the app
-origin. The exact checks are listed in `.factory/claims.json`.
+safe import rejection, shared meals, prep labels, printing, an offline reload,
+local-only meal saves, and the paid license boundary and privacy behavior. The
+exact checks are listed in `.factory/claims.json`.
 
 ## License
 

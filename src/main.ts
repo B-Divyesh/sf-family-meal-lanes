@@ -16,6 +16,7 @@ const LICENSE_KEY = 'sb_license:family-meal-lanes';
 const LICENSE_CACHE_KEY = 'sb_license_check:family-meal-lanes';
 const CHECKOUT_URL = 'https://api.sociobot.in/api/v1/products/family-meal-lanes/checkout';
 let licensed = false;
+let licenseNotice = '';
 
 function mondayISO(date = new Date()) {
   const d = new Date(date); const shift = (d.getDay() + 6) % 7;
@@ -83,7 +84,7 @@ function pageTitle(path: string) {
   if (path === '/terms') return 'Terms — Family Meal Lanes';
   return 'Family Meal Lanes — plan meals by person';
 }
-function navigate(path: string) { history.pushState({}, '', path); void loadRoute(); }
+function navigate(path: string) { history.pushState({}, '', path); void loadRoute(true); }
 function header() { return `<header class="site-header"><a class="wordmark" href="/" data-route>Family<br><strong>Meal Lanes</strong></a><nav aria-label="Main navigation"><a href="/demo" data-route>Demo</a><a href="#board">Board</a><a href="/privacy" data-route>Privacy</a></nav></header>`; }
 function footer() { return `<footer><p>One weekly meal board for a shared kitchen device.</p><p><a href="/privacy" data-route>Privacy</a> · <a href="/terms" data-route>Terms</a> · Built by Param Factory · v1.0.0</p><p class="generated-note">Original illustration generated for this product.</p></footer>`; }
 
@@ -98,7 +99,7 @@ function renderLanding() {
       </div>
       <figure class="hero-art"><img src="/hero-risograph.webp" width="1200" height="800" fetchpriority="high" decoding="async" alt="A cut-paper weekly meal planner with colored meal slips and kitchen ingredients."><figcaption>Plan one meal in more than one lane.</figcaption></figure>
     </section>
-    <section class="board-section" id="board" aria-labelledby="board-title"><div class="section-heading"><div><p class="eyebrow">This week</p><h2 id="board-title">Who eats what</h2><p>${hasMeals ? 'Choose a meal slip to change it.' : 'Add people, then put the first meal in a lane.'}</p></div><div class="board-actions"><button class="button ink" data-action="add-meal">Add a meal</button><button class="icon-button" data-action="manage-lanes" aria-label="Manage people and lanes">People</button><button class="icon-button" data-action="print" aria-label="Print this weekly meal plan">Print</button><button class="icon-button" data-action="export" aria-label="Export this weekly meal plan as JSON">Export JSON</button><label class="import-label">Import JSON<input type="file" accept="application/json" data-action="import" /></label></div></div>${boardHtml()}</section>
+    <section class="board-section" id="board" aria-labelledby="board-title"><div class="section-heading"><div><p class="eyebrow">This week</p><h2 id="board-title">Who eats what</h2><p>${hasMeals ? 'Choose a meal slip to change it.' : 'Add people, then put the first meal in a lane.'}</p></div><div class="board-actions"><button class="button ink" data-action="add-meal">Add a meal</button><button class="icon-button" data-action="manage-lanes" aria-label="Manage people and lanes">People</button><button class="icon-button" data-action="print" aria-label="Print this weekly meal plan">Print</button><button class="icon-button" data-action="export" aria-label="Export JSON">Export JSON</button><label class="import-label">Import JSON<input type="file" accept="application/json" data-action="import" /></label></div></div>${boardHtml()}</section>
     <section class="how" aria-labelledby="how-title"><div><p class="eyebrow">How it works</p><h2 id="how-title">Keep the whole kitchen in view</h2></div><ol><li><strong>Name each lane.</strong><span>Add each person and one shared lane.</span></li><li><strong>Place the meal.</strong><span>Pick a day, a lane, and who shares it.</span></li><li><strong>Mark the prep.</strong><span>Leave the small task that saves time later.</span></li></ol></section>
     <section class="privacy-note" aria-labelledby="privacy-title"><h2 id="privacy-title">What this does not do</h2><p>It does not store recipes, order groceries, score nutrition, or send your plan anywhere. It keeps a clear weekly view on one device.</p><a href="/privacy" data-route>Read the privacy details</a></section>
     ${paidSection()}
@@ -108,7 +109,8 @@ function renderLanding() {
 function demoBanner() { return `<aside class="demo-banner" aria-label="Demo mode"><strong>Demo — sample data, nothing is saved</strong><span><button class="text-button" data-action="reset-demo">Reset demo</button><a href="/" data-route>Start for real</a></span></aside>`; }
 function paidSection() {
   if (demo) return '';
-  return `<section class="paid-section" aria-labelledby="paid-title"><p class="eyebrow">One-time purchase</p><h2 id="paid-title">Add as many lanes as your household needs</h2><p>Free plans include Shared plus three people. Pay $12 once for unlimited lanes on this device.</p>${licensed ? '<p class="license-good" role="status">Your unlimited-lanes license is active.</p>' : `<div class="paid-actions"><a class="button primary" href="${CHECKOUT_URL}">Buy unlimited lanes for $12</a><form class="license-form" data-form="license"><label for="license-token">Have a license?</label><input id="license-token" name="license" autocomplete="off" required placeholder="Paste your license token"><button class="button ink">Restore license</button></form></div><p class="small-note">Sociobot and Dodo handle checkout and refunds. A restored license is checked with Sociobot when you are online.</p>`}</section>`;
+  const notice = licenseNotice ? `<p class="license-notice" role="status">${esc(licenseNotice)}</p>` : '';
+  return `<section class="paid-section" aria-labelledby="paid-title"><p class="eyebrow">One-time purchase</p><h2 id="paid-title">Add as many lanes as your household needs</h2><p>Free plans include Shared plus three people. Pay $12 once for unlimited lanes on this device.</p>${licensed ? `<p class="license-good" role="status">Your unlimited-lanes license is active.</p>${notice}` : `<div class="paid-actions"><a class="button primary" href="${CHECKOUT_URL}">Buy unlimited lanes for $12</a><form class="license-form" data-form="license"><label for="license-token">Have a license?</label><input id="license-token" name="license" autocomplete="off" required placeholder="Paste your license token"><button class="button ink">Restore license</button></form></div><p class="small-note">Sociobot and Dodo handle the hosted checkout. A restored license is checked with Sociobot when you are online.</p>${notice}`}</section>`;
 }
 function boardHtml() {
   const cols = dayNames.map((_, index) => `<th scope="col">${dateLabel(index)}</th>`).join('');
@@ -141,13 +143,13 @@ async function saveMeal(dialog: HTMLDialogElement) {
   plan.meals = plan.meals.filter(m => m.id !== id); plan.meals.push(record); await persist('Meal saved.');
 }
 function lanesForm(dialog: HTMLDialogElement, draft: Lane[]) {
-  dialog.innerHTML = `<form method="dialog" class="dialog-sheet" data-form="lanes"><button class="dialog-close" value="cancel" aria-label="Close people form">×</button><p class="eyebrow">People and lanes</p><h2 id="lanes-dialog-title">Name the people who eat here</h2><p class="dialog-intro">Keep Shared for meals several people eat. Add a lane for each person.</p><div class="lane-list">${draft.map(lane => `<div class="lane-edit"><span class="lane-dot ${lane.color}"></span><label class="sr-only" for="lane-${lane.id}">Lane name</label><input id="lane-${lane.id}" name="lane-name" data-lane-id="${lane.id}" value="${esc(lane.name)}" maxlength="24"><label class="sr-only" for="color-${lane.id}">Lane color</label><select id="color-${lane.id}" name="lane-color" data-lane-id="${lane.id}">${colors.map(c => `<option value="${c}" ${c === lane.color ? 'selected' : ''}>${c}</option>`).join('')}</select>${lane.id === 'shared' ? '<span class="fixed">Shared</span>' : `<button type="button" class="remove-lane" data-action="remove-lane" data-id="${lane.id}" aria-label="Remove ${esc(lane.name)}">×</button>`}</div>`).join('')}</div><button type="button" class="button ink" data-action="add-lane">Add person</button><div class="dialog-actions"><span></span><button class="button ink" value="cancel">Cancel</button><button class="button primary" value="default">Save people</button></div></form>`;
+  dialog.innerHTML = `<form method="dialog" class="dialog-sheet" data-form="lanes"><button class="dialog-close" value="cancel" aria-label="Close people form">×</button><p class="eyebrow">People and lanes</p><h2 id="lanes-dialog-title">Name the people who eat here</h2><p class="dialog-intro">Keep Shared for meals several people eat. Add a lane for each person.</p><div class="lane-list">${draft.map(lane => `<div class="lane-edit"><span class="lane-dot ${lane.color}"></span><label class="sr-only" for="lane-${lane.id}">Lane name</label><input id="lane-${lane.id}" name="lane-name" data-lane-id="${lane.id}" value="${esc(lane.name)}" maxlength="24"><label class="sr-only" for="color-${lane.id}">Lane color</label><select id="color-${lane.id}" name="lane-color" data-lane-id="${lane.id}">${colors.map(c => `<option value="${c}" ${c === lane.color ? 'selected' : ''}>${c}</option>`).join('')}</select>${lane.id === 'shared' ? '<span class="fixed">Shared</span>' : `<button type="button" class="remove-lane" data-action="remove-lane" data-id="${lane.id}" aria-label="Remove ${esc(lane.name)}">×</button>`}</div>`).join('')}</div><p class="lane-limit" data-lane-limit role="status" aria-live="polite" tabindex="-1"></p><button type="button" class="button ink" data-action="add-lane">Add person</button><div class="dialog-actions"><span></span><button class="button ink" value="cancel">Cancel</button><button class="button primary" value="default">Save people</button></div></form>`;
   dialog.querySelector('[data-action="add-lane"]')?.addEventListener('click', () => {
     syncLaneDraft(dialog, draft);
     if (!licensed && draft.length >= 4) {
-      liveMessage = 'The free plan has four lanes. Restore a license or buy unlimited lanes to add another.';
-      dialog.close('cancel');
-      renderLanding();
+      const notice = dialog.querySelector<HTMLElement>('[data-lane-limit]')!;
+      notice.textContent = 'The free plan includes Shared plus three people. Restore a license or buy unlimited lanes to add another person.';
+      notice.focus();
       return;
     }
     draft.push({ id: crypto.randomUUID(), name: 'New person', color: colors[draft.length % colors.length] });
@@ -228,6 +230,7 @@ function bindEvents() {
     if (!token) { liveMessage = 'Paste your license token, then restore it.'; renderLanding(); return; }
     localStorage.setItem(LICENSE_KEY, token);
     licensed = true;
+    licenseNotice = 'Checking this license with Sociobot.';
     liveMessage = 'License restored. We will check it when you are online.';
     renderLanding();
     void verifyLicense(token);
@@ -246,16 +249,18 @@ async function verifyLicense(token: string) {
     const result: unknown = await response.json();
     const valid = isRecord(result) && result.valid === true;
     localStorage.setItem(LICENSE_CACHE_KEY, JSON.stringify({ valid, checkedAt: Date.now() }));
-    if (!valid) { licensed = false; liveMessage = 'This license is not active. You can buy unlimited lanes or restore another license.'; renderLanding(); }
+    if (!valid) licensed = false;
+    licenseNotice = valid ? 'Your license was checked and is active.' : 'This license is not active. You can buy unlimited lanes or restore another license.';
+    renderLanding();
   } catch { /* Offline use keeps the optimistic or last known local license state. */ }
 }
 function renderLegal(kind: 'privacy' | 'terms') {
   const privacy = kind === 'privacy';
-  app.innerHTML = `${header()}<main id="main" class="legal" tabindex="-1"><p class="eyebrow">Family Meal Lanes</p><h1>${privacy ? 'Your meal plan stays on this device' : 'Terms for using this meal board'}</h1>${privacy ? `<p>Family Meal Lanes saves your lanes and meal slips in this browser on this device. It does not create an account or send your plan to us.</p><h2>What is stored</h2><p>Names, meal titles, prep labels, and notes stay in the browser’s local database. You can export a JSON copy or clear browser data to remove it.</p><h2>Optional license check</h2><p>If you buy or restore the unlimited-lanes license, its token is stored in this browser and checked with Sociobot. Meal plan data is never included in that check.</p><h2>Demo mode</h2><p>The sample week uses a separate local database. Starting for real does not copy the sample into your plan.</p><h2>Contact</h2><p>Questions about this policy can go to the Param Factory team.</p>` : `<p>This utility is provided for household planning. You are responsible for checking meal choices and food safety for your household.</p><h2>One-time license</h2><p>A $12 license enables unlimited lanes on one device. Sociobot and Dodo handle checkout and refunds. A refund revokes the license.</p><h2>Local data</h2><p>Your browser stores your plan. Export a copy before clearing browser data or moving to another device.</p><h2>No medical advice</h2><p>Prep labels and lanes are planning notes. They do not assess allergens, nutrition, or food safety.</p><h2>Changes</h2><p>We may update this product and these terms as the product changes.</p>`}</main>${footer()}<div class="sr-only" aria-live="polite">${esc(liveMessage)}</div>`;
+  app.innerHTML = `${header()}<main id="main" class="legal" tabindex="-1"><p class="eyebrow">Family Meal Lanes</p><h1>${privacy ? 'Your meal plan stays on this device' : 'Terms for using this meal board'}</h1>${privacy ? `<p>Family Meal Lanes saves your lanes and meal slips in this browser on this device. It does not send your meal plan to us.</p><h2>What is stored</h2><p>Names, meal titles, prep labels, and notes stay in the browser’s local database. You can export a JSON copy.</p><h2>Optional license check</h2><p>If you buy or restore the unlimited-lanes license, its token is stored in this browser and checked with Sociobot. Meal plan data is never included in that check.</p><h2>Demo mode</h2><p>The sample week uses a separate local database. Starting for real does not copy the sample into your plan.</p><h2>Contact</h2><p>Questions about this policy can go to the Param Factory team.</p>` : `<p>This utility is provided for household planning. You are responsible for checking meal choices and food safety for your household.</p><h2>One-time license</h2><p>A $12 license enables unlimited lanes on one device. Sociobot and Dodo handle the hosted checkout. If a license is no longer active, the board returns to the free lane limit after its next check.</p><h2>Local data</h2><p>Your browser stores your plan. Export a copy before clearing browser data or moving to another device.</p><h2>No medical advice</h2><p>Prep labels and lanes are planning notes. They do not assess allergens, nutrition, or food safety.</p><h2>Changes</h2><p>We may update this product and these terms as the product changes.</p>`}</main>${footer()}<div class="sr-only" aria-live="polite">${esc(liveMessage)}</div>`;
   bindEvents();
 }
 function renderNotFound() { app.innerHTML = `${header()}<main id="main" class="legal" tabindex="-1"><p class="eyebrow">Family Meal Lanes</p><h1>This paper slip is missing</h1><p>The page you asked for is not here. Go back to the weekly meal board.</p><a class="button primary" href="/" data-route>Go to the meal board</a></main>${footer()}`; bindEvents(); }
-async function loadRoute() {
+async function loadRoute(moveFocus = false) {
   const path = location.pathname === '/demo' || new URLSearchParams(location.search).get('demo') === '1' ? '/demo' : location.pathname;
   document.title = pageTitle(path);
   demo = path === '/demo';
@@ -266,15 +271,25 @@ async function loadRoute() {
     const token = incoming || localStorage.getItem(LICENSE_KEY);
     const cached = readLicenseCache();
     licensed = Boolean(token) && cached?.valid !== false;
+    licenseNotice = cached?.valid === false ? 'This license is not active. You can buy unlimited lanes or restore another license.' : '';
     if (token && (!cached || Date.now() - cached.checkedAt > 86_400_000)) void verifyLicense(token);
   } else licensed = false;
   if (path === '/' || path === '/demo') {
     try { const stored = await readPlan(demo); const restored = stored && parsePlan(stored); plan = restored || (demo ? seedPlan() : emptyPlan()); if (!restored) { await writePlan(); if (stored) liveMessage = 'An incomplete saved plan was reset safely.'; } } catch { plan = demo ? seedPlan() : emptyPlan(); liveMessage = 'Storage is unavailable. Changes will not survive this tab.'; }
     renderLanding();
   } else if (path === '/privacy' || path === '/terms') renderLegal(path.slice(1) as 'privacy' | 'terms'); else renderNotFound();
-  requestAnimationFrame(() => document.querySelector<HTMLElement>('#main')?.focus());
+  if (!moveFocus) return;
+  requestAnimationFrame(() => {
+    const heading = document.querySelector<HTMLElement>('main h1');
+    if (heading) {
+      heading.tabIndex = -1;
+      heading.focus({ preventScroll: true });
+      const announcer = document.querySelector<HTMLElement>('#route-announcer');
+      if (announcer) announcer.textContent = heading.textContent || '';
+    }
+  });
 }
-window.addEventListener('popstate', () => void loadRoute());
+window.addEventListener('popstate', () => void loadRoute(true));
 window.addEventListener('online', () => { liveMessage = 'You are online.'; });
 window.addEventListener('offline', () => { liveMessage = 'You are offline. Your saved plan is still here.'; });
 function showUpdateToast(worker: ServiceWorker) {

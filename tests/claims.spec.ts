@@ -39,7 +39,7 @@ test('@claim:demo-sandbox sample data stays separate from a new plan', async ({ 
 test('@claim:json-export exports the visible meal plan as JSON', async ({ page }) => {
   await page.goto('/demo');
   const download = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export this weekly meal plan as JSON' }).click();
+  await page.getByRole('button', { name: 'Export JSON' }).click();
   const file = await download;
   const content = await file.createReadStream();
   let body = '';

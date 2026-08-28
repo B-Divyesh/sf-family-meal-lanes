@@ -55,6 +55,57 @@ test('@regression:all reported 390px controls meet the 44px touch-target minimum
   }
 });
 
+test('@regression:every visible 390px interactive target is at least 44px', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const route of ['/', '/demo', '/privacy', '/terms']) {
+    await page.goto(route);
+    const tooSmall = await page.locator('a, button, input:not([type="file"]), select, textarea, [role="button"], [tabindex="0"]').evaluateAll(elements => elements
+      .filter(element => {
+        const style = getComputedStyle(element);
+        const box = element.getBoundingClientRect();
+        return style.visibility !== 'hidden' && style.display !== 'none' && box.width > 0 && box.height > 0 && box.bottom >= 0;
+      })
+      .map(element => {
+        const box = element.getBoundingClientRect();
+        return { label: (element.getAttribute('aria-label') || element.textContent || element.tagName).trim(), width: box.width, height: box.height };
+      })
+      .filter(target => target.width < 44 || target.height < 44));
+    expect(tooSmall, route).toEqual([]);
+  }
+});
+
+test('@regression:visible Export JSON label is its accessible name', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: 'Export JSON', exact: true })).toHaveAccessibleName('Export JSON');
+});
+
+test('@regression:route navigation focuses and announces the destination h1', async ({ page }) => {
+  await page.goto('/');
+  await page.getByLabel('Main navigation').getByRole('link', { name: 'Privacy' }).click();
+  await expect(page.getByRole('heading', { level: 1, name: 'Your meal plan stays on this device' })).toBeFocused();
+  await expect(page.locator('#route-announcer')).toHaveText('Your meal plan stays on this device');
+  await page.goBack();
+  await expect(page.getByRole('heading', { level: 1, name: 'Plan meals by person, not guesswork' })).toBeFocused();
+});
+
+test('@regression:direct 404 is styled with a self-hosted stylesheet and is CSP clean', async ({ page }) => {
+  const notFound = await readFile(resolve(process.cwd(), 'public/404.html'), 'utf8');
+  const consoleErrors: string[] = [];
+  page.on('console', message => { if (message.type() === 'error') consoleErrors.push(message.text()); });
+  await page.route('**/not-a-page', route => route.fulfill({
+    status: 404,
+    contentType: 'text/html',
+    headers: { 'Content-Security-Policy': "default-src 'self'; style-src 'self'" },
+    body: notFound
+  }));
+  const response = await page.goto('/not-a-page');
+  expect(response?.status()).toBe(404);
+  await expect(page.getByRole('heading', { name: 'This paper slip is missing.' })).toBeVisible();
+  await expect(page.locator('link[rel="stylesheet"]')).toHaveAttribute('href', '/404.css');
+  expect(await page.locator('body').evaluate(body => getComputedStyle(body).backgroundColor)).toBe('rgb(255, 247, 232)');
+  expect(consoleErrors.filter(message => /Content Security Policy|inline style/i.test(message))).toEqual([]);
+});
+
 test('@claim:named-lanes saves a named lane through reload and offers it for shared meals', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: 'Manage people and lanes' }).click();
@@ -93,4 +144,78 @@ test('@claim:paid-unlock offers a truthful hosted $12 checkout', async ({ page, 
   const response = await request.get('https://api.sociobot.in/api/v1/products/family-meal-lanes/checkout', { maxRedirects: 0 });
   expect(response.status()).toBe(303);
   expect(response.headers().location).toMatch(/^https:\/\/checkout\.dodopayments\.com\/session\//);
+});
+
+async function addPeople(page: import('@playwright/test').Page, names: string[]) {
+  await page.getByRole('button', { name: 'Manage people and lanes' }).click();
+  for (const name of names) {
+    await page.getByRole('button', { name: 'Add person' }).click();
+    await page.locator('input[name="lane-name"]').last().fill(name);
+  }
+  await page.getByRole('button', { name: 'Save people' }).click();
+  await expect(page.getByRole('rowheader', { name: names.at(-1)! })).toBeVisible();
+}
+
+test('@claim:free-lane-limit keeps the visible free limit explanation in the people dialog', async ({ page }) => {
+  await page.goto('/');
+  await addPeople(page, ['Ari', 'Bee', 'Cam']);
+  await page.getByRole('button', { name: 'Manage people and lanes' }).click();
+  await page.getByRole('button', { name: 'Add person' }).click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await expect(page.locator('[data-lane-limit]')).toHaveText('The free plan includes Shared plus three people. Restore a license or buy unlimited lanes to add another person.');
+});
+
+test('@claim:paid-unlimited-lanes a valid license permits a fifth lane', async ({ page }) => {
+  let verifyRequests = 0;
+  await page.route('https://api.sociobot.in/api/v1/products/family-meal-lanes/verify?**', async route => {
+    verifyRequests += 1;
+    await route.fulfill({ contentType: 'application/json', body: JSON.stringify({ valid: true, reason: 'ok' }) });
+  });
+  await page.goto('/');
+  await addPeople(page, ['Ari', 'Bee', 'Cam']);
+  await page.getByLabel('Have a license?').fill('valid-token');
+  await page.getByRole('button', { name: 'Restore license' }).click();
+  await expect(page.getByText('Your unlimited-lanes license is active.')).toBeVisible();
+  await expect.poll(() => verifyRequests).toBe(1);
+  await addPeople(page, ['Dana']);
+  await expect(page.getByRole('rowheader', { name: 'Dana' })).toBeVisible();
+});
+
+test('@claim:license-invalid-cache relocks lanes and does not verify again within a day', async ({ page }) => {
+  let verifyRequests = 0;
+  await page.route('https://api.sociobot.in/api/v1/products/family-meal-lanes/verify?**', async route => {
+    verifyRequests += 1;
+    await route.fulfill({ contentType: 'application/json', body: JSON.stringify({ valid: false, reason: 'revoked' }) });
+  });
+  await page.goto('/');
+  await page.getByLabel('Have a license?').fill('revoked-token');
+  await page.getByRole('button', { name: 'Restore license' }).click();
+  await expect(page.getByText('This license is not active. You can buy unlimited lanes or restore another license.')).toBeVisible();
+  await expect.poll(() => verifyRequests).toBe(1);
+  await page.reload();
+  await expect(page.getByText('This license is not active. You can buy unlimited lanes or restore another license.')).toBeVisible();
+  expect(verifyRequests).toBe(1);
+  await addPeople(page, ['Ari', 'Bee', 'Cam']);
+  await page.getByRole('button', { name: 'Manage people and lanes' }).click();
+  await page.getByRole('button', { name: 'Add person' }).click();
+  await expect(page.locator('[data-lane-limit]')).toContainText('free plan includes Shared plus three people');
+});
+
+test('@claim:license-request-privacy sends only a token to Sociobot', async ({ page }) => {
+  const observed: { method: string; url: string; body: string | null }[] = [];
+  await page.route('https://api.sociobot.in/api/v1/products/family-meal-lanes/verify?**', async route => {
+    const request = route.request();
+    observed.push({ method: request.method(), url: request.url(), body: request.postData() });
+    await route.fulfill({ contentType: 'application/json', body: JSON.stringify({ valid: true, reason: 'ok' }) });
+  });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Add a meal' }).click();
+  await page.getByLabel('Meal name').fill('Private family dinner');
+  await page.getByRole('button', { name: 'Save meal' }).click();
+  await expect(page.getByText('Private family dinner').first()).toBeVisible();
+  await page.getByLabel('Have a license?').fill('private-token');
+  await page.getByRole('button', { name: 'Restore license' }).click();
+  await expect.poll(() => observed).toHaveLength(1);
+  expect(observed[0]).toEqual({ method: 'GET', url: 'https://api.sociobot.in/api/v1/products/family-meal-lanes/verify?license=private-token', body: null });
+  expect(JSON.stringify(observed)).not.toContain('Private family dinner');
 });

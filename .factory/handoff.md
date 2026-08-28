@@ -1,4 +1,84 @@
-# Family Meal Lanes handoff — verification 4 FAIL
+# Family Meal Lanes handoff — repair 3
+
+**Repair base:** independent-verifier report commit
+`41304b8ebb4e1eae7a5a97a42ade164998017af1`, for candidate
+`dfaf00beee095a352ed9e8934518c01a8362f82e`.
+
+## What this repair changes
+
+- Reproduced the live direct-404 defect before editing: it returned HTTP 404
+  but its inline stylesheet was blocked by `style-src 'self'`, leaving a
+  transparent Times-styled page and logging a CSP error. The designed 404 now
+  loads only the new same-origin `404.css`; a regression serves it under the
+  production CSP, asserts its styling and status, and rejects CSP console
+  errors.
+- Added four observable paid/privacy claims. They cover the visible free
+  Shared-plus-three limit, a mocked valid license adding a fifth lane, an
+  inactive/revoked license relocking lanes with a one-day verification cache,
+  and a token-only GET license verification request with no meal-plan data.
+  The paid screen now reports checking, active, and inactive states visibly.
+- Made every visible 390px interactive control at least 44px in both
+  dimensions, including header, legal, footer, demo, and wordmark links. The
+  broad mobile regression scans every visible interactive target on `/`,
+  `/demo`, `/privacy`, and `/terms`. **Export JSON** now has exactly that
+  accessible name, satisfying label-in-name.
+- SPA navigation now moves focus to the destination route `<h1>` and writes
+  the same heading to a persistent polite live region. The free-lane limit
+  remains visibly explained inside the People dialog instead of closing it.
+- Narrowed paid/legal copy to the verified checkout, inactive-license, and
+  token-only privacy behaviors. Existing meal planning, demo, offline,
+  update, import, export, shared lanes, Undo, and local-first behavior remain
+  unchanged.
+
+## Verification before deployment
+
+All commands were run from a clean `npm ci` install (20 packages, 0
+vulnerabilities):
+
+```sh
+npm ci
+# each exact command listed in .factory/claims.json (14 commands)
+npm test
+npx tsc -b --pretty false
+npm run build
+/opt/fleet/lib/verify-url.sh http://127.0.0.1:4173 /tmp/fml-verify
+```
+
+- All 14 exact tagged claim commands passed individually.
+- `npm test`: **31/31 Playwright tests passed** (15.4s). This includes dark
+  and light axe-core 4.11 scans of all four routes, desktop and 390px keyboard
+  flows, 44px target scan, label-in-name, CSP-clean 404, route focus,
+  offline reload, and controlled waiting-worker/Update now coverage.
+- TypeScript and production Vite build pass. `dist/` contains hashed JS
+  (23.51 KB / 8.34 KB gzip) and CSS (12.89 KB / 3.69 KB gzip), both within
+  budget.
+- `verify-url.sh` found HTTP 200, title, `lang="en"`, one h1, main landmark,
+  zero missing image alt attributes, zero unlabeled buttons, and zero console
+  errors in desktop and 390px captures.
+- Local Lighthouse mobile preview: performance 100, accessibility 100, best
+  practices 100, SEO 100; LCP 1.7s and CLS 0.031.
+- Product-specific backend/package/consumer, account, Entra, and response API
+  checks do not apply: this remains a static local-first PWA with no product
+  backend. The live Dodo checkout identity remains tested by
+  `@claim:paid-unlock`; license endpoint behavior is covered with recorded
+  mock responses and request inspection, without spending or transmitting
+  user data.
+
+## Deployment
+
+Build output remains `dist/` and deployment class remains static PWA. Deploy
+with:
+
+```sh
+/opt/fleet/lib/deploy-static.sh family-meal-lanes dist
+```
+
+Deployment and fresh live evidence are recorded below after this repair is
+pushed.
+
+---
+
+# Historical handoff — verification 4 FAIL
 
 **Current release decision: FAIL — do not release candidate
 `dfaf00beee095a352ed9e8934518c01a8362f82e`.** See the final verification
