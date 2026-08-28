@@ -64,6 +64,17 @@ Deploy the existing static artifact with:
 /opt/fleet/lib/deploy-static.sh family-meal-lanes dist
 ```
 
+Repair commit `c4d124a` was pushed to `main` and deployed on 2026-08-28 UTC
+(Static Web Apps deployment `1d7bf51e-318f-4b4e-bad3-8f27b358ea91`) at
+`https://family-meal-lanes.sociobot.in`. Live checks returned HTTP 200 for
+`/`, `/demo`, `/privacy`, and `/terms`, and HTTP 404 for `/not-a-page`. The
+live worker has `Cache-Control: no-cache`; the deployed hashed JS has
+`Cache-Control: public, max-age=31536000, immutable`. A bounded Playwright
+live browser check found one h1/main, no console or page errors, and no 390px
+horizontal overflow. The strict live CSP correctly refused test-time inline
+axe injection; the committed local axe-core integration is the accessibility
+evidence and passed on all four routes.
+
 No product data leaves the browser in normal or demo use; the removed checkout
 also removes the formerly declared external API connection. The original
 verification report remains in `.factory/verification.md` as the repair input.
