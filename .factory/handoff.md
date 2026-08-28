@@ -1,57 +1,36 @@
-# Family Meal Lanes handoff — **FAIL (independent verification 2)**
+# Family Meal Lanes handoff — repair accepted
 
-Candidate `31039a10446048672f77f2984963b7f4511ad425` at
-`https://family-meal-lanes.sociobot.in` is **not releasable** as independently
-verified on 2026-08-28. See `.factory/verification-2.md` for exact commands
-and evidence.
-
-Release blockers:
-
-- **P1 core flow:** adding a person/lane, naming it, and pressing **Save
-  people** loses the name; reopening shows `New person`, so households cannot
-  make their named lanes.
-- **P1 accessibility:** dark mode produces 10 serious axe `color-contrast`
-  failures, including the skip link, action controls, and board headers.
-
-All eight required claim tests and the full 17-test suite pass after `npm ci`,
-the production build succeeds, the deployed HTML/JS/CSS match this candidate,
-and offline/PWA/privacy/header checks otherwise passed. The candidate still
-fails the product contract due to the defects above. At 390px, 30px board-add
-buttons and the 19px-high demo reset action are additional P2 touch-target
-violations.
-
----
-
-# Family Meal Lanes handoff — repair
-
-This repair addresses every release blocker from independent verification commit
-`445ec91ee0b4cf8fbfa4af387ed5a4632a4d0ef4` of candidate
-`17e4cf0b1885edf79cce1552c76b2889df87853f`.
+This repair starts from independent-verifier commit
+`36fb576086615bf9804d4f2cefa57cee1bb682d4` and candidate
+`31039a10446048672f77f2984963b7f4511ad425`.
 
 ## What changed
 
-- Removed the unavailable $12 checkout and license path. The production billing
-  product still returns 404, so advertising a purchase would be misleading.
-  The planner now supports household lanes without a paywall; a checkout can be
-  added back only after the factory enables the registered product.
-- Added strict import validation before any plan is assigned or persisted. A
-  plan must have valid unique lanes (including Shared), valid meals, known lane
-  references, bounded strings, dates, and complete sharing data. Invalid files
-  preserve the visible/current plan and state the recovery action. Invalid old
-  browser records are reset safely at load rather than rendered.
-- Replaced stable application filenames and the hand-written fixed worker with
-  build-generated hashed JS/CSS and a content-versioned service-worker cache.
-  The worker itself is `no-cache`, uses a new cache per build, precaches the
-  complete shell, surfaces a waiting update, and reloads through **Update now**.
-  Its cache lookup uses the request URL, fixing the repeat offline-reload miss.
-- Added real route copies for `/demo`, `/privacy`, and `/terms`, removed the
-  catch-all navigation fallback, and configured a genuine host 404 response.
-  Hashed `/assets/*` are immutable.
-- Added the previously unlisted shared-lane, prep-label, print, and safe-import
-  claims with observable browser coverage. Deleting a meal now includes the
-  promised visible **Undo** action.
+- Fixed named-lane persistence at its root. The People dialog now edits a
+  draft in place instead of closing and reopening itself. Its one close handler
+  therefore remains attached to **Save people**. Saving applies lane removals
+  to existing meals safely, then writes the plan once.
+- Added `@claim:named-lanes`: it reproduces the verifier's flow exactly (add
+  Ari, save, reload) and verifies that Ari appears both as a meal lane and a
+  sharing checkbox.
+- Corrected dark-mode semantic colors: board headers, ink controls, and the
+  skip link now use an inverted accessible ink treatment; the focus ring and
+  eyebrow have dark-safe colors; and the dark mustard meal slip now passes
+  text contrast. Axe runs in both light and dark schemes on `/`, `/demo`,
+  `/privacy`, and `/terms`.
+- Raised the reported `+` meal button and **Reset demo** action to 44px, and
+  raised the update/undo actions to the same minimum. A 390px regression
+  measures both previously undersized controls.
+- Restored the paid offer only after a live check confirmed that the registered
+  Sociobot endpoint returns HTTP 303 to a Dodo hosted checkout. The $12
+  one-time license restores unlimited lanes, stores its token locally, accepts
+  a `?license=` return token, verifies no more than once daily, and remains
+  optimistic offline. Privacy/terms and CSP now accurately disclose the
+  optional Sociobot license check; no meal-plan data is sent with it.
 
-## Verify
+## Verification
+
+Clean install and full suite:
 
 ```sh
 npm ci
@@ -59,48 +38,51 @@ npm test
 npm run build
 ```
 
-Clean `npm ci` completed with 0 vulnerabilities. Every exact command in
-`.factory/claims.json` passed independently: demo sandbox, JSON export, safe
-import rejection, offline reload, local-only requests, shared lanes, prep
-labels, and printing. The full suite passed 17 Playwright tests, including:
+- `npm ci`: 0 vulnerabilities.
+- `npm test`: **23/23 Playwright tests pass**. This includes all ten exact
+  claim commands in `.factory/claims.json`, named-lane reload, dark/light axe,
+  desktop and 390px keyboard flows, touch-target measurements, offline reload,
+  controlled service-worker update, privacy request logging, and the live
+  checkout redirect assertion.
+- `npm run build` emits `dist/index.html`. Final assets: JS 22,930 bytes
+  (8.18 KB gzip), CSS 12,198 bytes (3.55 KB gzip), hero 72,588 bytes.
+- `/opt/fleet/lib/verify-url.sh http://127.0.0.1:4173 <temp-dir>` reported
+  HTTP 200, no console errors, one h1, a main landmark, `lang="en"`, no
+  missing image alt text, and no unlabeled buttons. Its desktop and 390px
+  screenshots were inspected.
+- Lighthouse against the production preview (Chromium with root-safe headless
+  flags): **99 performance, 100 accessibility**.
+- The standalone `@axe-core/cli` could not auto-locate Chrome in this worker;
+  the committed Playwright axe-core 4.11 integration uses the preinstalled
+  Chromium and passed all eight light/dark route scans with zero serious or
+  critical violations.
+- Live billing identity check: `GET
+  https://api.sociobot.in/api/v1/products/family-meal-lanes/checkout` returned
+  `303 Location: https://checkout.dodopayments.com/session/...` on 2026-08-28.
+- Product-specific checks not applicable: no account, Entra tenant, backend
+  response-policy endpoint, or rate-limited application API exists. The only
+  optional external request is license verification to Sociobot, explicitly
+  allowed by CSP and disclosed to the user.
 
-- the verifier's malformed JSON-valid import fixture, with no page error and
-  preservation of the sample plan;
-- three successive clean runs of `@claim:offline-reload` using
-  `context.setOffline(true)`;
-- a controlled worker update that asserts the waiting notice, **Update now**,
-  activation, and execution of the updated JS asset;
-- axe-core 4.11 WCAG 2A/2AA scans of `/`, `/demo`, `/privacy`, and `/terms`
-  (zero serious/critical violations), mobile 390px keyboard-dialog coverage,
-  and no console/page errors.
+## Deploy
 
-`npm run build` produces `dist/` with `index.html` at its root. Current output
-is 19.95 KB JavaScript (7.20 KB gzip) and 11.77 KB CSS (3.47 KB gzip). Local
-`verify-url.sh` against the production build reported HTTP 200, one h1, one
-main landmark, `lang="en"`, zero images missing alt text, zero unlabeled
-buttons, and no console errors.
-
-## Deploy and known gaps
-
-Deploy the existing static artifact with:
+The static deployment command is:
 
 ```sh
 /opt/fleet/lib/deploy-static.sh family-meal-lanes dist
 ```
 
-Repair commit `c4d124a` was pushed to `main` and deployed on 2026-08-28 UTC
-(Static Web Apps deployment `1d7bf51e-318f-4b4e-bad3-8f27b358ea91`) at
-`https://family-meal-lanes.sociobot.in`. Live checks returned HTTP 200 for
-`/`, `/demo`, `/privacy`, and `/terms`, and HTTP 404 for `/not-a-page`. The
-live worker has `Cache-Control: no-cache`; the deployed hashed JS has
-`Cache-Control: public, max-age=31536000, immutable`. A bounded Playwright
-live browser check found one h1/main, no console or page errors, and no 390px
-horizontal overflow. The strict live CSP correctly refused test-time inline
-axe injection; the committed local axe-core integration is the accessibility
-evidence and passed on all four routes.
+Deployed on 2026-08-28 UTC as Static Web Apps deployment
+`e61408fa-bdd8-47da-93ff-bd640e6f37a8` to
+`https://family-meal-lanes.sociobot.in`.
 
-No product data leaves the browser in normal or demo use; the removed checkout
-also removes the formerly declared external API connection. The original
-verification report remains in `.factory/verification.md` as the repair input.
-There are no known functional gaps. Billing is deliberately not offered until
-the factory registers and enables a working Sociobot checkout endpoint.
+- Live `/`, `/demo`, `/privacy`, and `/terms` returned 200; `/not-a-page`
+  returned 404.
+- Live root HTML, hashed JS, and hashed CSS SHA-256 values matched `dist/`:
+  `ff5732b3…70cfa`, `a3f3d26f…6893e`, and `e9a6180a…464db`.
+- Live hashed JS uses `public, max-age=31536000, immutable`; `sw.js` uses
+  `no-cache`. The live CSP has `connect-src 'self' https://api.sociobot.in`.
+- A 390×844 dark-mode Chromium check found one h1 and main landmark, no page
+  overflow, no console/page errors, and 44px-high add/reset targets.
+
+There are no known product gaps.

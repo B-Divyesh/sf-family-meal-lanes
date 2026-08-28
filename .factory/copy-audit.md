@@ -9,13 +9,17 @@ Landing sentences were checked against the 22-word cap.
 | See a filled week. | 4 | pass |
 | Nothing is saved. | 4 | pass |
 | Works offline after setup | 4 | pass |
-| Saved only on this device | 5 | pass |
+| Meal plan saved only on this device | 7 | pass |
 | Export a JSON copy | 4 | pass |
 | Add people, then put the first meal in a lane. | 10 | pass |
 | Choose a meal slip to change it. | 8 | pass |
 | Keep the whole kitchen in view | 7 | pass |
 | It does not store recipes, order groceries, score nutrition, or send your plan anywhere. | 15 | pass |
 | It keeps a clear weekly view on one device. | 10 | pass |
+| Free plans include Shared plus three people. | 7 | pass |
+| Pay $12 once for unlimited lanes on this device. | 10 | pass |
+| Sociobot and Dodo handle checkout and refunds. | 7 | pass |
+| A restored license is checked with Sociobot when you are online. | 11 | pass |
 
 No banned words appear in the landing sentences.
 
@@ -28,3 +32,4 @@ No banned words appear in the landing sentences.
 | repeat display in another lane | shared meal |
 | small advance task | prep label |
 | isolated sample plan | demo |
+| paid unlimited-lanes token | license |

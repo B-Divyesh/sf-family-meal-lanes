@@ -18,6 +18,12 @@ give the weekly board a friendly physical logic without making it childish.
 - Pulp `#f1dfbf` — secondary paper surface.
 - Night `#172030` — dark-mode ground with `#fff7e8` text.
 
+In dark mode, ink-filled controls and board headers invert to Paper on Night
+(`#fff7e8` background, `#172030` text). The focus ring becomes sky `#8fc4ff`,
+and the eyebrow becomes `#ff9b94`; these keep small text and focus affordances
+above the required contrast threshold. Mustard meal slips darken to `#725514`
+so their Paper text remains readable.
+
 ## Type and layout
 
 Display type is **Georgia**, deliberately warm and editorial, with **Arial**
