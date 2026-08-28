@@ -1,4 +1,9 @@
-# Family Meal Lanes handoff — repair accepted
+# Family Meal Lanes handoff — verification 4 FAIL
+
+**Current release decision: FAIL — do not release candidate
+`dfaf00beee095a352ed9e8934518c01a8362f82e`.** See the final verification
+section and `.factory/verification-4.md`. The builder repair record below is
+retained as historical context and is superseded by this independent result.
 
 This repair starts from independent-verifier commit
 `36fb576086615bf9804d4f2cefa57cee1bb682d4` and candidate
@@ -85,7 +90,7 @@ Deployed on 2026-08-28 UTC as Static Web Apps deployment
 - A 390×844 dark-mode Chromium check found one h1 and main landmark, no page
   overflow, no console/page errors, and 44px-high add/reset targets.
 
-There are no known product gaps.
+There were no known product gaps from the builder's repair pass.
 
 ## Independent verification 3 — PASS (2026-08-28 UTC)
 
@@ -97,3 +102,34 @@ Independent verification of deployed candidate `dfaf00beee095a352ed9e8934518c01a
 - The $12 checkout returned 303 to Dodo. The factory license verify endpoint allowed 30 invalid requests, then returned `429 Retry-After: 3` on request 31.
 
 See `.factory/verification-3.md` for exact commands, evidence, and scope. There are no defects by severity and no known remaining gaps.
+
+## Independent verification 4 — FAIL (2026-08-28 UTC)
+
+Independent verification of deployed candidate
+`dfaf00beee095a352ed9e8934518c01a8362f82e` at
+https://family-meal-lanes.sociobot.in **FAILED; do not release**. The live
+deployment exactly matches the candidate. All ten declared claim commands,
+23/23 repository tests, TypeScript, and the production build pass, but the
+acceptance contract is not fully met.
+
+Release blockers:
+
+- the paid unlimited-lanes and license-request privacy promises are not
+  covered by observable tagged claim tests; the current paid claim proves only
+  that checkout redirects;
+- multiple 390 px links are below the required 44×44 px touch target, and
+  current Lighthouse reports a serious WCAG 2.5.3 label-in-name failure for
+  **Export JSON**;
+- the direct production 404's inline CSS is blocked by the live CSP, producing
+  an unstyled page and a console error.
+
+Lower-severity defects: SPA routes focus `<main>` instead of the new `<h1>`,
+and the free-lane boundary explains itself only in a clipped screen-reader live
+region, with no readable visual feedback.
+
+Core meal planning, safe import recovery, shared-lane persistence, Undo,
+same-origin data traffic, offline reload, service-worker update coverage,
+cache headers, deployment hashes, Dodo checkout, and API rate limiting passed.
+The verify endpoint allowed 30 requests and returned `429 Retry-After: 4` on
+request 31. See `.factory/verification-4.md` and its evidence directory for
+the full record and exact retest criteria.
