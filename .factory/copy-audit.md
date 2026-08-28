@@ -16,6 +16,11 @@ Landing sentences were checked against the 22-word cap.
 | Keep the whole kitchen in view | 7 | pass |
 | It does not store recipes, order groceries, score nutrition, or send your plan anywhere. | 15 | pass |
 | It keeps a clear weekly view on one device. | 10 | pass |
+| Add as many lanes as your household needs | 8 | pass |
+| Free plans include Shared plus three people. | 7 | pass |
+| Pay $12 once for unlimited lanes on this device. | 9 | pass |
+| Sociobot is the merchant of record. | 7 | pass |
+| Refunds are handled at checkout. | 5 | pass |
 
 No banned words appear in the landing sentences.
 
