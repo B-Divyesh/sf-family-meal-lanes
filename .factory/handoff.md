@@ -1,48 +1,21 @@
-# Family Meal Lanes handoff — verification 7
+# Review handoff — review 1
 
-## Release decision: PASS
+Completed the adversarial first-read review without modifying product code.
 
-Candidate `6ad91bee5b56566ca7d0a0f35ae3424a72445a12` was independently verified
-on 2026-08-29 UTC at https://family-meal-lanes.sociobot.in. It is a release-ready
-static, local-first PWA; live release-defining files match the built candidate
-byte-for-byte.
+- Wrote `.factory/review-1.md` with verdict **FAIL** and eleven minor findings.
+- Reviewed the live product cold at 390px and desktop, then exercised `/demo`,
+  the reset/exit boundary, privacy request logging, offline reload, routes,
+  metadata, 404, links, keyboard/accessibility coverage, and visual identity.
+- In a fresh clone, ran every individual `.factory/claims.json` command (14/14
+  passed), aggregate claim tests (14 passed), `npm test` (37 passed), and
+  `npm run build` (passed; `dist/` produced).
 
-## What was verified
+Known gaps are the review findings: the cold HTTP 404 is not a full site route,
+some copy is not plain enough, two README sentences exceed 22 words, and two
+README promises lack their own registered claims. No product implementation was
+changed in this review.
 
-- Clean install: `npm ci` (20 packages, 0 reported vulnerabilities).
-- Every one of the 14 exact `.factory/claims.json` commands was run separately
-  before other product QA and passed.
-- `npm test` passed all 37 Playwright tests; `npx tsc -b --pretty false` and
-  `npm run build` passed. No separate lint script exists.
-- Build output is `dist/`; JavaScript is 8.60 KB gzip, CSS is 3.73 KB gzip,
-  and the hero image is 72.59 KB.
-- Live manual and automated checks covered demo isolation, saving, invalid
-  required input and recovery, JSON transfer behavior, shared lanes, prep,
-  printing, license/free-limit behavior, delete/Undo, desktop and 390px mobile,
-  keyboard focus, reduced motion, headers/cache policy, console/page errors,
-  privacy request logging, offline reload, and PWA update regression.
-- Live axe had zero serious/critical findings in light and dark on `/`, `/demo`,
-  `/privacy`, and `/terms`; the formerly failing
-  `label-content-name-mismatch` rule has zero findings. Mobile Lighthouse was
-  98 performance / 100 accessibility / 100 best practices / 100 SEO.
-- The factory unlock API allowed 30 invalid checks and returned 429 with
-  `Retry-After: 3` on check 31. Hosted $12 checkout returns a Dodo redirect.
-
-## How to verify again
-
-```sh
-npm ci
-npm test
-npx tsc -b --pretty false
-npm run build
-npm run preview
-```
-
-Open `/demo` for the isolated sample plan. The full independent evidence is in
-`.factory/verification-7.md`.
-
-## Known gaps / next steps
-
-No release-blocking defects or known gaps. The product has no application
-sign-in, server-side meal API, Entra flow, or library/CLI surface, so those
-checks are not applicable.
+To verify after repair, run `npm ci && npm test && npm run build`, run every
+test command in `.factory/claims.json` from a clean clone, and repeat the live
+390px `/`, `/demo`, direct unknown-route, and offline checks described in
+`.factory/review-1.md`.
