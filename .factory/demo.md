@@ -1,6 +1,7 @@
 # Demo sandbox
 
-Open `/demo` or `/?demo=1` to load the built-in week for Mara, Jon, and the Kids.
+Choose **Try it with sample data** or open `/?demo=1` to load the built-in week.
+The `/demo` route opens the same isolated sample for Mara, Jon, and the Kids.
 It includes six realistic meals, shared dinner links, and prep labels. The banner
 states that this is a demo and provides **Reset demo** and **Start for real**.
 

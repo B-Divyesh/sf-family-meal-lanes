@@ -82,11 +82,31 @@ function pageTitle(path: string) {
   if (path === '/demo') return 'Demo — Family Meal Lanes';
   if (path === '/privacy') return 'Privacy — Family Meal Lanes';
   if (path === '/terms') return 'Terms — Family Meal Lanes';
-  return 'Family Meal Lanes — plan meals by person';
+  if (path === '/') return 'Family Meal Lanes — plan meals by person';
+  return 'Page not found — Family Meal Lanes';
 }
 function canonicalUrl(path: string) {
-  const route = path === '/demo' || path === '/privacy' || path === '/terms' ? path : '/';
+  const route = path === '/demo' || path === '/privacy' || path === '/terms' || path === '/' ? path : '/404.html';
   return `https://family-meal-lanes.sociobot.in${route}`;
+}
+function pageDescription(path: string) {
+  if (path === '/demo') return 'Try a filled weekly meal board with six sample meals. Demo changes stay separate from your real plan.';
+  if (path === '/privacy') return 'Read what Family Meal Lanes stores on your device and what is sent during an optional license check.';
+  if (path === '/terms') return 'Read the terms for Family Meal Lanes and its optional one-time unlimited-lanes license.';
+  if (path === '/') return 'Plan a week of meals by person, shared meal, and prep task on one private device.';
+  return 'The requested Family Meal Lanes page was not found. Return to the weekly meal board.';
+}
+function updateMetadata(path: string) {
+  const title = pageTitle(path);
+  const description = pageDescription(path);
+  document.title = title;
+  document.querySelector<HTMLMetaElement>('meta[name="description"]')?.setAttribute('content', description);
+  document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.setAttribute('content', title);
+  document.querySelector<HTMLMetaElement>('meta[property="og:description"]')?.setAttribute('content', description);
+  document.querySelector<HTMLMetaElement>('meta[property="og:url"]')?.setAttribute('content', canonicalUrl(path));
+  document.querySelector<HTMLMetaElement>('meta[name="twitter:title"]')?.setAttribute('content', title);
+  document.querySelector<HTMLMetaElement>('meta[name="twitter:description"]')?.setAttribute('content', description);
+  document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.setAttribute('href', canonicalUrl(path));
 }
 function navigate(path: string) { history.pushState({}, '', path); void loadRoute(true); }
 function header() {
@@ -100,15 +120,15 @@ function renderLanding() {
   const hasMeals = plan.meals.length > 0;
   app.innerHTML = `${header()}<main id="main" tabindex="-1">
     ${demo ? demoBanner() : ''}
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-copy"><p class="eyebrow">A weekly board for one kitchen</p><h1 id="hero-title">Plan meals by person, not guesswork</h1><p class="lede">For households with different meals, so everyone can see what is theirs and what they share.</p>
-        <div class="hero-actions"><a class="button primary" href="/demo" data-route>Try it with sample data</a><span>See a filled week. Nothing is saved.</span></div>
-        <ul class="facts"><li>Works offline after setup</li><li>Meal plan saved only on this device</li><li>Export a JSON copy</li></ul>
+    ${demo ? `<section class="demo-intro" aria-labelledby="hero-title"><p class="eyebrow">Sample week</p><h1 id="hero-title">Try a filled meal week</h1><p>Use the sample below. Reset it at any time, or start a separate plan for your household.</p></section>` : `<section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy"><p class="eyebrow">A weekly board for one kitchen</p><h1 id="hero-title">Plan meals for each person</h1><p class="lede">For households with different meals, so everyone can see what is theirs and what they share.</p>
+        <div class="hero-actions"><a class="button primary" href="/?demo=1" data-route>Try it with sample data</a><span>See a filled week. Nothing is saved.</span></div>
+        <ul class="facts"><li>Works offline after your first visit.</li><li>Meal plan saved only on this device</li><li>Export a JSON copy</li></ul>
       </div>
       <figure class="hero-art"><img src="/hero-risograph.webp" width="1200" height="800" fetchpriority="high" decoding="async" alt="A cut-paper weekly meal planner with colored meal slips and kitchen ingredients."><figcaption>Plan one meal in more than one lane.</figcaption></figure>
-    </section>
-    <section class="board-section" id="board" aria-labelledby="board-title"><div class="section-heading"><div><p class="eyebrow">This week</p><h2 id="board-title">Who eats what</h2><p>${hasMeals ? 'Choose a meal slip to change it.' : 'Add people, then put the first meal in a lane.'}</p></div><div class="board-actions"><button class="button ink" data-action="add-meal">Add a meal</button><button class="icon-button" data-action="manage-lanes" aria-label="Manage people and lanes">People</button><button class="icon-button" data-action="print" aria-label="Print this weekly meal plan">Print</button><button class="icon-button" data-action="export" aria-label="Export JSON">Export JSON</button><label class="import-label">Import JSON<input type="file" accept="application/json" data-action="import" /></label></div></div>${boardHtml()}</section>
-    <section class="how" aria-labelledby="how-title"><div><p class="eyebrow">How it works</p><h2 id="how-title">Keep the whole kitchen in view</h2></div><ol><li><strong>Name each lane.</strong><span>Add each person and one shared lane.</span></li><li><strong>Place the meal.</strong><span>Pick a day, a lane, and who shares it.</span></li><li><strong>Mark the prep.</strong><span>Leave the small task that saves time later.</span></li></ol></section>
+    </section>`}
+    <section class="board-section" id="board" aria-labelledby="board-title"><div class="section-heading"><div><p class="eyebrow">This week</p><h2 id="board-title">Who eats what</h2><p>${hasMeals ? 'Choose a meal slip to change it.' : 'Add people, then put the first meal in a lane.'}</p></div><div class="board-actions"><button class="button ink" data-action="add-meal">Add a meal</button><button class="icon-button" data-action="manage-lanes">Manage people</button><button class="icon-button" data-action="print" aria-label="Print this weekly meal plan">Print</button><button class="icon-button" data-action="export" aria-label="Export JSON">Export JSON</button><label class="import-label">Import JSON<input type="file" accept="application/json" data-action="import" /></label></div></div>${boardHtml()}</section>
+    <section class="how" aria-labelledby="how-title"><div><p class="eyebrow">How it works</p><h2 id="how-title">Plan individual and shared meals</h2></div><ol><li><strong>Name each lane.</strong><span>Add each person and one shared lane.</span></li><li><strong>Place the meal.</strong><span>Pick a day, a lane, and who shares it.</span></li><li><strong>Mark the prep.</strong><span>Leave a small prep task for later.</span></li></ol></section>
     <section class="privacy-note" aria-labelledby="privacy-title"><h2 id="privacy-title">What this does not do</h2><p>It does not store recipes, order groceries, score nutrition, or send your plan anywhere. It keeps a clear weekly view on one device.</p><a href="/privacy" data-route>Read the privacy details</a></section>
     ${paidSection()}
   </main>${footer()}${lastDeleted ? `<aside class="undo-toast" role="status">Meal removed.<button class="button ink" data-action="undo-delete">Undo</button></aside>` : ''}<div class="sr-only" aria-live="polite">${esc(liveMessage)}</div>${dialogs()}`;
@@ -276,12 +296,11 @@ function renderLegal(kind: 'privacy' | 'terms') {
   app.innerHTML = `${header()}<main id="main" class="legal" tabindex="-1"><p class="eyebrow">Family Meal Lanes</p><h1>${privacy ? 'Your meal plan stays on this device' : 'Terms for using this meal board'}</h1>${privacy ? `<p>Family Meal Lanes saves your lanes and meal slips in this browser on this device. It does not send your meal plan to us.</p><h2>What is stored</h2><p>Names, meal titles, prep labels, and notes stay in the browser’s local database. You can export a JSON copy.</p><h2>Optional license check</h2><p>If you buy or restore the unlimited-lanes license, its token is stored in this browser and checked with Sociobot. Meal plan data is never included in that check.</p><h2>Demo mode</h2><p>The sample week uses a separate local database. Starting for real does not copy the sample into your plan.</p><h2>Contact</h2><p>Questions about this policy can go to the Param Factory team.</p>` : `<p>This utility is provided for household planning. You are responsible for checking meal choices and food safety for your household.</p><h2>One-time license</h2><p>A $12 license enables unlimited lanes on one device. Sociobot and Dodo handle the hosted checkout. If a license is no longer active, the board returns to the free lane limit after its next check.</p><h2>Local data</h2><p>Your browser stores your plan. Export a copy before clearing browser data or moving to another device.</p><h2>No medical advice</h2><p>Prep labels and lanes are planning notes. They do not assess allergens, nutrition, or food safety.</p><h2>Changes</h2><p>We may update this product and these terms as the product changes.</p>`}</main>${footer()}<div class="sr-only" aria-live="polite">${esc(liveMessage)}</div>`;
   bindEvents();
 }
-function renderNotFound() { app.innerHTML = `${header()}<main id="main" class="legal" tabindex="-1"><p class="eyebrow">Family Meal Lanes</p><h1>This paper slip is missing</h1><p>The page you asked for is not here. Go back to the weekly meal board.</p><a class="button primary" href="/" data-route>Go to the meal board</a></main>${footer()}`; bindEvents(); }
+function renderNotFound() { app.innerHTML = `${header()}<main id="main" class="legal" tabindex="-1"><p class="eyebrow">Family Meal Lanes</p><h1>Page not found</h1><p>This address does not have a meal board.</p><a class="button primary" href="/" data-route>Go to the meal board</a></main>${footer()}`; bindEvents(); }
 async function loadRoute(moveFocus = false) {
   const wasDemo = demo;
   const path = location.pathname === '/demo' || new URLSearchParams(location.search).get('demo') === '1' ? '/demo' : location.pathname;
-  document.title = pageTitle(path);
-  document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.setAttribute('href', canonicalUrl(path));
+  updateMetadata(path);
   demo = path === '/demo';
   if (wasDemo && !demo) {
     try { await clearPlan(true); } catch { /* The real plan still remains isolated if demo storage is unavailable. */ }

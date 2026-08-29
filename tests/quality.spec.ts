@@ -3,6 +3,16 @@ import axe from 'axe-core';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
+test('@regression:claim manifest has one matching test for every unique claim', async () => {
+  const claims = JSON.parse(await readFile(resolve(process.cwd(), '.factory/claims.json'), 'utf8')) as { id: string; test: string }[];
+  expect(new Set(claims.map(claim => claim.id)).size).toBe(claims.length);
+  const sources = `${await readFile(resolve(process.cwd(), 'tests/claims.spec.ts'), 'utf8')}\n${await readFile(resolve(process.cwd(), 'tests/quality.spec.ts'), 'utf8')}`;
+  for (const claim of claims) {
+    expect(claim.test).toBe(`npm test -- --grep @claim:${claim.id}`);
+    expect(sources.match(new RegExp(`@claim:${claim.id}(?![a-z0-9-])`, 'g'))).toHaveLength(1);
+  }
+});
+
 for (const route of ['/', '/demo', '/privacy', '/terms']) {
   test(`@regression:accessibility ${route} has no serious or critical axe violations`, async ({ page }) => {
     const errors: string[] = [];
@@ -37,6 +47,7 @@ test('@regression:mobile keyboard path keeps the board reachable at 390px', asyn
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/demo');
   expect(await page.locator('body').evaluate(body => body.scrollWidth <= window.innerWidth)).toBe(true);
+  await expect(page.getByText('Lemon chicken tray bake').first()).toBeInViewport();
   await page.locator('button[data-meal="m1"]').first().focus();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('dialog')).toBeVisible();
@@ -77,6 +88,7 @@ test('@regression:every visible 390px interactive target is at least 44px', asyn
 test('@regression:visible Export JSON label is its accessible name', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('button', { name: 'Export JSON', exact: true })).toHaveAccessibleName('Export JSON');
+  await expect(page.getByRole('button', { name: 'Manage people', exact: true })).toHaveAccessibleName('Manage people');
 });
 
 test('@regression:all populated meal slips pass axe label-content-name-mismatch', async ({ page }) => {
@@ -148,21 +160,34 @@ test('@regression:route navigation focuses and announces the destination h1', as
   await expect(page.getByRole('heading', { level: 1, name: 'Your meal plan stays on this device' })).toBeFocused();
   await expect(page.locator('#route-announcer')).toHaveText('Your meal plan stays on this device');
   await page.goBack();
-  await expect(page.getByRole('heading', { level: 1, name: 'Plan meals by person, not guesswork' })).toBeFocused();
+  await expect(page.getByRole('heading', { level: 1, name: 'Plan meals for each person' })).toBeFocused();
 });
 
-test('@regression:legal Board links open the board and every route has its own canonical URL', async ({ page }) => {
-  for (const route of ['/', '/demo', '/privacy', '/terms']) {
+test('@regression:each route has its own title, description, and canonical URL', async ({ page }) => {
+  const routes = [
+    { route: '/', title: 'Family Meal Lanes — plan meals by person' },
+    { route: '/demo', title: 'Demo — Family Meal Lanes' },
+    { route: '/privacy', title: 'Privacy — Family Meal Lanes' },
+    { route: '/terms', title: 'Terms — Family Meal Lanes' }
+  ];
+  for (const { route, title } of routes) {
     await page.goto(route);
+    await expect(page).toHaveTitle(title);
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /.+/);
+    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', title);
+    await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', `https://family-meal-lanes.sociobot.in${route}`);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://family-meal-lanes.sociobot.in${route === '/' ? '/' : route}`);
   }
+});
+
+test('@regression:legal Board links open the board', async ({ page }) => {
   await page.goto('/privacy');
   await page.getByLabel('Main navigation').getByRole('link', { name: 'Board' }).click();
   await expect(page).toHaveURL(/\/#board$/);
   await expect(page.getByRole('heading', { name: 'Who eats what' })).toBeVisible();
 });
 
-test('@regression:direct 404 is styled with a self-hosted stylesheet and is CSP clean', async ({ page }) => {
+test('@regression:direct 404 has the site skeleton, metadata, legal links, and CSP-clean styling', async ({ page }) => {
   const notFound = await readFile(resolve(process.cwd(), 'public/404.html'), 'utf8');
   const consoleErrors: string[] = [];
   page.on('console', message => { if (message.type() === 'error') consoleErrors.push(message.text()); });
@@ -174,22 +199,46 @@ test('@regression:direct 404 is styled with a self-hosted stylesheet and is CSP 
   }));
   const response = await page.goto('/not-a-page');
   expect(response?.status()).toBe(404);
-  await expect(page.getByRole('heading', { name: 'This paper slip is missing.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible();
+  await expect(page.locator('header')).toHaveCount(1);
+  await expect(page.getByRole('navigation', { name: 'Main navigation' })).toBeVisible();
+  await expect(page.locator('footer')).toHaveCount(1);
+  await expect(page.getByRole('link', { name: 'Skip to main content' })).toHaveAttribute('href', '#main');
+  await expect(page.getByRole('link', { name: 'Privacy' }).last()).toHaveAttribute('href', '/privacy');
+  await expect(page.getByRole('link', { name: 'Terms' })).toHaveAttribute('href', '/terms');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://family-meal-lanes.sociobot.in/404.html');
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /not found/i);
+  await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/favicon.svg');
   await expect(page.locator('link[rel="stylesheet"]')).toHaveAttribute('href', '/404.css');
   expect(await page.locator('body').evaluate(body => getComputedStyle(body).backgroundColor)).toBe('rgb(255, 247, 232)');
   expect(consoleErrors.filter(message => /Content Security Policy|inline style/i.test(message))).toEqual([]);
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await page.locator('body').evaluate(body => body.scrollWidth <= window.innerWidth)).toBe(true);
+  const tooSmall = await page.locator('a').evaluateAll(elements => elements.filter(element => {
+    const box = element.getBoundingClientRect();
+    return getComputedStyle(element).visibility !== 'hidden' && box.width > 0 && box.height > 0 && (box.width < 44 || box.height < 44);
+  }).map(element => element.textContent?.trim()));
+  expect(tooSmall).toEqual([]);
+});
+
+test('@regression:in-app unknown routes use a real not-found title and recovery page', async ({ page }) => {
+  await page.goto('/unknown-preview-route');
+  await expect(page).toHaveTitle('Page not found — Family Meal Lanes');
+  await expect(page.getByRole('heading', { level: 1, name: 'Page not found' })).toBeVisible();
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://family-meal-lanes.sociobot.in/404.html');
+  await expect(page.getByRole('link', { name: 'Go to the meal board' })).toHaveAttribute('href', '/');
 });
 
 test('@claim:named-lanes saves a named lane through reload and offers it for shared meals', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('button', { name: 'Manage people and lanes' }).click();
+  await page.getByRole('button', { name: 'Manage people' }).click();
   await page.getByRole('button', { name: 'Add person' }).click();
   await page.locator('input[name="lane-name"]').last().fill('Ari');
   await page.getByRole('button', { name: 'Save people' }).click();
   await expect(page.getByRole('dialog')).not.toBeVisible();
   await expect(page.getByRole('rowheader', { name: 'Ari' })).toBeVisible();
   await page.reload();
-  await page.getByRole('button', { name: 'Manage people and lanes' }).click();
+  await page.getByRole('button', { name: 'Manage people' }).click();
   await expect(page.locator('input[name="lane-name"]').last()).toHaveValue('Ari');
   await page.getByRole('button', { name: 'Cancel' }).click();
   await page.getByRole('button', { name: 'Add a meal' }).click();
@@ -221,7 +270,7 @@ test('@claim:paid-unlock offers a truthful hosted $12 checkout', async ({ page, 
 });
 
 async function addPeople(page: import('@playwright/test').Page, names: string[]) {
-  await page.getByRole('button', { name: 'Manage people and lanes' }).click();
+  await page.getByRole('button', { name: 'Manage people' }).click();
   for (const name of names) {
     await page.getByRole('button', { name: 'Add person' }).click();
     await page.locator('input[name="lane-name"]').last().fill(name);
@@ -233,7 +282,7 @@ async function addPeople(page: import('@playwright/test').Page, names: string[])
 test('@claim:free-lane-limit keeps the visible free limit explanation in the people dialog', async ({ page }) => {
   await page.goto('/');
   await addPeople(page, ['Ari', 'Bee', 'Cam']);
-  await page.getByRole('button', { name: 'Manage people and lanes' }).click();
+  await page.getByRole('button', { name: 'Manage people' }).click();
   await page.getByRole('button', { name: 'Add person' }).click();
   await expect(page.getByRole('dialog')).toBeVisible();
   await expect(page.locator('[data-lane-limit]')).toHaveText('The free plan includes Shared plus three people. Restore a license or buy unlimited lanes to add another person.');
@@ -270,7 +319,7 @@ test('@claim:license-invalid-cache relocks lanes and does not verify again withi
   await expect(page.getByText('This license is not active. You can buy unlimited lanes or restore another license.')).toBeVisible();
   expect(verifyRequests).toBe(1);
   await addPeople(page, ['Ari', 'Bee', 'Cam']);
-  await page.getByRole('button', { name: 'Manage people and lanes' }).click();
+  await page.getByRole('button', { name: 'Manage people' }).click();
   await page.getByRole('button', { name: 'Add person' }).click();
   await expect(page.locator('[data-lane-limit]')).toContainText('free plan includes Shared plus three people');
 });

@@ -16,20 +16,23 @@ async function prepareOfflineReload(page: import('@playwright/test').Page) {
     const appScript = document.querySelector<HTMLScriptElement>('script[type="module"]')?.src;
     return Boolean(appScript && await caches.match(appScript) && await caches.match('/index.html'));
   });
-  await expect(page.getByRole('heading', { name: 'Plan meals by person, not guesswork' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Try a filled meal week' })).toBeVisible();
 }
 
 test('@claim:offline-reload works offline after the first visit', async ({ page, context }) => {
   await prepareOfflineReload(page);
   await context.setOffline(true);
   await page.reload();
-  await expect(page.getByRole('heading', { name: 'Plan meals by person, not guesswork' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Try a filled meal week' })).toBeVisible();
   await expect(page.getByText('Lemon chicken tray bake').first()).toBeVisible();
 });
 
 test('@claim:demo-sandbox sample data is separate and discarded when starting for real', async ({ page }) => {
-  await page.goto('/demo');
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Try it with sample data' }).click();
+  await expect(page).toHaveURL(/\?demo=1$/);
   await expect(page.getByText('Demo — sample data, nothing is saved')).toBeVisible();
+  await expect(page.getByText('Lemon chicken tray bake').first()).toBeInViewport();
   await expect(page.getByText('Lemon chicken tray bake').first()).toBeVisible();
   await page.getByRole('button', { name: 'Add a meal' }).click();
   await page.getByLabel('Meal name').fill('Demo persistence probe');
@@ -41,6 +44,13 @@ test('@claim:demo-sandbox sample data is separate and discarded when starting fo
   await page.goto('/demo');
   await expect(page.getByText('Demo persistence probe')).toHaveCount(0);
   await expect(page.getByText('Lemon chicken tray bake').first()).toBeVisible();
+});
+
+test('@claim:sample-six-meals opens the demo with exactly six distinct sample meals', async ({ page }) => {
+  await page.goto('/?demo=1');
+  const mealIds = await page.locator('button[data-meal]').evaluateAll(elements => [...new Set(elements.map(element => element.getAttribute('data-meal')))]);
+  expect(mealIds).toHaveLength(6);
+  await expect(page.getByText('Demo — sample data, nothing is saved')).toBeVisible();
 });
 
 test('@claim:json-export exports the visible meal plan as JSON', async ({ page }) => {
@@ -109,6 +119,36 @@ test('@claim:print-plan prints the weekly meal board', async ({ page }) => {
     Object.defineProperty(window, 'print', { configurable: true, value: () => { document.documentElement.dataset.printed = 'true'; } });
   });
   await page.goto('/demo');
+  await page.getByRole('button', { name: 'Print this weekly meal plan' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-printed', 'true');
+});
+
+test('@claim:free-export-import-print keeps all transfer tools available without a license', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(window, 'print', { configurable: true, value: () => { document.documentElement.dataset.printed = 'true'; } });
+  });
+  await page.goto('/');
+  expect(await page.evaluate(() => localStorage.getItem('sb_license:family-meal-lanes'))).toBeNull();
+  await page.getByRole('button', { name: 'Add a meal' }).click();
+  await page.getByLabel('Meal name').fill('Free plan soup');
+  await page.getByRole('button', { name: 'Save meal' }).click();
+  const download = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Export JSON' }).click();
+  const exportedFile = await download;
+  const stream = await exportedFile.createReadStream();
+  let exportedBody = '';
+  for await (const chunk of stream!) exportedBody += chunk.toString();
+  expect(JSON.parse(exportedBody).plan.meals[0].title).toBe('Free plan soup');
+  await page.locator('input[type=file]').setInputFiles({
+    name: 'free-plan.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify({ version: 1, plan: {
+      lanes: [{ id: 'shared', name: 'Shared', color: 'blue' }],
+      meals: [{ id: 'free-import', day: 1, laneId: 'shared', title: 'Free imported pasta', prep: '', sharedWith: [], note: '', createdAt: '2026-08-28T08:00:00.000Z' }],
+      weekOf: '2026-08-24'
+    }}))
+  });
+  await expect(page.getByText('Free imported pasta').first()).toBeVisible();
   await page.getByRole('button', { name: 'Print this weekly meal plan' }).click();
   await expect(page.locator('html')).toHaveAttribute('data-printed', 'true');
 });
