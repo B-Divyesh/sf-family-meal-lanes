@@ -38,11 +38,18 @@ test('@claim:demo-sandbox sample data is separate and discarded when starting fo
   await page.getByLabel('Meal name').fill('Demo persistence probe');
   await page.getByRole('button', { name: 'Save meal' }).click();
   await expect(page.getByText('Demo persistence probe').first()).toBeVisible();
+  await page.getByRole('button', { name: 'Reset demo' }).click();
+  await expect(page.getByText('Demo persistence probe')).toHaveCount(0);
+  await expect(page.getByText('Lemon chicken tray bake').first()).toBeVisible();
+  await page.getByRole('button', { name: 'Add a meal' }).click();
+  await page.getByLabel('Meal name').fill('Demo exit probe');
+  await page.getByRole('button', { name: 'Save meal' }).click();
   await page.getByRole('link', { name: 'Start for real' }).click();
   await expect(page.getByRole('heading', { name: 'Who eats what' })).toBeVisible();
   await expect(page.getByText('Lemon chicken tray bake')).toHaveCount(0);
   await page.goto('/demo');
   await expect(page.getByText('Demo persistence probe')).toHaveCount(0);
+  await expect(page.getByText('Demo exit probe')).toHaveCount(0);
   await expect(page.getByText('Lemon chicken tray bake').first()).toBeVisible();
 });
 

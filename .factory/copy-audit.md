@@ -59,6 +59,10 @@ sentences. No sentence exceeds 22 words, and no banned marketing word appears.
 | 3 | v1.0.0 | pass |
 | 6 | Original illustration generated for this product. | pass |
 
+The demo first screen also passes: `Try a filled meal week` has five words.
+Its longest sentence has 14 words: `Choose Reset demo to reload it, or start a
+separate plan for your household.`
+
 ## README
 
 | Words | Sentence | Result |

@@ -120,7 +120,7 @@ function renderLanding() {
   const hasMeals = plan.meals.length > 0;
   app.innerHTML = `${header()}<main id="main" tabindex="-1">
     ${demo ? demoBanner() : ''}
-    ${demo ? `<section class="demo-intro" aria-labelledby="hero-title"><p class="eyebrow">Sample week</p><h1 id="hero-title">Try a filled meal week</h1><p>Use the sample below. Reset it at any time, or start a separate plan for your household.</p></section>` : `<section class="hero" aria-labelledby="hero-title">
+    ${demo ? `<section class="demo-intro" aria-labelledby="hero-title"><p class="eyebrow">Sample week</p><h1 id="hero-title">Try a filled meal week</h1><p>Use the sample below. Choose Reset demo to reload it, or start a separate plan for your household.</p></section>` : `<section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy"><p class="eyebrow">A weekly board for one kitchen</p><h1 id="hero-title">Plan meals for each person</h1><p class="lede">For households with different meals, so everyone can see what is theirs and what they share.</p>
         <div class="hero-actions"><a class="button primary" href="/?demo=1" data-route>Try it with sample data</a><span>See a filled week. Nothing is saved.</span></div>
         <ul class="facts"><li>Works offline after your first visit.</li><li>Meal plan saved only on this device</li><li>Export a JSON copy</li></ul>
