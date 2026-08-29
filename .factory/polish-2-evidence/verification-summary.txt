@@ -1,0 +1,18 @@
+Clean clone: /tmp/family-meal-lanes-polish-2-QYRAEu
+Commit tested: 45f052a2e21c638312b15043fbe92853c8124924
+npm ci: PASS, 0 vulnerabilities
+Every .factory/claims.json command: PASS, 16/16
+npm test: PASS, 46/46
+npm run build: PASS
+Initial JavaScript: 25.94 kB raw, 8.90 kB gzip
+Initial CSS: 13.60 kB raw, 3.84 kB gzip
+Hero image: 72,588 bytes
+Live verify-url.sh: PASS, zero console errors
+Live cold-browser matrix: PASS, 36/36
+Live axe serious/critical violations: 0 on five routes in light and dark schemes
+Live Lighthouse: Performance 100, Accessibility 100, Best Practices 100, SEO 100
+Live Lighthouse LCP: 1.1 s
+Live Lighthouse CLS: 0
+Live Lighthouse total blocking time: 70 ms
+Azure deployment: 69abe040-02ec-4fce-8ca9-f3f98198861c
+Live URL: https://family-meal-lanes.sociobot.in
