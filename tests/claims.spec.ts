@@ -148,6 +148,26 @@ test('@claim:scope-boundaries exposes no recipe, grocery, nutrition, or allergen
   }
   await page.goto('/');
   await expect(page.getByText('It does not store recipes, order groceries, score nutrition, or check allergens.')).toBeVisible();
+  await page.locator('input[type=file]').setInputFiles({
+    name: 'plan-with-unsupported-fields.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify({ plan: {
+      lanes: [{ id: 'shared', name: 'Shared', color: 'blue' }],
+      meals: [{ id: 'scope-meal', day: 0, laneId: 'shared', title: 'Bean chilli', prep: '', sharedWith: [], note: '', createdAt: '2026-08-29T08:00:00.000Z' }],
+      weekOf: '2026-08-24', recipes: ['secret recipe'], groceries: ['beans'], nutritionScore: 10, allergens: ['nuts']
+    } }))
+  });
+  await expect(page.getByText('Bean chilli').first()).toBeVisible();
+  const download = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Export JSON' }).click();
+  const stream = await (await download).createReadStream();
+  let body = '';
+  for await (const chunk of stream!) body += chunk.toString();
+  const storedPlan = JSON.parse(body).plan;
+  expect(Object.keys(storedPlan).sort()).toEqual(['lanes', 'meals', 'updatedAt', 'weekOf']);
+  expect(body).not.toContain('secret recipe');
+  expect(body).not.toContain('nutritionScore');
+  expect(body).not.toContain('allergens');
 });
 
 test('@claim:shared-lanes shows a shared meal in every selected lane', async ({ page }) => {

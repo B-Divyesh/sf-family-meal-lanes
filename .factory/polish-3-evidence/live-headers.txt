@@ -1,0 +1,14 @@
+https://family-meal-lanes.sociobot.in/
+HTTP/2 200
+cache-control: public, must-revalidate, max-age=30
+strict-transport-security: max-age=10886400; includeSubDomains; preload
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+content-security-policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'
+
+https://family-meal-lanes.sociobot.in/assets/index-BQqzSmkF.js
+HTTP/2 200
+cache-control: public, max-age=31536000, immutable
+
+https://family-meal-lanes.sociobot.in/missing-polish-3-final
+HTTP/2 404

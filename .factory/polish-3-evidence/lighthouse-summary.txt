@@ -1,0 +1,10 @@
+URL: https://family-meal-lanes.sociobot.in/?demo=1
+Performance: 100
+Accessibility: 100
+Best Practices: 100
+SEO: 100
+First Contentful Paint: 0.8 s
+Largest Contentful Paint: 1.1 s
+Cumulative Layout Shift: 0
+Total Blocking Time: 10 ms
+Speed Index: 0.8 s

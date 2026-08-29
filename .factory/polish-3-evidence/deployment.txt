@@ -1,0 +1,7 @@
+Deployment ID: b1098f23-653d-4ac2-a680-c4ec42cd9ea5
+Azure Static Web App: sf-family-meal-lanes
+Region: centralus
+Default host: lively-pond-02e4e0f10.7.azurestaticapps.net
+Custom URL: https://family-meal-lanes.sociobot.in
+Deployment status: Succeeded
+Cold custom-domain response: HTTP 200

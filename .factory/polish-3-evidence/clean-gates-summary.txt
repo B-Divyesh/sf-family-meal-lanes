@@ -1,0 +1,11 @@
+Clean remote clone: /tmp/family-meal-lanes-polish-3-9yr4Ak
+Commit: a0059db9a7cd3d6b2d1eed037761744db1bf6f97
+npm ci: PASS (20 packages, 0 vulnerabilities)
+Every claims.json command run separately: PASS (20/20)
+npm test: PASS (51/51 Playwright tests)
+npm run build: PASS
+dist/index.html: present
+Initial JavaScript: 25.89 kB raw / 8.87 kB gzip
+Initial CSS: 13.60 kB raw / 3.84 kB gzip
+Hero image: 72,588 bytes
+Fonts: 0 bytes
