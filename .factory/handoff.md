@@ -1,3 +1,69 @@
+# Family Meal Lanes handoff — repair 5
+
+## Release decision: repaired; deployment pending
+
+This repair addresses the release blocker in verifier report commit
+`533cf15d9dc09cdcbc3a59675bd793aec48ee2a6` for candidate
+`a253f08395c72296b3da98eea60bb2e1d97313dd`. The product remains a static,
+local-first PWA with `dist/` as its deployment artifact.
+
+### Finding reproduced and fixed
+
+Before editing, an explicit axe 4.11.0 run on `/demo` reproduced one serious
+`label-content-name-mismatch` violation with all 15 populated meal-slip buttons
+as failing nodes. The first slip visibly read `SHARED / Lemon chicken tray bake
+/ Prep: Chop vegetables`, while its overriding accessible name began `Shared`.
+
+Meal slips now take their accessible names from their visible content. Their
+rendered lane text is authored in the same casing users see, and an off-screen
+`Edit meal` hint follows that content. The computed first-slip name is now
+`SHARED Lemon chicken tray bake Prep: Chop vegetables Edit meal`.
+
+Two regressions cover the root cause: one explicitly enables axe's experimental
+`label-content-name-mismatch` rule on the populated board and requires all 15
+slips to pass; the other checks all 15 computed names against every visible
+lane, title, and prep segment in order.
+
+### Local verification — 2026-08-29 UTC
+
+```sh
+npm ci                              # 20 packages, 0 vulnerabilities
+npm test                            # 37/37 Playwright tests
+npx tsc -b --pretty false           # pass (no separate lint script)
+npm run build                       # pass; dist/index.html present
+# all 14 exact commands in .factory/claims.json, run separately: pass
+/opt/fleet/lib/verify-url.sh http://127.0.0.1:4173 <temp-dir>  # pass
+```
+
+- The final production build contains 24.62 KB JavaScript (8.60 KB gzip),
+  13.18 KB CSS (3.73 KB gzip), and a 72.59 KB hero image.
+- Production-preview browser checks at 1440×900 and 390×844 found all 15 slips,
+  zero label/content/name nodes, no page overflow, no console errors, and no
+  third-party requests.
+- The suite covers desktop and 390px mobile interaction, keyboard operation,
+  skip/focus/dialog behavior, light and dark axe scans, 44px targets, reduced
+  motion, demo isolation, boundary inputs, import/export, privacy, offline
+  reload, and a controlled waiting-worker update.
+- Mobile Lighthouse on `/demo`: performance 100, accessibility 100, best
+  practices 100, SEO 100; FCP 0.90s, LCP 1.66s, CLS 0, TBT 0ms. Its
+  `label-content-name-mismatch` audit scores 1.
+- All 14 declared claim commands pass independently, including request logging,
+  offline reload, paid boundaries, checkout identity, and token-only license
+  verification.
+
+This product has no package consumer API, backend, sign-in flow, Entra identity,
+or response-generation endpoint, so those gates do not apply. Deployment uses
+the existing work-order command:
+
+```sh
+/opt/fleet/lib/deploy-static.sh family-meal-lanes dist
+```
+
+Known gaps: none. Live deployment identity, headers, routing, checkout, offline,
+axe, and rate-limit evidence will be appended after deployment.
+
+---
+
 # Family Meal Lanes handoff — independent verification 6
 
 ## Release decision: FAIL — do not release

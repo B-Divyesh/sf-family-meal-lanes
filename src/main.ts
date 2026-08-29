@@ -127,9 +127,8 @@ function boardHtml() {
 }
 function mealHtml(meal: Meal, shownIn: Lane) {
   const original = meal.laneId !== shownIn.id;
-  const laneText = original ? `Shared from ${laneName(meal.laneId)}` : laneName(meal.laneId);
-  const prepText = meal.prep ? ` Prep: ${meal.prep}` : '';
-  return `<button type="button" class="meal-slip ${plan.lanes.find(l => l.id === meal.laneId)?.color || 'blue'}" data-meal="${meal.id}" aria-label="${esc(`${laneText} ${meal.title}${prepText}. Edit meal.`)}"><span class="slip-top">${original ? `Shared from ${esc(laneName(meal.laneId))}` : esc(laneName(meal.laneId))}</span><strong>${esc(meal.title)}</strong>${meal.prep ? `<span class="prep">Prep: ${esc(meal.prep)}</span>` : ''}</button>`;
+  const laneLabel = original ? `Shared from ${laneName(meal.laneId)}` : laneName(meal.laneId);
+  return `<button type="button" class="meal-slip ${plan.lanes.find(l => l.id === meal.laneId)?.color || 'blue'}" data-meal="${meal.id}"><span class="slip-top">${esc(laneLabel.toUpperCase())}</span><strong>${esc(meal.title)}</strong>${meal.prep ? `<span class="prep">Prep: ${esc(meal.prep)}</span>` : ''}<span class="sr-only">Edit meal</span></button>`;
 }
 function dialogs() { return `<dialog id="meal-dialog" aria-labelledby="meal-dialog-title"></dialog><dialog id="lanes-dialog" aria-labelledby="lanes-dialog-title"></dialog><dialog id="import-dialog" aria-labelledby="import-dialog-title"></dialog>`; }
 

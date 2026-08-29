@@ -79,9 +79,29 @@ test('@regression:visible Export JSON label is its accessible name', async ({ pa
   await expect(page.getByRole('button', { name: 'Export JSON', exact: true })).toHaveAccessibleName('Export JSON');
 });
 
-test('@regression:meal slips include their visible lane and prep text in their accessible name', async ({ page }) => {
+test('@regression:all populated meal slips pass axe label-content-name-mismatch', async ({ page }) => {
   await page.goto('/demo');
-  await expect(page.locator('button[data-meal="m1"]').first()).toHaveAccessibleName('Shared Lemon chicken tray bake Prep: Chop vegetables. Edit meal.');
+  const slips = page.locator('button[data-meal]');
+  await expect(slips).toHaveCount(15);
+  await page.addScriptTag({ content: axe.source });
+  const violations = await page.evaluate(async () => {
+    const result = await (window as Window & { axe: typeof axe }).axe.run('.meal-board', {
+      runOnly: { type: 'rule', values: ['label-content-name-mismatch'] }
+    });
+    return result.violations;
+  });
+  expect(violations).toEqual([]);
+});
+
+test('@regression:all populated meal-slip names contain visible text in order', async ({ page }) => {
+  await page.goto('/demo');
+  const slips = page.locator('button[data-meal]');
+  await expect(slips).toHaveCount(15);
+  for (let index = 0; index < await slips.count(); index += 1) {
+    const slip = slips.nth(index);
+    const visibleText = await slip.locator('.slip-top, strong, .prep').allInnerTexts();
+    await expect(slip).toHaveAccessibleName(`${visibleText.join(' ')} Edit meal`);
+  }
 });
 
 test('@regression:cancel and close dismiss an invalid meal form with pointer input at 390px', async ({ page }) => {
