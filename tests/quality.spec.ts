@@ -34,6 +34,12 @@ test('@regression:review-1 copy uses concrete wording and a valid catalog line',
   expect(catalog).toMatch(/^Plan\b/);
 });
 
+test('@regression:review-2 describes the full claim test scope accurately', async () => {
+  const readme = await readFile(resolve(process.cwd(), 'README.md'), 'utf8');
+  expect(readme).toContain('## Claims tested');
+  expect(readme).not.toContain('## Claims checked in the demo');
+});
+
 for (const route of ['/', '/demo', '/privacy', '/terms', '/404.html']) {
   test(`@regression:accessibility ${route} has no serious or critical axe violations`, async ({ page }) => {
     const errors: string[] = [];

@@ -2,6 +2,8 @@
 
 Audited on 2026-08-29. Word counts use visible words. Code commands are not
 sentences. No sentence exceeds 22 words, and no banned marketing word appears.
+README headings are also plain and accurate, including `Claims tested`, which
+names both demo-based checks and checks that run against a fresh real plan.
 
 ## Landing page
 

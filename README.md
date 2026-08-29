@@ -46,7 +46,7 @@ paid license, its token is checked with Sociobot;
 meal-plan data is never sent with that check. Read the in-app `/privacy` and
 `/terms` pages before relying on the board.
 
-## Claims checked in the demo
+## Claims tested
 
 The test suite checks the demo, exports, imports, shared meals, prep labels,
 printing, and offline reloads. It also checks the lane limit and license
