@@ -60,6 +60,31 @@ test('@claim:sample-six-meals opens the demo with exactly six distinct sample me
   await expect(page.getByText('Demo — sample data, nothing is saved')).toBeVisible();
 });
 
+test("@claim:meal-create-edit creates, reloads, and moves a meal in a named person's lane", async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Manage people' }).click();
+  await page.getByRole('button', { name: 'Add person' }).click();
+  await page.locator('input[name="lane-name"]').last().fill('Ari');
+  await page.getByRole('button', { name: 'Save people' }).click();
+
+  await page.getByRole('button', { name: 'Add a meal', exact: true }).click();
+  await page.getByLabel('Meal name').fill('Bean chilli');
+  await page.locator('#meal-dialog select[name="day"]').selectOption('1');
+  await page.locator('#meal-dialog select[name="laneId"]').selectOption({ label: 'Ari' });
+  await page.getByRole('button', { name: 'Save meal' }).click();
+  const ariRow = page.locator('tbody tr').filter({ has: page.getByRole('rowheader', { name: 'Ari' }) });
+  await expect(ariRow.locator('td').nth(1).getByText('Bean chilli')).toBeVisible();
+
+  await page.reload();
+  const restoredAriRow = page.locator('tbody tr').filter({ has: page.getByRole('rowheader', { name: 'Ari' }) });
+  await expect(restoredAriRow.locator('td').nth(1).getByText('Bean chilli')).toBeVisible();
+  await restoredAriRow.locator('td').nth(1).getByRole('button', { name: /Bean chilli/ }).click();
+  await page.locator('#meal-dialog select[name="day"]').selectOption('2');
+  await page.getByRole('button', { name: 'Save meal' }).click();
+  await expect(restoredAriRow.locator('td').nth(1).getByText('Bean chilli')).toHaveCount(0);
+  await expect(restoredAriRow.locator('td').nth(2).getByText('Bean chilli')).toBeVisible();
+});
+
 test('@claim:json-export exports the visible meal plan as JSON', async ({ page }) => {
   await page.goto('/demo');
   const download = page.waitForEvent('download');
@@ -106,6 +131,23 @@ test('@claim:local-only sends no meal plan data away from this device', async ({
   await page.getByRole('button', { name: 'Save meal' }).click();
   await expect(page.getByText('Test toast')).toBeVisible();
   expect([...origins]).toEqual(['http://127.0.0.1:4173']);
+});
+
+test('@claim:scope-boundaries exposes no recipe, grocery, nutrition, or allergen action', async ({ page }) => {
+  for (const route of ['/', '/demo']) {
+    await page.goto(route);
+    const matchingActions = await page.locator('a, button, input, select, textarea').evaluateAll(elements => elements
+      .map(element => [
+        element.textContent,
+        element.getAttribute('aria-label'),
+        element.getAttribute('placeholder'),
+        element.getAttribute('title')
+      ].filter(Boolean).join(' '))
+      .filter(name => /recipe|grocer|nutrition|allergen/i.test(name)));
+    expect(matchingActions, route).toEqual([]);
+  }
+  await page.goto('/');
+  await expect(page.getByText('It does not store recipes, order groceries, score nutrition, or check allergens.')).toBeVisible();
 });
 
 test('@claim:shared-lanes shows a shared meal in every selected lane', async ({ page }) => {

@@ -1,9 +1,9 @@
 # Copy audit
 
-Audited on 2026-08-29. Word counts use visible words. Code commands are not
-sentences. No sentence exceeds 22 words, and no banned marketing word appears.
-README headings are also plain and accurate, including `Claims tested`, which
-names both demo-based checks and checks that run against a fresh real plan.
+Audited on 2026-08-29 after polish round 3. Word counts use visible words.
+Code commands are not sentences. No sentence exceeds 22 words, and no banned
+marketing word appears. README headings are plain and accurate. `Claims
+tested` names both demo-based checks and checks against a fresh real plan.
 
 ## Landing page
 
@@ -42,8 +42,8 @@ names both demo-based checks and checks that run against a fresh real plan.
 | 3 | Mark the prep. | pass |
 | 7 | Leave a small prep task for later. | pass |
 | 5 | What this does not do | pass |
-| 14 | It does not store recipes, order groceries, score nutrition, or send your plan anywhere. | pass |
-| 9 | It keeps a clear weekly view on one device. | pass |
+| 12 | It does not store recipes, order groceries, score nutrition, or check allergens. | pass — `scope-boundaries` |
+| 9 | It shows one weekly meal board on this device. | pass — `meal-create-edit`, `local-only` |
 | 4 | Read the privacy details | pass |
 | 2 | One-time purchase | pass |
 | 8 | Add as many lanes as your household needs | pass |
@@ -52,14 +52,14 @@ names both demo-based checks and checks that run against a fresh real plan.
 | 5 | Buy unlimited lanes for $12 | pass |
 | 3 | Have a license? | pass |
 | 2 | Restore license | pass |
-| 7 | Sociobot and Dodo handle the hosted checkout. | pass |
+| 5 | Sociobot opens the payment page. | pass |
+| 4 | Dodo processes the payment. | pass |
 | 11 | A restored license is checked with Sociobot when you are online. | pass |
 | 9 | One weekly meal board for a shared kitchen device. | pass |
 | 1 | Privacy | pass |
 | 1 | Terms | pass |
 | 4 | Built by Param Factory | pass |
 | 3 | v1.0.0 | pass |
-| 6 | Original illustration generated for this product. | pass |
 
 The demo first screen also passes: `Try a filled meal week` has five words.
 Its longest sentence has 14 words: `Choose Reset demo to reload it, or start a
@@ -81,16 +81,18 @@ separate plan for your household.`
 | 8 | The free plan includes Shared plus three people. | pass |
 | 10 | A $12 one-time license adds unlimited lanes on that device. | pass |
 | 6 | Export, import, and print remain free. | pass |
-| 7 | Sociobot and Dodo handle the hosted checkout. | pass |
+| 5 | Sociobot opens the payment page. | pass |
+| 4 | Dodo processes the payment. | pass |
 | 10 | Run the app and open http://localhost:5173/?demo=1. | pass |
 | 9 | The deployed /?demo=1 URL opens the same sample. | pass |
 | 9 | The demo has six meals for a small household. | pass |
 | 6 | The demo uses separate browser storage. | pass |
 | 15 | Starting for real discards that demo store and never copies the sample into your plan. | pass |
-| 15 | npm run build writes the static site to dist/, with index.html at its root. | pass |
+| 7 | Build the site with npm run build. | pass — `build-output` |
+| 6 | Deploy dist/ as the site root. | pass — `build-output` |
 | 8 | Preview the production build with npm run preview. | pass |
-| 11 | The factory deploys the built dist/ directory as a static PWA. | pass |
-| 20 | The checked-in staticwebapp.config.json supplies the security headers, immutable hashed-asset caching, real route rewrites, and the HTTP 404 response. | pass |
+| 9 | The hosting config adds security headers and direct routes. | pass — `hosting-config` |
+| 9 | It serves the 404 page and caches versioned assets. | pass — `hosting-config` |
 | 10 | Your meal plan stays in this browser on this device. | pass |
 | 8 | Use Export JSON to make a transfer copy. | pass |
 | 6 | Use Import JSON on another device. | pass |
@@ -110,3 +112,7 @@ separate plan for your household.`
 | advance task | prep label |
 | isolated sample plan | demo |
 | paid device token | license |
+
+The catalog line is 93 characters, begins with `Plan`, and contains no banned
+word: `Plan each person’s meals on one private weekly board, including shared
+meals and prep labels.`

@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import axe from 'axe-core';
-import { readFile } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 test('@regression:claim manifest has one matching test for every unique claim', async () => {
@@ -38,6 +38,50 @@ test('@regression:review-2 describes the full claim test scope accurately', asyn
   const readme = await readFile(resolve(process.cwd(), 'README.md'), 'utf8');
   expect(readme).toContain('## Claims tested');
   expect(readme).not.toContain('## Claims checked in the demo');
+});
+
+test('@regression:review-3 copy is concrete, provider roles are clear, and public provenance copy is absent', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByText('It shows one weekly meal board on this device.')).toBeVisible();
+  await expect(page.getByText('Sociobot opens the payment page. Dodo processes the payment.')).toBeVisible();
+  await expect(page.getByText('Original illustration generated for this product.')).toHaveCount(0);
+  await page.goto('/404.html');
+  await expect(page.getByText('Original illustration generated for this product.')).toHaveCount(0);
+  const readme = (await readFile(resolve(process.cwd(), 'README.md'), 'utf8')).replace(/\s+/g, ' ');
+  expect(readme).toContain('Build the site with `npm run build`. Deploy `dist/` as the site root.');
+  expect(readme).toContain('The hosting config adds security headers and direct routes. It serves the 404 page and caches versioned assets.');
+  for (const removed of ['It keeps a clear weekly view', 'hosted checkout', 'static PWA', 'immutable hashed-asset caching', 'route rewrites']) {
+    expect(readme).not.toContain(removed);
+  }
+});
+
+test('@claim:build-output builds a static site with index.html at the dist root', async () => {
+  const dist = resolve(process.cwd(), 'dist');
+  const index = await readFile(resolve(dist, 'index.html'), 'utf8');
+  const assetPaths = [...index.matchAll(/(?:src|href)="(\/assets\/[^"?]+\.(?:js|css))"/g)].map(match => match[1]);
+  expect(assetPaths.some(path => /index-[A-Za-z0-9_-]+\.js$/.test(path))).toBe(true);
+  expect(assetPaths.some(path => /index-[A-Za-z0-9_-]+\.css$/.test(path))).toBe(true);
+  for (const assetPath of assetPaths) await access(resolve(dist, `.${assetPath}`));
+});
+
+test('@claim:hosting-config defines direct routes, security headers, a 404 response, and immutable asset caching', async ({ request }) => {
+  const dist = resolve(process.cwd(), 'dist');
+  const config = JSON.parse(await readFile(resolve(dist, 'staticwebapp.config.json'), 'utf8')) as {
+    routes: { route: string; rewrite?: string; headers?: Record<string, string> }[];
+    responseOverrides: Record<string, { rewrite: string; statusCode: number }>;
+    globalHeaders: Record<string, string>;
+  };
+  for (const route of ['/demo', '/privacy', '/terms']) {
+    expect(config.routes.find(entry => entry.route === route)?.rewrite).toBe(`${route}/index.html`);
+    expect((await request.get(route)).status()).toBe(200);
+  }
+  expect(config.responseOverrides['404']).toEqual({ rewrite: '/404.html', statusCode: 404 });
+  expect((await request.get('/404.html')).status()).toBe(200);
+  expect(await readFile(resolve(dist, '404.html'), 'utf8')).toContain('<h1>Page not found</h1>');
+  expect(config.routes.find(entry => entry.route === '/assets/*')?.headers?.['Cache-Control']).toBe('public, max-age=31536000, immutable');
+  expect(config.globalHeaders['X-Content-Type-Options']).toBe('nosniff');
+  expect(config.globalHeaders['Referrer-Policy']).toBe('strict-origin-when-cross-origin');
+  expect(config.globalHeaders['Content-Security-Policy']).toContain("default-src 'self'");
 });
 
 for (const route of ['/', '/demo', '/privacy', '/terms', '/404.html']) {

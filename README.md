@@ -11,7 +11,7 @@ allergen checker.
 
 The free plan includes Shared plus three people. A $12 one-time license adds
 unlimited lanes on that device. Export, import, and print remain free.
-Sociobot and Dodo handle the hosted checkout.
+Sociobot opens the payment page. Dodo processes the payment.
 
 ## Try it
 
@@ -29,14 +29,13 @@ npm test
 npm run build
 ```
 
-`npm run build` writes the static site to `dist/`, with `index.html` at its
-root. Preview the production build with `npm run preview`.
+Build the site with `npm run build`. Deploy `dist/` as the site root. Preview
+the production build with `npm run preview`.
 
 ## Deploy
 
-The factory deploys the built `dist/` directory as a static PWA. The checked-in
-`staticwebapp.config.json` supplies the security headers, immutable hashed-asset
-caching, real route rewrites, and the HTTP 404 response.
+The hosting config adds security headers and direct routes. It serves the 404
+page and caches versioned assets.
 
 ## Privacy and transfer
 
