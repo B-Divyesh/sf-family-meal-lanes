@@ -13,6 +13,27 @@ test('@regression:claim manifest has one matching test for every unique claim', 
   }
 });
 
+test('@regression:review-1 copy uses concrete wording and a valid catalog line', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Plan meals for each person');
+  await expect(page.getByText('Works offline after your first visit.')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Manage people', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Plan individual and shared meals' })).toBeVisible();
+  await expect(page.getByText('Leave a small prep task for later.')).toBeVisible();
+
+  const readme = await readFile(resolve(process.cwd(), 'README.md'), 'utf8');
+  const readmeText = readme.replace(/\s+/g, ' ');
+  for (const removed of ['Plan meals by person, not guesswork', 'offline-first PWA', 'separate IndexedDB store', 'exit lifecycle']) {
+    expect(readme).not.toContain(removed);
+  }
+  expect(readmeText).toContain('Name the people in your kitchen. Put meals in their lanes.');
+  expect(readmeText).toContain('The test suite checks the demo, exports, imports, shared meals, prep labels,');
+
+  const catalog = (await readFile(resolve(process.cwd(), '.factory/catalog-description.txt'), 'utf8')).trim();
+  expect(catalog.length).toBeLessThanOrEqual(120);
+  expect(catalog).toMatch(/^Plan\b/);
+});
+
 for (const route of ['/', '/demo', '/privacy', '/terms']) {
   test(`@regression:accessibility ${route} has no serious or critical axe violations`, async ({ page }) => {
     const errors: string[] = [];
