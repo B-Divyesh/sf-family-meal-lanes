@@ -1,38 +1,35 @@
-# Family Meal Lanes — polish 2 handoff
+# Family Meal Lanes — adversarial review 3 handoff
 
 ## Outcome
 
-Perfection-loop round 2 is complete. The sole new finding, F-2-1, is fixed:
-the README section now says `Claims tested`, accurately covering demo and
-fresh-real-plan checks. Every earlier finding was rechecked against source,
-a clean clone, and the deployed product; none regressed.
+Adversarial review round 3 is complete with **FAIL**. No product code was
+changed. The cold first screen, demo, sandbox isolation, declared claims,
+routing, accessibility, and build all passed, but six minor copy/claim findings
+remain in `.factory/review-3.md`.
 
-The repair preserves the risograph meal-slip visual system and the original
-static offline PWA deployment class. The catalog description is now an
-85-character, verb-first sentence using the product's canonical terms.
+The findings cover an unregistered core create/edit promise, subjective
+`clear` copy, unregistered negative-scope and illustration-provenance claims,
+jargon/undeclared claims in the README deploy section, and unclear checkout
+provider wording. No blocking defect or earlier-finding regression was found.
 
 ## Verification
 
-- Clean clone: `/tmp/family-meal-lanes-polish-2-QYRAEu`
-- Repair commit tested: `45f052a2e21c638312b15043fbe92853c8124924`
-- `npm ci`: passed with 0 vulnerabilities.
-- Every command in `.factory/claims.json`: 16/16 passed individually.
+- Live URL: `https://family-meal-lanes.sociobot.in`
+- Reviewed source commit: `68f9c50a351e641420bb25f87cc8f7a77069a573`
+- Clean clone: `/tmp/family-meal-lanes-review-3-kCABb7`
+- Every command in `.factory/claims.json`: 16/16 passed independently.
 - `npm test`: 46/46 Playwright tests passed.
-- `npm run build`: passed; `dist/index.html` is present.
-- Bundle: JavaScript 25.94 kB raw / 8.90 kB gzip; CSS 13.60 kB raw /
-  3.84 kB gzip; hero 72,588 bytes.
-- Browser coverage: demo lifecycle, imports/exports, shared meals, paid/free
-  boundaries, route history/focus, 404, mobile 390 px, dialog keyboard use,
-  service-worker update, privacy requests, and offline reload.
-- Accessibility: 0 serious/critical axe violations across `/`, `/?demo=1`,
-  `/privacy`, `/terms`, and `/404.html` in light and dark schemes. All tested
-  visible 390 px controls meet the 44 px target minimum.
-- Live verifier: title, `lang=en`, one h1, main, image alt, button names, and
-  console all passed.
-- Lighthouse mobile: Performance 100, Accessibility 100, Best Practices 100,
-  SEO 100; LCP 1.1 s, CLS 0, total blocking time 70 ms.
+- `npm run build`: passed and produced `dist/`.
+- Initial JavaScript: 25.94 kB raw / 8.90 kB gzip.
+- Live demo: six sample meals, persistent banner, Reset, Start for real,
+  separate demo/real IndexedDB names, same-origin-only requests, and offline
+  reload passed.
+- Live routes: 200 for `/`, `/demo`, `/privacy`, and `/terms`; direct unknown
+  URL returned the designed HTTP 404; checkout returned the expected 303.
+- Live accessibility: zero serious/critical axe violations on all four normal
+  routes in light and dark schemes. Route focus and Back restoration passed.
 
-Run locally with:
+Run the local gates with:
 
 ```sh
 npm ci
@@ -40,21 +37,17 @@ npm test
 npm run build
 ```
 
-## Deployment
+## Artifacts
 
-- URL: `https://family-meal-lanes.sociobot.in`
-- Azure Static Web Apps deployment:
-  `69abe040-02ec-4fce-8ca9-f3f98198861c`
-- Cold live matrix: 36/36 passed.
-- The live HTML, hashed JavaScript, hashed CSS, and service worker match the
-  local `dist/` SHA-256 values.
-- A cold unknown URL returned HTTP 404 with the shared site skeleton.
-- A cold `/?demo=1` opened six sample meals with the demo banner; reset and
-  exit probes did not reach the real plan.
+- Review: `.factory/review-3.md`
+- First-read mobile: `.factory/review-3-evidence/first-read-mobile.png`
+- First-read desktop: `.factory/review-3-evidence/first-read-desktop.png`
+- One-click demo mobile: `.factory/review-3-evidence/demo-after-one-click-mobile.png`
+- Live 404 mobile: `.factory/review-3-evidence/live-404-mobile.png`
 
-Evidence is under `.factory/polish-2-evidence/`; the finding-by-finding map is
-`.factory/polish-2.md`.
+## Known gaps and next steps
 
-## Known gaps
-
-None within the cumulative review scope. No finding or severity is deferred.
+F-3-1 through F-3-6 remain open. Implement their exact copy and claims-manifest
+fixes, add the named tests, deploy, and repeat the entire review from a fresh
+context. `.factory/brief.json` remains absent, so this round could not compare
+missed leverage against a separate researched brief.
