@@ -106,6 +106,7 @@ function updateMetadata(path: string) {
   document.querySelector<HTMLMetaElement>('meta[property="og:url"]')?.setAttribute('content', canonicalUrl(path));
   document.querySelector<HTMLMetaElement>('meta[name="twitter:title"]')?.setAttribute('content', title);
   document.querySelector<HTMLMetaElement>('meta[name="twitter:description"]')?.setAttribute('content', description);
+  document.querySelector<HTMLMetaElement>('meta[name="twitter:image"]')?.setAttribute('content', 'https://family-meal-lanes.sociobot.in/social-card.webp');
   document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.setAttribute('href', canonicalUrl(path));
 }
 function navigate(path: string) { history.pushState({}, '', path); void loadRoute(true); }

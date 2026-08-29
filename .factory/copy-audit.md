@@ -113,6 +113,6 @@ separate plan for your household.`
 | isolated sample plan | demo |
 | paid device token | license |
 
-The catalog line is 93 characters, begins with `Plan`, and contains no banned
-word: `Plan each person’s meals on one private weekly board, including shared
-meals and prep labels.`
+The catalog line is 77 characters, begins with `Plan`, and contains no banned
+word: `Plan individual and shared meals for each person on one private weekly
+board.`

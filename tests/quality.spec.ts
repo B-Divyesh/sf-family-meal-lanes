@@ -81,7 +81,9 @@ test('@claim:hosting-config defines direct routes, security headers, a 404 respo
   expect(config.routes.find(entry => entry.route === '/assets/*')?.headers?.['Cache-Control']).toBe('public, max-age=31536000, immutable');
   expect(config.globalHeaders['X-Content-Type-Options']).toBe('nosniff');
   expect(config.globalHeaders['Referrer-Policy']).toBe('strict-origin-when-cross-origin');
-  expect(config.globalHeaders['Content-Security-Policy']).toContain("default-src 'self'");
+  const csp = config.globalHeaders['Content-Security-Policy'];
+  expect(csp).toContain("default-src 'self'");
+  expect(csp).toContain("frame-ancestors 'self'");
 });
 
 for (const route of ['/', '/demo', '/privacy', '/terms', '/404.html']) {
@@ -247,6 +249,7 @@ test('@regression:each route has its own title, description, and canonical URL',
     await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /.+/);
     await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', title);
     await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', `https://family-meal-lanes.sociobot.in${route}`);
+    await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'https://family-meal-lanes.sociobot.in/social-card.webp');
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://family-meal-lanes.sociobot.in${route === '/' ? '/' : route}`);
   }
 });
@@ -265,7 +268,7 @@ test('@regression:direct 404 has the site skeleton, metadata, legal links, and C
   await page.route('**/not-a-page', route => route.fulfill({
     status: 404,
     contentType: 'text/html',
-    headers: { 'Content-Security-Policy': "default-src 'self'; style-src 'self'" },
+    headers: { 'Content-Security-Policy': "default-src 'self'; style-src 'self'; frame-ancestors 'self'" },
     body: notFound
   }));
   const response = await page.goto('/not-a-page');
@@ -279,6 +282,7 @@ test('@regression:direct 404 has the site skeleton, metadata, legal links, and C
   await expect(page.getByRole('link', { name: 'Terms' })).toHaveAttribute('href', '/terms');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://family-meal-lanes.sociobot.in/404.html');
   await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /not found/i);
+  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'https://family-meal-lanes.sociobot.in/social-card.webp');
   await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/favicon.svg');
   await expect(page.locator('link[rel="stylesheet"]')).toHaveAttribute('href', '/404.css');
   expect(await page.locator('body').evaluate(body => getComputedStyle(body).backgroundColor)).toBe('rgb(255, 247, 232)');
