@@ -1,6 +1,6 @@
 # Family Meal Lanes handoff — repair 5
 
-## Release decision: repaired; deployment pending
+## Release decision: repaired and deployed
 
 This repair addresses the release blocker in verifier report commit
 `533cf15d9dc09cdcbc3a59675bd793aec48ee2a6` for candidate
@@ -59,8 +59,54 @@ the existing work-order command:
 /opt/fleet/lib/deploy-static.sh family-meal-lanes dist
 ```
 
-Known gaps: none. Live deployment identity, headers, routing, checkout, offline,
-axe, and rate-limit evidence will be appended after deployment.
+### Deployment and live verification — 2026-08-29 UTC
+
+Repair commit `e732b12` was pushed to `origin/main`. The existing static command
+deployed `dist/` successfully as deployment
+`89c7ff4d-9269-4016-bdae-0694a00b9327` to
+`https://family-meal-lanes.sociobot.in`.
+
+- Live `verify-url.sh` returned 200 with the correct title, `lang="en"`, one
+  h1, a main landmark, zero missing alt attributes, zero unlabelled buttons,
+  and no console errors.
+- `/`, `/demo`, `/privacy`, and `/terms` return 200; a missing route returns the
+  designed 404. HSTS, `nosniff`, strict-origin referrer policy, and the expected
+  self-only CSP plus the disclosed Sociobot API are present. Hashed assets are
+  immutable; `sw.js` is `no-cache`.
+- Fresh live desktop-light and 390×844 dark contexts each render all 15 slips.
+  Standard axe reports zero serious/critical violations, and the explicitly
+  enabled label/content/name rule reports zero violations and zero nodes. The
+  first computed name is `SHARED Lemon chicken tray bake Prep: Chop vegetables
+  Edit meal`.
+- Live keyboard checks reach the skip link with a 3px focus outline, move to
+  `main`, focus the meal-name field on Enter, close on Escape, and return focus
+  to the meal slip. All visible mobile targets are at least 44px. Reduced-motion
+  transitions are `0.01ms`.
+- A fresh 390px context installed the service worker, reloaded under its
+  control, went offline, and reloaded the sample meal from cache
+  `family-meal-lanes-59d79bde4957`. A normal meal-save flow made no external
+  request and sent no meal text.
+- Live mobile Lighthouse: performance 100, accessibility 100, best practices
+  100, SEO 100; FCP 0.81s, LCP 1.21s, CLS 0.013, TBT 23ms. The
+  `label-content-name-mismatch` audit scores 1.
+- Sociobot checkout returned 303 to `checkout.dodopayments.com/session/...`.
+  Thirty sequential invalid license checks returned 200; request 31 returned
+  429 with `Retry-After: 4`.
+
+Local and live SHA-256 hashes match exactly:
+
+| Asset | SHA-256 |
+| --- | --- |
+| `index.html` and route HTML | `069ca43730881b312826e63fe4380ba911a0e5f02ea04d72976acc98016f5388` |
+| `assets/index-DjnZOHco.js` | `0605a7fdf709c1e571566e04cf3793f740b4326af3fe68d346667b592fd8ed06` |
+| `assets/index-CW4lb6nI.css` | `afd8654086d455e0ff720748ca81f23e541626c2addeacba52ddcc18d30bac93` |
+| `sw.js` | `e4464d6e7c0252520bfd8495cdd4af15c44bef394d227f74edb282b61907c5ec` |
+| `manifest.webmanifest` | `e22676a386d7ae80a55f4f3349fbfb0b3c84600ec418817769c1a02cad9e534a` |
+| `hero-risograph.webp` | `8a2a2700458cb89660d408de4831062b2db5dff3155d0053d77f1c02284a4bc8` |
+| `404.html` | `e1ce068012545d781c91f685962a1cd82ae17bccb8be764f07eb15744d5095dc` |
+| `404.css` | `8974d6561cc1d233a3da5ec4f5bfef46fc154904930cc08ac9973aed7fbc9498` |
+
+Known gaps: none.
 
 ---
 
