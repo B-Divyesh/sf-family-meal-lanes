@@ -1,0 +1,182 @@
+[
+  {
+    "name": "F-1-3 headline",
+    "passed": true,
+    "detail": "https://family-meal-lanes.sociobot.in/"
+  },
+  {
+    "name": "F-1-4 control wording",
+    "passed": true,
+    "detail": "visible and accessible names match"
+  },
+  {
+    "name": "F-1-5 section heading",
+    "passed": true,
+    "detail": "https://family-meal-lanes.sociobot.in/"
+  },
+  {
+    "name": "F-1-6 offline wording",
+    "passed": true,
+    "detail": "https://family-meal-lanes.sociobot.in/"
+  },
+  {
+    "name": "F-1-7 prep wording",
+    "passed": true,
+    "detail": "https://family-meal-lanes.sociobot.in/"
+  },
+  {
+    "name": "mobile home fit",
+    "passed": true,
+    "detail": "390x844"
+  },
+  {
+    "name": "one-click query demo",
+    "passed": true,
+    "detail": "https://family-meal-lanes.sociobot.in/?demo=1"
+  },
+  {
+    "name": "demo banner",
+    "passed": true,
+    "detail": "https://family-meal-lanes.sociobot.in/?demo=1"
+  },
+  {
+    "name": "sample visible on first screen",
+    "passed": true,
+    "detail": "390x844"
+  },
+  {
+    "name": "F-1-11 six sample meals",
+    "passed": true,
+    "detail": "6 distinct meals"
+  },
+  {
+    "name": "demo reset",
+    "passed": true,
+    "detail": "probe removed"
+  },
+  {
+    "name": "demo exit isolation",
+    "passed": true,
+    "detail": "real store is empty"
+  },
+  {
+    "name": "privacy title",
+    "passed": true,
+    "detail": "Privacy — Family Meal Lanes"
+  },
+  {
+    "name": "route focus",
+    "passed": true,
+    "detail": "privacy h1 focused"
+  },
+  {
+    "name": "privacy canonical",
+    "passed": true,
+    "detail": "canonical URL"
+  },
+  {
+    "name": "legal terms link",
+    "passed": true,
+    "detail": "footer link"
+  },
+  {
+    "name": "terms title",
+    "passed": true,
+    "detail": "Terms — Family Meal Lanes"
+  },
+  {
+    "name": "demo request privacy",
+    "passed": true,
+    "detail": "[]"
+  },
+  {
+    "name": "console",
+    "passed": true,
+    "detail": "[]"
+  },
+  {
+    "name": "offline reload",
+    "passed": true,
+    "detail": "sample board visible offline"
+  },
+  {
+    "name": "axe light /",
+    "passed": true,
+    "detail": "[]"
+  },
+  {
+    "name": "axe light /?demo=1",
+    "passed": true,
+    "detail": "[]"
+  },
+  {
+    "name": "axe light /privacy",
+    "passed": true,
+    "detail": "[]"
+  },
+  {
+    "name": "axe light /terms",
+    "passed": true,
+    "detail": "[]"
+  },
+  {
+    "name": "axe light /404.html",
+    "passed": true,
+    "detail": "[]"
+  },
+  {
+    "name": "axe dark /",
+    "passed": true,
+    "detail": "[]"
+  },
+  {
+    "name": "axe dark /?demo=1",
+    "passed": true,
+    "detail": "[]"
+  },
+  {
+    "name": "axe dark /privacy",
+    "passed": true,
+    "detail": "[]"
+  },
+  {
+    "name": "axe dark /terms",
+    "passed": true,
+    "detail": "[]"
+  },
+  {
+    "name": "axe dark /404.html",
+    "passed": true,
+    "detail": "[]"
+  },
+  {
+    "name": "F-1-1 HTTP 404",
+    "passed": true,
+    "detail": "404"
+  },
+  {
+    "name": "F-1-1 skeleton",
+    "passed": true,
+    "detail": "header/nav/main/footer present"
+  },
+  {
+    "name": "F-1-1 legal links",
+    "passed": true,
+    "detail": "privacy and terms present"
+  },
+  {
+    "name": "F-1-2 404 wording",
+    "passed": true,
+    "detail": "Page not found — Family Meal Lanes"
+  },
+  {
+    "name": "404 metadata",
+    "passed": true,
+    "detail": "canonical URL"
+  },
+  {
+    "name": "404 mobile fit",
+    "passed": true,
+    "detail": "390x844"
+  }
+]

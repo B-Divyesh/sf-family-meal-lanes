@@ -1,0 +1,14 @@
+{
+  "url": "https://family-meal-lanes.sociobot.in/?demo=1",
+  "loadMs": 741,
+  "errors": [],
+  "a11y": {
+    "title": "Demo — Family Meal Lanes",
+    "lang": "en",
+    "h1": 1,
+    "main": true,
+    "imgsMissingAlt": 0,
+    "buttonsUnlabeled": 0,
+    "textLength": 2033
+  }
+}
