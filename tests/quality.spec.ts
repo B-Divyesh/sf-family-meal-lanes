@@ -34,7 +34,7 @@ test('@regression:review-1 copy uses concrete wording and a valid catalog line',
   expect(catalog).toMatch(/^Plan\b/);
 });
 
-for (const route of ['/', '/demo', '/privacy', '/terms']) {
+for (const route of ['/', '/demo', '/privacy', '/terms', '/404.html']) {
   test(`@regression:accessibility ${route} has no serious or critical axe violations`, async ({ page }) => {
     const errors: string[] = [];
     page.on('pageerror', error => errors.push(error.message));
@@ -51,7 +51,7 @@ for (const route of ['/', '/demo', '/privacy', '/terms']) {
 
 test.describe('dark scheme accessibility', () => {
   test.use({ colorScheme: 'dark' });
-  for (const route of ['/', '/demo', '/privacy', '/terms']) {
+  for (const route of ['/', '/demo', '/privacy', '/terms', '/404.html']) {
     test(`@regression:accessibility ${route} has no serious or critical dark-scheme axe violations`, async ({ page }) => {
       await page.goto(route);
       await page.addScriptTag({ content: axe.source });
@@ -89,7 +89,7 @@ test('@regression:all reported 390px controls meet the 44px touch-target minimum
 
 test('@regression:every visible 390px interactive target is at least 44px', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const route of ['/', '/demo', '/privacy', '/terms']) {
+  for (const route of ['/', '/demo', '/privacy', '/terms', '/404.html']) {
     await page.goto(route);
     const tooSmall = await page.locator('a, button, input:not([type="file"]), select, textarea, [role="button"], [tabindex="0"]').evaluateAll(elements => elements
       .filter(element => {
