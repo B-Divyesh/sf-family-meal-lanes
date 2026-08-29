@@ -16,7 +16,9 @@ route metadata/focus, legal pages, 404, and mobile board all remain intact.
 ## Verification
 
 - Repair implementation: `a0059db9a7cd3d6b2d1eed037761744db1bf6f97`
-- Clean remote clone: `/tmp/family-meal-lanes-polish-3-9yr4Ak`
+- Evidence commit: `398d70f2b7f35f4f9fd9eaf87346f82824ad8fac`
+- Clean remote clone: `/tmp/family-meal-lanes-polish-3-final-9yRNUP` at
+  `398d70f2b7f35f4f9fd9eaf87346f82824ad8fac`
 - `npm ci`: pass; 20 packages; zero vulnerabilities
 - Every `.factory/claims.json` command: 20/20 pass independently
 - `npm test`: 51/51 Playwright tests pass

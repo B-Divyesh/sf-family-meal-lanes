@@ -1,7 +1,8 @@
 # Perfection loop — polish 3
 
 Base review: `.factory/review-3.md` at `580b827`. Repair implementation:
-`a0059db9a7cd3d6b2d1eed037761744db1bf6f97`. Live product:
+`a0059db9a7cd3d6b2d1eed037761744db1bf6f97`; evidence commit:
+`398d70f2b7f35f4f9fd9eaf87346f82824ad8fac`. Live product:
 `https://family-meal-lanes.sociobot.in`.
 
 ## Finding closure
@@ -29,7 +30,8 @@ Base review: `.factory/review-3.md` at `580b827`. Repair implementation:
 
 ## Verification evidence
 
-- Clean remote clone `/tmp/family-meal-lanes-polish-3-9yr4Ak` at `a0059db`:
+- Clean remote clone `/tmp/family-meal-lanes-polish-3-final-9yRNUP` at
+  `398d70f`:
   `npm ci` passed with zero vulnerabilities; every one of 20 claim commands
   passed independently; `npm test` passed 51/51; final `npm run build` passed.
 - Bundle sizes: 25.89 kB JavaScript raw / 8.87 kB gzip; 13.60 kB CSS raw /
