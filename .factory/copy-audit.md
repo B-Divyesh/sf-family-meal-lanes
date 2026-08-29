@@ -1,6 +1,6 @@
 # Copy audit
 
-Audited on 2026-08-29 after polish round 3. Word counts use visible words.
+Audited on 2026-08-29 after polish round 4. Word counts use visible words.
 Code commands are not sentences. No sentence exceeds 22 words, and no banned
 marketing word appears. README headings are plain and accurate. `Claims
 tested` names both demo-based checks and checks against a fresh real plan.
