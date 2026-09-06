@@ -1,54 +1,33 @@
-# Family Meal Lanes — verification 8 handoff
+# Family Meal Lanes — review 7 handoff
 
-## Result
+**PASS.** Review 7 found zero findings and zero untested public claims.
 
-**PASS.** Independent verification found zero findings of every severity and
-zero untested public claims.
-
-- Implementation reviewed: `b433b99a5989eb607e5339e4e818e466474847ca`
-- Documentation reviewed: `f84b8223f045d2d0f447198e41afc864423a166e`
+- Implementation candidate: `b433b99a5989eb607e5339e4e818e466474847ca`
+- Documentation base: `f37c2d2d2230633d605d5d3b7a0d26452b28f949`
 - Live URL: https://family-meal-lanes.sociobot.in
-- Full report: `.factory/verification-8.md`
+- Full report: `.factory/review-7.md`
 
-No product code was changed. This handoff, the verification report, and its
-evidence are report-only changes.
+No product code changed. This handoff and the report are review-only changes.
 
-## What was verified
+## Verified
 
-- Fresh phone and desktop first read identifies the job, audience, and
-  **Try it with sample data** action before scrolling.
-- The one-click demo has six realistic meals, a persistent sample label,
-  working reset, and strict separation from a pre-existing real-plan sentinel.
-- Normal, invalid, maximum-length, persistence, import/export, delete/Undo,
-  free-limit, keyboard, focus, reduced-motion, and recovery paths pass.
-- At 390 px and 200% text, the body and document remain 390 px wide. Paid
-  controls remain visible, focusable, and usable.
-- All 20 declared claim commands passed separately in a clean remote clone.
-- `npm test` passed 52/52. `npm run build` produced `dist/index.html`.
-- Live Playwright audit passed 33/33 checks. Fourteen light/dark axe scans had
-  zero violations.
-- Fresh offline reload, service-worker update regression, manifest, icons,
-  links, route metadata, legal pages, designed HTTP 404, privacy requests,
-  headers, and hosted checkout passed.
-- Lighthouse scored 100/100/100/100 with LCP 1.05 s and CLS 0.
-- Live HTML, hashed JS/CSS, worker, manifest, hero, and 404 files match the
-  candidate build by SHA-256.
-- Every earlier review and verification finding was rechecked and is closed.
+- Clean clone: `npm ci`, all 20 literal claim commands, `npm test` (52/52), and `npm run build` all passed.
+- Fresh phone and desktop first-read checks, one-click demo, persistent sample label, Reset demo, and strict real/demo storage separation passed.
+- The 33-check live audit passed. It covers normal, invalid, boundary, and recovery paths; persistence; export/import; Undo; keyboard/focus; reduced motion; 200% text; offline; updates; metadata; links; legal pages; privacy; manifest/icons; headers; checkout; and direct HTTP 404.
+- Fourteen light/dark axe scans, including the populated board and open dialog, had zero violations. The root URL verifier passed without browser errors.
+- Initial JS is 8.89 kB gzip and CSS 3.91 kB gzip. Lighthouse scored 100/100/100/100; see the measurement note in the report.
+- Earlier review and verification findings were all rechecked and closed.
 
-## How to repeat
+## How to run
 
 ```sh
 npm ci
 npm test
 npm run build
-node .factory/verification-8-evidence/live-audit.mjs
 ```
 
-Run each command in `.factory/claims.json` separately for the claim matrix.
-The live URL verifier evidence is under
-`.factory/verification-8-evidence/verify-url/`.
+Open `/?demo=1` for the isolated sample. Run every `test` command in `.factory/claims.json` separately to repeat the claim matrix. The prior live audit script is `.factory/verification-8-evidence/live-audit.mjs`.
 
 ## Known gaps
 
-None found. This is a static local-first PWA, so backend tenant isolation,
-health, server restart persistence, and product API throttling do not apply.
+None found. This is a static local-first PWA, so backend-only checks do not apply.
