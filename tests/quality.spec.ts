@@ -158,6 +158,34 @@ test('@regression:every visible 390px interactive target is at least 44px', asyn
   }
 });
 
+test('@regression:paid controls reflow and restore a license at 200% text size on a 390px phone', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.route('https://api.sociobot.in/api/v1/products/family-meal-lanes/verify?**', route => route.fulfill({
+    contentType: 'application/json', body: JSON.stringify({ valid: true, reason: 'ok' })
+  }));
+  await page.goto('/');
+  await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
+
+  expect(await page.locator('body').evaluate(body => body.scrollWidth <= window.innerWidth)).toBe(true);
+  const controls = [
+    page.getByRole('link', { name: 'Buy unlimited lanes for $12' }),
+    page.getByLabel('Have a license?'),
+    page.getByRole('button', { name: 'Restore license' })
+  ];
+  for (const control of controls) {
+    await expect(control).toBeVisible();
+    const box = await control.boundingBox();
+    expect(box?.x).toBeGreaterThanOrEqual(0);
+    expect((box?.x ?? 0) + (box?.width ?? 0)).toBeLessThanOrEqual(390);
+    await control.focus();
+    await expect(control).toBeFocused();
+  }
+
+  await page.getByLabel('Have a license?').fill('resized-text-token');
+  await page.getByRole('button', { name: 'Restore license' }).click();
+  await expect(page.getByText('Your unlimited-lanes license is active.')).toBeVisible();
+});
+
 test('@regression:visible Export JSON label is its accessible name', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('button', { name: 'Export JSON', exact: true })).toHaveAccessibleName('Export JSON');
