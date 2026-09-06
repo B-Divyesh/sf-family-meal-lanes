@@ -1,0 +1,116 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "free lane boundary remains visible",
+      "passed": true,
+      "evidence": "The free plan includes Shared plus three people. Restore a license or buy unlimited lanes to add another person."
+    },
+    {
+      "name": "license check is one bodyless token-only request with no meal data",
+      "passed": true,
+      "evidence": {
+        "count": 1,
+        "method": "GET",
+        "body": null,
+        "urlHasOnlyLicense": true
+      }
+    },
+    {
+      "name": "route / expected status",
+      "passed": true,
+      "evidence": 200
+    },
+    {
+      "name": "route /demo expected status",
+      "passed": true,
+      "evidence": 200
+    },
+    {
+      "name": "route /privacy expected status",
+      "passed": true,
+      "evidence": 200
+    },
+    {
+      "name": "route /terms expected status",
+      "passed": true,
+      "evidence": 200
+    },
+    {
+      "name": "route /missing-review-6 expected status",
+      "passed": true,
+      "evidence": 404
+    },
+    {
+      "name": "all discovered links resolve as intended",
+      "passed": true,
+      "evidence": [
+        {
+          "kind": "internal",
+          "path": "/#main",
+          "status": 200
+        },
+        {
+          "kind": "internal",
+          "path": "/",
+          "status": 200
+        },
+        {
+          "kind": "internal",
+          "path": "/demo",
+          "status": 200
+        },
+        {
+          "kind": "internal",
+          "path": "/#board",
+          "status": 200
+        },
+        {
+          "kind": "internal",
+          "path": "/privacy",
+          "status": 200
+        },
+        {
+          "kind": "internal",
+          "path": "/?demo=1",
+          "status": 200
+        },
+        {
+          "kind": "checkout",
+          "status": 303,
+          "redirectHost": "checkout.dodopayments.com"
+        },
+        {
+          "kind": "internal",
+          "path": "/terms",
+          "status": 200
+        },
+        {
+          "kind": "internal",
+          "path": "/demo#main",
+          "status": 200
+        },
+        {
+          "kind": "internal",
+          "path": "/demo#board",
+          "status": 200
+        },
+        {
+          "kind": "internal",
+          "path": "/privacy#main",
+          "status": 200
+        },
+        {
+          "kind": "internal",
+          "path": "/terms#main",
+          "status": 200
+        },
+        {
+          "kind": "internal",
+          "path": "/missing-review-6#main",
+          "status": 404
+        }
+      ]
+    }
+  ]
+}

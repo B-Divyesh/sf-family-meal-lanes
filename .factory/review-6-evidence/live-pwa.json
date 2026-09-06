@@ -1,0 +1,29 @@
+{
+  "errors": [],
+  "name": "Family Meal Lanes",
+  "short_name": "Meal Lanes",
+  "start_url": "/?v=021a04b15e57",
+  "display": "standalone",
+  "theme_color": "#fff7e8",
+  "background_color": "#fff7e8",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "status": 200,
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "status": 200,
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "registrations": [
+    {
+      "scope": "https://family-meal-lanes.sociobot.in/",
+      "active": "activated"
+    }
+  ]
+}

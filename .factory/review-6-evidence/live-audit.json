@@ -1,0 +1,952 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "name": "phone first screen states job, audience, action, and three facts",
+      "passed": true,
+      "evidence": {
+        "title": "Family Meal Lanes — plan meals by person",
+        "h1": "Plan meals for each person",
+        "audience": "For households with different meals, so everyone can see what is theirs and what they share.",
+        "action": "Try it with sample data",
+        "facts": [
+          "Works offline after your first visit.",
+          "Meal plan saved only on this device",
+          "Export a JSON copy"
+        ],
+        "scrollY": 0
+      }
+    },
+    {
+      "name": "phone first screen has no load errors",
+      "passed": true,
+      "evidence": {
+        "consoleErrors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "desktop first screen states job, audience, action, and three facts",
+      "passed": true,
+      "evidence": {
+        "title": "Family Meal Lanes — plan meals by person",
+        "h1": "Plan meals for each person",
+        "audience": "For households with different meals, so everyone can see what is theirs and what they share.",
+        "action": "Try it with sample data",
+        "facts": [
+          "Works offline after your first visit.",
+          "Meal plan saved only on this device",
+          "Export a JSON copy"
+        ],
+        "scrollY": 0
+      }
+    },
+    {
+      "name": "desktop first screen has no load errors",
+      "passed": true,
+      "evidence": {
+        "consoleErrors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "one-click demo is populated and persistently labeled",
+      "passed": true,
+      "evidence": {
+        "url": "https://family-meal-lanes.sociobot.in/?demo=1",
+        "sampleIds": [
+          "m1",
+          "m3",
+          "m6",
+          "m2",
+          "m4",
+          "m5"
+        ],
+        "slipCount": 15
+      }
+    },
+    {
+      "name": "shared sample appears in Shared",
+      "passed": true,
+      "evidence": "Shared"
+    },
+    {
+      "name": "shared sample appears in Mara",
+      "passed": true,
+      "evidence": "Mara"
+    },
+    {
+      "name": "shared sample appears in Jon",
+      "passed": true,
+      "evidence": "Jon"
+    },
+    {
+      "name": "shared sample appears in Kids",
+      "passed": true,
+      "evidence": "Kids"
+    },
+    {
+      "name": "sample prep label is visible",
+      "passed": true,
+      "evidence": "Lemon chicken tray bake"
+    },
+    {
+      "name": "blank required meal is rejected with recovery text and focus",
+      "passed": true,
+      "evidence": "dialog stays open"
+    },
+    {
+      "name": "Cancel recovers from invalid meal form",
+      "passed": true,
+      "evidence": "dialog closed"
+    },
+    {
+      "name": "maximum documented input persists after reload",
+      "passed": true,
+      "evidence": "80/60/240 characters on Sunday"
+    },
+    {
+      "name": "invalid import preserves the current plan and explains recovery",
+      "passed": true,
+      "evidence": "sample remained"
+    },
+    {
+      "name": "valid import replaces the visible plan",
+      "passed": true,
+      "evidence": "Sunday tomato soup visible"
+    },
+    {
+      "name": "live export is valid JSON with the visible imported meal",
+      "passed": true,
+      "evidence": "542 bytes"
+    },
+    {
+      "name": "delete offers Undo",
+      "passed": true,
+      "evidence": "Meal removed"
+    },
+    {
+      "name": "Undo restores the meal",
+      "passed": true,
+      "evidence": "restored"
+    },
+    {
+      "name": "keyboard opens meal dialog and moves focus",
+      "passed": true,
+      "evidence": "Enter"
+    },
+    {
+      "name": "Escape closes meal dialog and restores focus",
+      "passed": true,
+      "evidence": "Escape"
+    },
+    {
+      "name": "reduced motion removes meaningful transition",
+      "passed": true,
+      "evidence": "1e-05s"
+    },
+    {
+      "name": "Reset restores exactly the six shipped meals",
+      "passed": true,
+      "evidence": [
+        "m1",
+        "m3",
+        "m6",
+        "m2",
+        "m4",
+        "m5"
+      ]
+    },
+    {
+      "name": "starting for real preserves real data and excludes demo data",
+      "passed": true,
+      "evidence": "real sentinel visible; demo absent"
+    },
+    {
+      "name": "re-entering demo reseeds after exit",
+      "passed": true,
+      "evidence": "sample restored; probe absent"
+    },
+    {
+      "name": "populated meal slips pass label-in-name",
+      "passed": true,
+      "evidence": []
+    },
+    {
+      "name": "normal planning requests stay on the product origin",
+      "passed": true,
+      "evidence": [
+        "https://family-meal-lanes.sociobot.in"
+      ]
+    },
+    {
+      "name": "normal planning flow has no console or page errors",
+      "passed": true,
+      "evidence": {
+        "consoleErrors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "light / structure, metadata, targets, and axe",
+      "passed": true,
+      "evidence": {
+        "path": "/",
+        "status": 200,
+        "title": "Family Meal Lanes — plan meals by person",
+        "h1": "Plan meals for each person",
+        "scheme": "light",
+        "actualStatus": 200,
+        "actualTitle": "Family Meal Lanes — plan meals by person",
+        "actualH1": "Plan meals for each person",
+        "meta": {
+          "lang": "en",
+          "h1Count": 1,
+          "main": true,
+          "header": true,
+          "nav": true,
+          "footer": true,
+          "canonical": "https://family-meal-lanes.sociobot.in/",
+          "description": "Plan a week of meals by person, shared meal, and prep task on one private device.",
+          "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+        },
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+        "tooSmall": [],
+        "violations": [],
+        "consoleErrors": [],
+        "pageErrors": [],
+        "noBodyOverflow": true
+      }
+    },
+    {
+      "name": "light /demo structure, metadata, targets, and axe",
+      "passed": true,
+      "evidence": {
+        "path": "/demo",
+        "status": 200,
+        "title": "Demo — Family Meal Lanes",
+        "h1": "Try a filled meal week",
+        "scheme": "light",
+        "actualStatus": 200,
+        "actualTitle": "Demo — Family Meal Lanes",
+        "actualH1": "Try a filled meal week",
+        "meta": {
+          "lang": "en",
+          "h1Count": 1,
+          "main": true,
+          "header": true,
+          "nav": true,
+          "footer": true,
+          "canonical": "https://family-meal-lanes.sociobot.in/demo",
+          "description": "Try a filled weekly meal board with six sample meals. Demo changes stay separate from your real plan.",
+          "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+        },
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+        "tooSmall": [],
+        "violations": [],
+        "consoleErrors": [],
+        "pageErrors": [],
+        "noBodyOverflow": true
+      }
+    },
+    {
+      "name": "light /privacy structure, metadata, targets, and axe",
+      "passed": true,
+      "evidence": {
+        "path": "/privacy",
+        "status": 200,
+        "title": "Privacy — Family Meal Lanes",
+        "h1": "Your meal plan stays on this device",
+        "scheme": "light",
+        "actualStatus": 200,
+        "actualTitle": "Privacy — Family Meal Lanes",
+        "actualH1": "Your meal plan stays on this device",
+        "meta": {
+          "lang": "en",
+          "h1Count": 1,
+          "main": true,
+          "header": true,
+          "nav": true,
+          "footer": true,
+          "canonical": "https://family-meal-lanes.sociobot.in/privacy",
+          "description": "Read what Family Meal Lanes stores on your device and what is sent during an optional license check.",
+          "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+        },
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+        "tooSmall": [],
+        "violations": [],
+        "consoleErrors": [],
+        "pageErrors": [],
+        "noBodyOverflow": true
+      }
+    },
+    {
+      "name": "light /terms structure, metadata, targets, and axe",
+      "passed": true,
+      "evidence": {
+        "path": "/terms",
+        "status": 200,
+        "title": "Terms — Family Meal Lanes",
+        "h1": "Terms for using this meal board",
+        "scheme": "light",
+        "actualStatus": 200,
+        "actualTitle": "Terms — Family Meal Lanes",
+        "actualH1": "Terms for using this meal board",
+        "meta": {
+          "lang": "en",
+          "h1Count": 1,
+          "main": true,
+          "header": true,
+          "nav": true,
+          "footer": true,
+          "canonical": "https://family-meal-lanes.sociobot.in/terms",
+          "description": "Read the terms for Family Meal Lanes and its optional one-time unlimited-lanes license.",
+          "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+        },
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+        "tooSmall": [],
+        "violations": [],
+        "consoleErrors": [],
+        "pageErrors": [],
+        "noBodyOverflow": true
+      }
+    },
+    {
+      "name": "light /missing-review-6 structure, metadata, targets, and axe",
+      "passed": true,
+      "evidence": {
+        "path": "/missing-review-6",
+        "status": 404,
+        "title": "Page not found — Family Meal Lanes",
+        "h1": "Page not found",
+        "scheme": "light",
+        "actualStatus": 404,
+        "actualTitle": "Page not found — Family Meal Lanes",
+        "actualH1": "Page not found",
+        "meta": {
+          "lang": "en",
+          "h1Count": 1,
+          "main": true,
+          "header": true,
+          "nav": true,
+          "footer": true,
+          "canonical": "https://family-meal-lanes.sociobot.in/404.html",
+          "description": "The requested Family Meal Lanes page was not found. Return to the weekly meal board.",
+          "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+        },
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+        "tooSmall": [],
+        "violations": [],
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 404 ()"
+        ],
+        "pageErrors": [],
+        "noBodyOverflow": true
+      }
+    },
+    {
+      "name": "dark / structure, metadata, targets, and axe",
+      "passed": true,
+      "evidence": {
+        "path": "/",
+        "status": 200,
+        "title": "Family Meal Lanes — plan meals by person",
+        "h1": "Plan meals for each person",
+        "scheme": "dark",
+        "actualStatus": 200,
+        "actualTitle": "Family Meal Lanes — plan meals by person",
+        "actualH1": "Plan meals for each person",
+        "meta": {
+          "lang": "en",
+          "h1Count": 1,
+          "main": true,
+          "header": true,
+          "nav": true,
+          "footer": true,
+          "canonical": "https://family-meal-lanes.sociobot.in/",
+          "description": "Plan a week of meals by person, shared meal, and prep task on one private device.",
+          "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+        },
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+        "tooSmall": [],
+        "violations": [],
+        "consoleErrors": [],
+        "pageErrors": [],
+        "noBodyOverflow": true
+      }
+    },
+    {
+      "name": "dark /demo structure, metadata, targets, and axe",
+      "passed": true,
+      "evidence": {
+        "path": "/demo",
+        "status": 200,
+        "title": "Demo — Family Meal Lanes",
+        "h1": "Try a filled meal week",
+        "scheme": "dark",
+        "actualStatus": 200,
+        "actualTitle": "Demo — Family Meal Lanes",
+        "actualH1": "Try a filled meal week",
+        "meta": {
+          "lang": "en",
+          "h1Count": 1,
+          "main": true,
+          "header": true,
+          "nav": true,
+          "footer": true,
+          "canonical": "https://family-meal-lanes.sociobot.in/demo",
+          "description": "Try a filled weekly meal board with six sample meals. Demo changes stay separate from your real plan.",
+          "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+        },
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+        "tooSmall": [],
+        "violations": [],
+        "consoleErrors": [],
+        "pageErrors": [],
+        "noBodyOverflow": true
+      }
+    },
+    {
+      "name": "dark /privacy structure, metadata, targets, and axe",
+      "passed": true,
+      "evidence": {
+        "path": "/privacy",
+        "status": 200,
+        "title": "Privacy — Family Meal Lanes",
+        "h1": "Your meal plan stays on this device",
+        "scheme": "dark",
+        "actualStatus": 200,
+        "actualTitle": "Privacy — Family Meal Lanes",
+        "actualH1": "Your meal plan stays on this device",
+        "meta": {
+          "lang": "en",
+          "h1Count": 1,
+          "main": true,
+          "header": true,
+          "nav": true,
+          "footer": true,
+          "canonical": "https://family-meal-lanes.sociobot.in/privacy",
+          "description": "Read what Family Meal Lanes stores on your device and what is sent during an optional license check.",
+          "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+        },
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+        "tooSmall": [],
+        "violations": [],
+        "consoleErrors": [],
+        "pageErrors": [],
+        "noBodyOverflow": true
+      }
+    },
+    {
+      "name": "dark /terms structure, metadata, targets, and axe",
+      "passed": true,
+      "evidence": {
+        "path": "/terms",
+        "status": 200,
+        "title": "Terms — Family Meal Lanes",
+        "h1": "Terms for using this meal board",
+        "scheme": "dark",
+        "actualStatus": 200,
+        "actualTitle": "Terms — Family Meal Lanes",
+        "actualH1": "Terms for using this meal board",
+        "meta": {
+          "lang": "en",
+          "h1Count": 1,
+          "main": true,
+          "header": true,
+          "nav": true,
+          "footer": true,
+          "canonical": "https://family-meal-lanes.sociobot.in/terms",
+          "description": "Read the terms for Family Meal Lanes and its optional one-time unlimited-lanes license.",
+          "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+        },
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+        "tooSmall": [],
+        "violations": [],
+        "consoleErrors": [],
+        "pageErrors": [],
+        "noBodyOverflow": true
+      }
+    },
+    {
+      "name": "dark /missing-review-6 structure, metadata, targets, and axe",
+      "passed": true,
+      "evidence": {
+        "path": "/missing-review-6",
+        "status": 404,
+        "title": "Page not found — Family Meal Lanes",
+        "h1": "Page not found",
+        "scheme": "dark",
+        "actualStatus": 404,
+        "actualTitle": "Page not found — Family Meal Lanes",
+        "actualH1": "Page not found",
+        "meta": {
+          "lang": "en",
+          "h1Count": 1,
+          "main": true,
+          "header": true,
+          "nav": true,
+          "footer": true,
+          "canonical": "https://family-meal-lanes.sociobot.in/404.html",
+          "description": "The requested Family Meal Lanes page was not found. Return to the weekly meal board.",
+          "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+        },
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+        "tooSmall": [],
+        "violations": [],
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 404 ()"
+        ],
+        "pageErrors": [],
+        "noBodyOverflow": true
+      }
+    },
+    {
+      "name": "skip link receives a visible keyboard focus ring",
+      "passed": true,
+      "evidence": {
+        "focused": true,
+        "outlineWidth": "3px",
+        "outlineColor": "rgb(39, 88, 166)"
+      }
+    },
+    {
+      "name": "skip link moves focus into main content",
+      "passed": true,
+      "evidence": {
+        "active": "Plan meals for each person",
+        "insideMain": true
+      }
+    },
+    {
+      "name": "route navigation focuses and announces privacy h1",
+      "passed": true,
+      "evidence": "privacy"
+    },
+    {
+      "name": "Board link from legal route opens the actual board",
+      "passed": true,
+      "evidence": "https://family-meal-lanes.sociobot.in/#board"
+    },
+    {
+      "name": "browser Back restores legal route and h1 focus",
+      "passed": true,
+      "evidence": {
+        "url": "https://family-meal-lanes.sociobot.in/privacy",
+        "headings": [
+          "Your meal plan stays on this device"
+        ]
+      }
+    },
+    {
+      "name": "200% text keeps primary content present and page width contained",
+      "passed": false,
+      "evidence": {
+        "viewportWidth": 390,
+        "bodyScrollWidth": 456,
+        "documentScrollWidth": 456
+      }
+    },
+    {
+      "name": "live demo reloads offline after first visit",
+      "passed": true,
+      "evidence": {
+        "heading": true,
+        "banner": true,
+        "sample": true,
+        "controlled": true
+      }
+    }
+  ],
+  "routes": [
+    {
+      "path": "/",
+      "status": 200,
+      "title": "Family Meal Lanes — plan meals by person",
+      "h1": "Plan meals for each person",
+      "scheme": "light",
+      "actualStatus": 200,
+      "actualTitle": "Family Meal Lanes — plan meals by person",
+      "actualH1": "Plan meals for each person",
+      "meta": {
+        "lang": "en",
+        "h1Count": 1,
+        "main": true,
+        "header": true,
+        "nav": true,
+        "footer": true,
+        "canonical": "https://family-meal-lanes.sociobot.in/",
+        "description": "Plan a week of meals by person, shared meal, and prep task on one private device.",
+        "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+      },
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+      "tooSmall": [],
+      "violations": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "noBodyOverflow": true
+    },
+    {
+      "path": "/demo",
+      "status": 200,
+      "title": "Demo — Family Meal Lanes",
+      "h1": "Try a filled meal week",
+      "scheme": "light",
+      "actualStatus": 200,
+      "actualTitle": "Demo — Family Meal Lanes",
+      "actualH1": "Try a filled meal week",
+      "meta": {
+        "lang": "en",
+        "h1Count": 1,
+        "main": true,
+        "header": true,
+        "nav": true,
+        "footer": true,
+        "canonical": "https://family-meal-lanes.sociobot.in/demo",
+        "description": "Try a filled weekly meal board with six sample meals. Demo changes stay separate from your real plan.",
+        "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+      },
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+      "tooSmall": [],
+      "violations": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "noBodyOverflow": true
+    },
+    {
+      "path": "/privacy",
+      "status": 200,
+      "title": "Privacy — Family Meal Lanes",
+      "h1": "Your meal plan stays on this device",
+      "scheme": "light",
+      "actualStatus": 200,
+      "actualTitle": "Privacy — Family Meal Lanes",
+      "actualH1": "Your meal plan stays on this device",
+      "meta": {
+        "lang": "en",
+        "h1Count": 1,
+        "main": true,
+        "header": true,
+        "nav": true,
+        "footer": true,
+        "canonical": "https://family-meal-lanes.sociobot.in/privacy",
+        "description": "Read what Family Meal Lanes stores on your device and what is sent during an optional license check.",
+        "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+      },
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+      "tooSmall": [],
+      "violations": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "noBodyOverflow": true
+    },
+    {
+      "path": "/terms",
+      "status": 200,
+      "title": "Terms — Family Meal Lanes",
+      "h1": "Terms for using this meal board",
+      "scheme": "light",
+      "actualStatus": 200,
+      "actualTitle": "Terms — Family Meal Lanes",
+      "actualH1": "Terms for using this meal board",
+      "meta": {
+        "lang": "en",
+        "h1Count": 1,
+        "main": true,
+        "header": true,
+        "nav": true,
+        "footer": true,
+        "canonical": "https://family-meal-lanes.sociobot.in/terms",
+        "description": "Read the terms for Family Meal Lanes and its optional one-time unlimited-lanes license.",
+        "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+      },
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+      "tooSmall": [],
+      "violations": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "noBodyOverflow": true
+    },
+    {
+      "path": "/missing-review-6",
+      "status": 404,
+      "title": "Page not found — Family Meal Lanes",
+      "h1": "Page not found",
+      "scheme": "light",
+      "actualStatus": 404,
+      "actualTitle": "Page not found — Family Meal Lanes",
+      "actualH1": "Page not found",
+      "meta": {
+        "lang": "en",
+        "h1Count": 1,
+        "main": true,
+        "header": true,
+        "nav": true,
+        "footer": true,
+        "canonical": "https://family-meal-lanes.sociobot.in/404.html",
+        "description": "The requested Family Meal Lanes page was not found. Return to the weekly meal board.",
+        "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+      },
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+      "tooSmall": [],
+      "violations": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "pageErrors": [],
+      "noBodyOverflow": true
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "title": "Family Meal Lanes — plan meals by person",
+      "h1": "Plan meals for each person",
+      "scheme": "dark",
+      "actualStatus": 200,
+      "actualTitle": "Family Meal Lanes — plan meals by person",
+      "actualH1": "Plan meals for each person",
+      "meta": {
+        "lang": "en",
+        "h1Count": 1,
+        "main": true,
+        "header": true,
+        "nav": true,
+        "footer": true,
+        "canonical": "https://family-meal-lanes.sociobot.in/",
+        "description": "Plan a week of meals by person, shared meal, and prep task on one private device.",
+        "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+      },
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+      "tooSmall": [],
+      "violations": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "noBodyOverflow": true
+    },
+    {
+      "path": "/demo",
+      "status": 200,
+      "title": "Demo — Family Meal Lanes",
+      "h1": "Try a filled meal week",
+      "scheme": "dark",
+      "actualStatus": 200,
+      "actualTitle": "Demo — Family Meal Lanes",
+      "actualH1": "Try a filled meal week",
+      "meta": {
+        "lang": "en",
+        "h1Count": 1,
+        "main": true,
+        "header": true,
+        "nav": true,
+        "footer": true,
+        "canonical": "https://family-meal-lanes.sociobot.in/demo",
+        "description": "Try a filled weekly meal board with six sample meals. Demo changes stay separate from your real plan.",
+        "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+      },
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+      "tooSmall": [],
+      "violations": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "noBodyOverflow": true
+    },
+    {
+      "path": "/privacy",
+      "status": 200,
+      "title": "Privacy — Family Meal Lanes",
+      "h1": "Your meal plan stays on this device",
+      "scheme": "dark",
+      "actualStatus": 200,
+      "actualTitle": "Privacy — Family Meal Lanes",
+      "actualH1": "Your meal plan stays on this device",
+      "meta": {
+        "lang": "en",
+        "h1Count": 1,
+        "main": true,
+        "header": true,
+        "nav": true,
+        "footer": true,
+        "canonical": "https://family-meal-lanes.sociobot.in/privacy",
+        "description": "Read what Family Meal Lanes stores on your device and what is sent during an optional license check.",
+        "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+      },
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+      "tooSmall": [],
+      "violations": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "noBodyOverflow": true
+    },
+    {
+      "path": "/terms",
+      "status": 200,
+      "title": "Terms — Family Meal Lanes",
+      "h1": "Terms for using this meal board",
+      "scheme": "dark",
+      "actualStatus": 200,
+      "actualTitle": "Terms — Family Meal Lanes",
+      "actualH1": "Terms for using this meal board",
+      "meta": {
+        "lang": "en",
+        "h1Count": 1,
+        "main": true,
+        "header": true,
+        "nav": true,
+        "footer": true,
+        "canonical": "https://family-meal-lanes.sociobot.in/terms",
+        "description": "Read the terms for Family Meal Lanes and its optional one-time unlimited-lanes license.",
+        "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+      },
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+      "tooSmall": [],
+      "violations": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "noBodyOverflow": true
+    },
+    {
+      "path": "/missing-review-6",
+      "status": 404,
+      "title": "Page not found — Family Meal Lanes",
+      "h1": "Page not found",
+      "scheme": "dark",
+      "actualStatus": 404,
+      "actualTitle": "Page not found — Family Meal Lanes",
+      "actualH1": "Page not found",
+      "meta": {
+        "lang": "en",
+        "h1Count": 1,
+        "main": true,
+        "header": true,
+        "nav": true,
+        "footer": true,
+        "canonical": "https://family-meal-lanes.sociobot.in/404.html",
+        "description": "The requested Family Meal Lanes page was not found. Return to the weekly meal board.",
+        "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp"
+      },
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.sociobot.in; manifest-src 'self'; worker-src 'self'; frame-ancestors 'self'",
+      "tooSmall": [],
+      "violations": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "pageErrors": [],
+      "noBodyOverflow": true
+    }
+  ],
+  "accessibility": [
+    {
+      "path": "/",
+      "scheme": "light",
+      "violations": []
+    },
+    {
+      "path": "/demo",
+      "scheme": "light",
+      "violations": []
+    },
+    {
+      "path": "/privacy",
+      "scheme": "light",
+      "violations": []
+    },
+    {
+      "path": "/terms",
+      "scheme": "light",
+      "violations": []
+    },
+    {
+      "path": "/missing-review-6",
+      "scheme": "light",
+      "violations": []
+    },
+    {
+      "path": "/",
+      "scheme": "dark",
+      "violations": []
+    },
+    {
+      "path": "/demo",
+      "scheme": "dark",
+      "violations": []
+    },
+    {
+      "path": "/privacy",
+      "scheme": "dark",
+      "violations": []
+    },
+    {
+      "path": "/terms",
+      "scheme": "dark",
+      "violations": []
+    },
+    {
+      "path": "/missing-review-6",
+      "scheme": "dark",
+      "violations": []
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/",
+      "hasBody": false
+    },
+    {
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-D4U1zZ2r.js",
+      "hasBody": false
+    },
+    {
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-8dilUnJ-.css",
+      "hasBody": false
+    },
+    {
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+      "hasBody": false
+    },
+    {
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+      "hasBody": false
+    },
+    {
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/?demo=1",
+      "hasBody": false
+    },
+    {
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-D4U1zZ2r.js",
+      "hasBody": false
+    },
+    {
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-8dilUnJ-.css",
+      "hasBody": false
+    },
+    {
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+      "hasBody": false
+    },
+    {
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/demo",
+      "hasBody": false
+    },
+    {
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-D4U1zZ2r.js",
+      "hasBody": false
+    },
+    {
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-8dilUnJ-.css",
+      "hasBody": false
+    }
+  ],
+  "errors": []
+}
