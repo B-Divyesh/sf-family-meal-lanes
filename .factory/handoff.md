@@ -1,40 +1,69 @@
-# Family Meal Lanes — review 6 handoff
+# Family Meal Lanes — repair 6 handoff
 
-## What was done
+## What changed
 
-Completed the seven-day independent review against the deployed product and
-implementation candidate `53d9512bcc06b91454fcb104f49d1034367b4a34`.
-Documentation before this review was at
-`eae14c66cb2a66bedc1035da5652f4a3354e51f6`.
+Fixed review finding F-6-1 in implementation commit
+`b433b99a5989eb607e5339e4e818e466474847ca`.
 
-Verdict: **FAIL** with one medium finding and zero untested claims. At a 390 px
-viewport with text enlarged to 200%, the paid action and license form widen the
-document to 456 px. Product code was not changed. The complete report is
-`.factory/review-6.md`.
+At phone widths, the paid purchase action and license restore form now use the
+available width and stack their controls. This prevents enlarged text from
+widening the page. The free plan, $12 one-time unlimited-lanes offer, hosted
+Sociobot checkout, and license restore path remain unchanged.
 
-## How verified
+Added the outcome-based Playwright regression
+`@regression:paid controls reflow and restore a license at 200% text size on a
+390px phone`. It doubles the root text size, checks that the document does not
+overflow, confirms every paid control is visible and focusable, then restores a
+mocked valid license through the visible form.
 
-- Fresh Chromium at 390 × 844 and 1440 × 900 against
-  `https://family-meal-lanes.sociobot.in`.
-- The one-click six-meal demo, persistent label, Reset, Start for real,
-  real-data preservation, normal/invalid/boundary/recovery paths, offline
-  reload, keyboard path, and reduced motion were exercised live.
-- All 20 literal claim commands passed independently after `npm ci` in a clean
-  detached checkout of the implementation candidate.
-- `npm test` passed 51/51. `npm run build` produced `dist/`; JavaScript is
-  8.89 kB gzip and CSS is 3.84 kB gzip.
-- Light/dark live axe scans found zero serious or critical violations across
-  the four routes and cold 404. The explicit meal-slip label test passed.
-- The route/link crawl, hosted checkout, token-only license request, 30-request
-  allowance followed by 429/`Retry-After`, legal pages, manifest, offline
-  worker, and controlled update regression passed.
-- Live mobile Lighthouse scored 100 in Performance, Accessibility, Best
-  Practices, and SEO. LCP was 1,052 ms and CLS was 0.
-- Live and candidate hashes match for release-defining assets. The required
-  URL verifier passed with no console errors.
+The prior review documentation is at
+`250f3ec85193bb98ba5a7a96a86c4d054cd1fea5`; this repair's implementation is
+the separate SHA above.
 
-## Known gaps / next steps
+## Verification
 
-Fix the paid-section reflow at 200% text size and add an automated regression.
-Then repeat the full review gates. `.factory/brief.json` is not present, so the
-supplied researched brief was used as acceptance context.
+- In a clean clone of `b433b99`, `npm ci` completed with zero reported
+  vulnerabilities. Each of the 20 literal commands in `.factory/claims.json`
+  passed individually. `npm test` passed 52/52 and `npm run build` produced
+  `dist/index.html`.
+- Local production output is 26.02 kB JavaScript (8.89 kB gzip) and 13.95 kB
+  CSS (3.91 kB gzip), below the static budgets.
+- Deployed the tested `dist/` to the existing `sf-family-meal-lanes` Static Web
+  App. Deployment `790a8d02-16b4-4bf6-92c2-9a3c7d9317e1` completed, and
+  HTTPS returned 200.
+- Local and live SHA-256 values match for `index.html`, hashed JavaScript and
+  CSS, `sw.js`, the manifest, hero image, and static 404 page.
+- `verify-url.sh https://family-meal-lanes.sociobot.in/` passed: one h1,
+  `lang=en`, main landmark, image alternatives, labeled buttons, and no root
+  console errors.
+- Fresh desktop and phone browsers show the job, audience, and first action
+  before scrolling: plan meals for each person; households sharing one device;
+  **Try it with sample data**. The one-click demo showed its six source meals
+  and persistent sample banner. A demo-only meal disappeared after Reset;
+  Start for real removed the banner and sample without creating real-plan data.
+- On the live 390 px phone page at 200% root text, body and document widths
+  are both 390 px. The purchase link, license field, and restore button are
+  visible from x=16 to x=374 and each receives keyboard focus.
+- Live Playwright axe scans found zero serious or critical issues on `/`,
+  `/demo`, `/privacy`, and `/terms` in light and dark schemes. The designed
+  missing route returns the expected HTTP 404 with `Page not found`; it is not
+  a broken page.
+- A fresh live `/demo` visit reloaded offline after service-worker activation
+  with its heading, demo banner, and Lemon chicken sample. Security headers
+  include `nosniff`, strict-origin referrer policy, and self-only framing.
+- Mobile Lighthouse rerun on `/demo`: Performance 100, Accessibility 100,
+  Best Practices 100, SEO 100; FCP 0.9 s, LCP 1.1 s, CLS 0, TBT 10 ms.
+
+## Run and deploy
+
+```sh
+npm ci
+npm test
+npm run build
+/opt/fleet/lib/deploy-static.sh family-meal-lanes dist
+```
+
+## Known gaps
+
+None found in this repair. The optional one-time purchase and license check
+continue to depend on Sociobot and Dodo, which were live during verification.
