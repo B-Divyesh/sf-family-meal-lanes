@@ -1,0 +1,994 @@
+{
+  "checks": [
+    {
+      "name": "route / structure and metadata",
+      "passed": true,
+      "evidence": {
+        "path": "/",
+        "status": 200,
+        "title": "Family Meal Lanes — plan meals by person",
+        "lang": "en",
+        "h1Count": 1,
+        "h1": "Plan meals for each person",
+        "header": true,
+        "nav": true,
+        "main": true,
+        "footer": true,
+        "canonical": "https://family-meal-lanes.sociobot.in/",
+        "description": "Plan a week of meals by person, shared meal, and prep task on one private device.",
+        "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp",
+        "overflow": false,
+        "smallTargets": []
+      }
+    },
+    {
+      "name": "route / mobile fit and targets",
+      "passed": true,
+      "evidence": {
+        "overflow": false,
+        "smallTargets": []
+      }
+    },
+    {
+      "name": "route /demo structure and metadata",
+      "passed": true,
+      "evidence": {
+        "path": "/demo",
+        "status": 200,
+        "title": "Demo — Family Meal Lanes",
+        "lang": "en",
+        "h1Count": 1,
+        "h1": "Try a filled meal week",
+        "header": true,
+        "nav": true,
+        "main": true,
+        "footer": true,
+        "canonical": "https://family-meal-lanes.sociobot.in/demo",
+        "description": "Try a filled weekly meal board with six sample meals. Demo changes stay separate from your real plan.",
+        "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp",
+        "overflow": false,
+        "smallTargets": []
+      }
+    },
+    {
+      "name": "route /demo mobile fit and targets",
+      "passed": true,
+      "evidence": {
+        "overflow": false,
+        "smallTargets": []
+      }
+    },
+    {
+      "name": "route /privacy structure and metadata",
+      "passed": true,
+      "evidence": {
+        "path": "/privacy",
+        "status": 200,
+        "title": "Privacy — Family Meal Lanes",
+        "lang": "en",
+        "h1Count": 1,
+        "h1": "Your meal plan stays on this device",
+        "header": true,
+        "nav": true,
+        "main": true,
+        "footer": true,
+        "canonical": "https://family-meal-lanes.sociobot.in/privacy",
+        "description": "Read what Family Meal Lanes stores on your device and what is sent during an optional license check.",
+        "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp",
+        "overflow": false,
+        "smallTargets": []
+      }
+    },
+    {
+      "name": "route /privacy mobile fit and targets",
+      "passed": true,
+      "evidence": {
+        "overflow": false,
+        "smallTargets": []
+      }
+    },
+    {
+      "name": "route /terms structure and metadata",
+      "passed": true,
+      "evidence": {
+        "path": "/terms",
+        "status": 200,
+        "title": "Terms — Family Meal Lanes",
+        "lang": "en",
+        "h1Count": 1,
+        "h1": "Terms for using this meal board",
+        "header": true,
+        "nav": true,
+        "main": true,
+        "footer": true,
+        "canonical": "https://family-meal-lanes.sociobot.in/terms",
+        "description": "Read the terms for Family Meal Lanes and its optional one-time unlimited-lanes license.",
+        "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp",
+        "overflow": false,
+        "smallTargets": []
+      }
+    },
+    {
+      "name": "route /terms mobile fit and targets",
+      "passed": true,
+      "evidence": {
+        "overflow": false,
+        "smallTargets": []
+      }
+    },
+    {
+      "name": "route /missing-verification-8 structure and metadata",
+      "passed": true,
+      "evidence": {
+        "path": "/missing-verification-8",
+        "status": 404,
+        "title": "Page not found — Family Meal Lanes",
+        "lang": "en",
+        "h1Count": 1,
+        "h1": "Page not found",
+        "header": true,
+        "nav": true,
+        "main": true,
+        "footer": true,
+        "canonical": "https://family-meal-lanes.sociobot.in/404.html",
+        "description": "The requested Family Meal Lanes page was not found. Return to the weekly meal board.",
+        "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp",
+        "overflow": false,
+        "smallTargets": []
+      }
+    },
+    {
+      "name": "route /missing-verification-8 mobile fit and targets",
+      "passed": true,
+      "evidence": {
+        "overflow": false,
+        "smallTargets": []
+      }
+    },
+    {
+      "name": "phone first read before scroll",
+      "passed": true,
+      "evidence": {
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "inViewport": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "scrollY": 0
+      }
+    },
+    {
+      "name": "desktop first read before scroll",
+      "passed": true,
+      "evidence": {
+        "visible": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "inViewport": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "scrollY": 0
+      }
+    },
+    {
+      "name": "one-click sample is populated and realistic",
+      "passed": true,
+      "evidence": {
+        "url": "https://family-meal-lanes.sociobot.in/?demo=1",
+        "distinctMeals": [
+          "m1",
+          "m3",
+          "m6",
+          "m2",
+          "m4",
+          "m5"
+        ],
+        "sharedRows": {
+          "Shared": true,
+          "Mara": true,
+          "Jon": true,
+          "Kids": true
+        }
+      }
+    },
+    {
+      "name": "demo label remains visible while using sample",
+      "passed": true,
+      "evidence": "Demo — sample data, nothing is saved"
+    },
+    {
+      "name": "Reset demo restores only the sample",
+      "passed": true,
+      "evidence": "probe absent; six sample meal ids"
+    },
+    {
+      "name": "demo never changes real-plan data",
+      "passed": true,
+      "evidence": {
+        "realKept": true,
+        "demoAbsent": true,
+        "reopenedClean": true
+      }
+    },
+    {
+      "name": "named lanes survive reload",
+      "passed": true,
+      "evidence": "Ari lane visible after reload"
+    },
+    {
+      "name": "free boundary keeps a visible recovery message",
+      "passed": true,
+      "evidence": "The free plan includes Shared plus three people. Restore a license or buy unlimited lanes to add another person."
+    },
+    {
+      "name": "blank meal is blocked and Cancel recovers",
+      "passed": true,
+      "evidence": {
+        "invalidFocused": true
+      }
+    },
+    {
+      "name": "maximum allowed meal fields persist and share",
+      "passed": true,
+      "evidence": "80-character title, 60-character prep, 240-character note, Sunday, Ari and Bee"
+    },
+    {
+      "name": "JSON export is complete",
+      "passed": true,
+      "evidence": {
+        "lanes": 4,
+        "meals": 1
+      }
+    },
+    {
+      "name": "delete offers working Undo",
+      "passed": true,
+      "evidence": {
+        "undoVisible": true
+      }
+    },
+    {
+      "name": "valid import replaces and invalid import preserves",
+      "passed": true,
+      "evidence": {
+        "validImported": true,
+        "invalidMessage": true
+      }
+    },
+    {
+      "name": "reduced motion is respected",
+      "passed": true,
+      "evidence": "1e-05s"
+    },
+    {
+      "name": "keyboard, skip link, dialog, and route focus work",
+      "passed": true,
+      "evidence": {
+        "firstTab": {
+          "text": "Skip to meal plan",
+          "outline": "rgb(39, 88, 166) solid 3px"
+        },
+        "skipTarget": {
+          "tag": "H1",
+          "text": "Try a filled meal week"
+        },
+        "dialogFocus": true,
+        "focusReturned": true,
+        "routeFocus": true,
+        "backFocus": true,
+        "announcement": "Your meal plan stays on this device"
+      }
+    },
+    {
+      "name": "390px phone reflows at 200% text",
+      "passed": true,
+      "evidence": {
+        "widths": {
+          "viewport": 390,
+          "body": 390,
+          "document": 390
+        },
+        "boxes": [
+          {
+            "x": 16,
+            "y": 5131.328125,
+            "width": 358,
+            "height": 118
+          },
+          {
+            "x": 16,
+            "y": 556.328125,
+            "width": 358,
+            "height": 68
+          },
+          {
+            "x": 16,
+            "y": 634.328125,
+            "width": 358,
+            "height": 70
+          }
+        ],
+        "focusable": true,
+        "restored": true
+      }
+    },
+    {
+      "name": "axe scans are clean",
+      "passed": true,
+      "evidence": [
+        {
+          "colorScheme": "light",
+          "path": "/",
+          "state": "page",
+          "violations": []
+        },
+        {
+          "colorScheme": "light",
+          "path": "/demo",
+          "state": "page",
+          "violations": []
+        },
+        {
+          "colorScheme": "light",
+          "path": "/demo",
+          "state": "populated labels",
+          "violations": []
+        },
+        {
+          "colorScheme": "light",
+          "path": "/demo",
+          "state": "meal dialog",
+          "violations": []
+        },
+        {
+          "colorScheme": "light",
+          "path": "/privacy",
+          "state": "page",
+          "violations": []
+        },
+        {
+          "colorScheme": "light",
+          "path": "/terms",
+          "state": "page",
+          "violations": []
+        },
+        {
+          "colorScheme": "light",
+          "path": "/missing-verification-8",
+          "state": "page",
+          "violations": []
+        },
+        {
+          "colorScheme": "dark",
+          "path": "/",
+          "state": "page",
+          "violations": []
+        },
+        {
+          "colorScheme": "dark",
+          "path": "/demo",
+          "state": "page",
+          "violations": []
+        },
+        {
+          "colorScheme": "dark",
+          "path": "/demo",
+          "state": "populated labels",
+          "violations": []
+        },
+        {
+          "colorScheme": "dark",
+          "path": "/demo",
+          "state": "meal dialog",
+          "violations": []
+        },
+        {
+          "colorScheme": "dark",
+          "path": "/privacy",
+          "state": "page",
+          "violations": []
+        },
+        {
+          "colorScheme": "dark",
+          "path": "/terms",
+          "state": "page",
+          "violations": []
+        },
+        {
+          "colorScheme": "dark",
+          "path": "/missing-verification-8",
+          "state": "page",
+          "violations": []
+        }
+      ]
+    },
+    {
+      "name": "fresh demo reloads offline",
+      "passed": true,
+      "evidence": {
+        "controlled": true,
+        "banner": true,
+        "sample": true,
+        "cachesBefore": [
+          "family-meal-lanes-c37ed56957af"
+        ]
+      }
+    },
+    {
+      "name": "internal links and hosted checkout work",
+      "passed": true,
+      "evidence": {
+        "crawled": [
+          {
+            "href": "https://family-meal-lanes.sociobot.in/#main",
+            "status": 200
+          },
+          {
+            "href": "https://family-meal-lanes.sociobot.in/",
+            "status": 200
+          },
+          {
+            "href": "https://family-meal-lanes.sociobot.in/demo",
+            "status": 200
+          },
+          {
+            "href": "https://family-meal-lanes.sociobot.in/#board",
+            "status": 200
+          },
+          {
+            "href": "https://family-meal-lanes.sociobot.in/privacy",
+            "status": 200
+          },
+          {
+            "href": "https://family-meal-lanes.sociobot.in/?demo=1",
+            "status": 200
+          },
+          {
+            "href": "https://family-meal-lanes.sociobot.in/terms",
+            "status": 200
+          },
+          {
+            "href": "https://family-meal-lanes.sociobot.in/demo#main",
+            "status": 200
+          },
+          {
+            "href": "https://family-meal-lanes.sociobot.in/demo#board",
+            "status": 200
+          },
+          {
+            "href": "https://family-meal-lanes.sociobot.in/privacy#main",
+            "status": 200
+          },
+          {
+            "href": "https://family-meal-lanes.sociobot.in/terms#main",
+            "status": 200
+          },
+          {
+            "href": "https://family-meal-lanes.sociobot.in/404.html#main",
+            "status": 200
+          }
+        ],
+        "checkout": {
+          "status": 303,
+          "destination": "https://checkout.dodopayments.com/session/[redacted]"
+        }
+      }
+    },
+    {
+      "name": "manifest and install icons are complete",
+      "passed": true,
+      "evidence": {
+        "manifest": {
+          "name": "Family Meal Lanes",
+          "short_name": "Meal Lanes",
+          "description": "A private weekly meal board for one household device.",
+          "start_url": "/?v=c37ed56957af",
+          "display": "standalone",
+          "background_color": "#fff7e8",
+          "theme_color": "#fff7e8",
+          "icons": [
+            {
+              "src": "/icon-192.png",
+              "sizes": "192x192",
+              "type": "image/png"
+            },
+            {
+              "src": "/icon-512.png",
+              "sizes": "512x512",
+              "type": "image/png",
+              "purpose": "any maskable"
+            }
+          ]
+        },
+        "iconStatuses": [
+          {
+            "src": "/icon-192.png",
+            "status": 200,
+            "sizes": "192x192",
+            "purpose": ""
+          },
+          {
+            "src": "/icon-512.png",
+            "status": 200,
+            "sizes": "512x512",
+            "purpose": "any maskable"
+          }
+        ]
+      }
+    },
+    {
+      "name": "live files match implementation candidate",
+      "passed": true,
+      "evidence": [
+        {
+          "asset": "index.html",
+          "status": 200,
+          "local": "0c16b493e1ceccb640b89cdbae022f454b2d8db3ca18ff0d833e0b600f0704a1",
+          "live": "0c16b493e1ceccb640b89cdbae022f454b2d8db3ca18ff0d833e0b600f0704a1",
+          "matches": true
+        },
+        {
+          "asset": "sw.js",
+          "status": 200,
+          "local": "8d890ca9b38446646c15f30300a321db34cf45c2d8f0282c99d44dfa247a8697",
+          "live": "8d890ca9b38446646c15f30300a321db34cf45c2d8f0282c99d44dfa247a8697",
+          "matches": true
+        },
+        {
+          "asset": "manifest.webmanifest",
+          "status": 200,
+          "local": "5378159a06034a0b73482c4cd763d180e7c55ea4d2cf863a36041b0b423cdb87",
+          "live": "5378159a06034a0b73482c4cd763d180e7c55ea4d2cf863a36041b0b423cdb87",
+          "matches": true
+        },
+        {
+          "asset": "404.html",
+          "status": 200,
+          "local": "e77e23414ff22ba8edd1d25b14db678c279e9104957fa21cca1407de7e836042",
+          "live": "e77e23414ff22ba8edd1d25b14db678c279e9104957fa21cca1407de7e836042",
+          "matches": true
+        },
+        {
+          "asset": "404.css",
+          "status": 200,
+          "local": "3113d11320812f190bbf07f55976119c1fc1f1df8cdb81d2847ade48884607c7",
+          "live": "3113d11320812f190bbf07f55976119c1fc1f1df8cdb81d2847ade48884607c7",
+          "matches": true
+        },
+        {
+          "asset": "hero-risograph.webp",
+          "status": 200,
+          "local": "8a2a2700458cb89660d408de4831062b2db5dff3155d0053d77f1c02284a4bc8",
+          "live": "8a2a2700458cb89660d408de4831062b2db5dff3155d0053d77f1c02284a4bc8",
+          "matches": true
+        },
+        {
+          "asset": "assets/index-By_HTLc3.js",
+          "status": 200,
+          "local": "68427eb368d9a57ccf8d1679f91d2e42953e304c1db25ea2f770dde37855c12b",
+          "live": "68427eb368d9a57ccf8d1679f91d2e42953e304c1db25ea2f770dde37855c12b",
+          "matches": true
+        },
+        {
+          "asset": "assets/index-DUiOlgJo.css",
+          "status": 200,
+          "local": "3aedecbd6b690064dd3dcdf7e7bb392477ffb3f1ef693b670e36ea7218469096",
+          "live": "3aedecbd6b690064dd3dcdf7e7bb392477ffb3f1ef693b670e36ea7218469096",
+          "matches": true
+        }
+      ]
+    },
+    {
+      "name": "normal meal use sends no data to another origin",
+      "passed": true,
+      "evidence": []
+    },
+    {
+      "name": "live browser has no unexpected console or page errors",
+      "passed": true,
+      "evidence": []
+    }
+  ],
+  "routes": [
+    {
+      "path": "/",
+      "status": 200,
+      "title": "Family Meal Lanes — plan meals by person",
+      "lang": "en",
+      "h1Count": 1,
+      "h1": "Plan meals for each person",
+      "header": true,
+      "nav": true,
+      "main": true,
+      "footer": true,
+      "canonical": "https://family-meal-lanes.sociobot.in/",
+      "description": "Plan a week of meals by person, shared meal, and prep task on one private device.",
+      "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp",
+      "overflow": false,
+      "smallTargets": []
+    },
+    {
+      "path": "/demo",
+      "status": 200,
+      "title": "Demo — Family Meal Lanes",
+      "lang": "en",
+      "h1Count": 1,
+      "h1": "Try a filled meal week",
+      "header": true,
+      "nav": true,
+      "main": true,
+      "footer": true,
+      "canonical": "https://family-meal-lanes.sociobot.in/demo",
+      "description": "Try a filled weekly meal board with six sample meals. Demo changes stay separate from your real plan.",
+      "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp",
+      "overflow": false,
+      "smallTargets": []
+    },
+    {
+      "path": "/privacy",
+      "status": 200,
+      "title": "Privacy — Family Meal Lanes",
+      "lang": "en",
+      "h1Count": 1,
+      "h1": "Your meal plan stays on this device",
+      "header": true,
+      "nav": true,
+      "main": true,
+      "footer": true,
+      "canonical": "https://family-meal-lanes.sociobot.in/privacy",
+      "description": "Read what Family Meal Lanes stores on your device and what is sent during an optional license check.",
+      "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp",
+      "overflow": false,
+      "smallTargets": []
+    },
+    {
+      "path": "/terms",
+      "status": 200,
+      "title": "Terms — Family Meal Lanes",
+      "lang": "en",
+      "h1Count": 1,
+      "h1": "Terms for using this meal board",
+      "header": true,
+      "nav": true,
+      "main": true,
+      "footer": true,
+      "canonical": "https://family-meal-lanes.sociobot.in/terms",
+      "description": "Read the terms for Family Meal Lanes and its optional one-time unlimited-lanes license.",
+      "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp",
+      "overflow": false,
+      "smallTargets": []
+    },
+    {
+      "path": "/missing-verification-8",
+      "status": 404,
+      "title": "Page not found — Family Meal Lanes",
+      "lang": "en",
+      "h1Count": 1,
+      "h1": "Page not found",
+      "header": true,
+      "nav": true,
+      "main": true,
+      "footer": true,
+      "canonical": "https://family-meal-lanes.sociobot.in/404.html",
+      "description": "The requested Family Meal Lanes page was not found. Return to the weekly meal board.",
+      "twitterImage": "https://family-meal-lanes.sociobot.in/social-card.webp",
+      "overflow": false,
+      "smallTargets": []
+    }
+  ],
+  "axe": [
+    {
+      "colorScheme": "light",
+      "path": "/",
+      "state": "page",
+      "violations": []
+    },
+    {
+      "colorScheme": "light",
+      "path": "/demo",
+      "state": "page",
+      "violations": []
+    },
+    {
+      "colorScheme": "light",
+      "path": "/demo",
+      "state": "populated labels",
+      "violations": []
+    },
+    {
+      "colorScheme": "light",
+      "path": "/demo",
+      "state": "meal dialog",
+      "violations": []
+    },
+    {
+      "colorScheme": "light",
+      "path": "/privacy",
+      "state": "page",
+      "violations": []
+    },
+    {
+      "colorScheme": "light",
+      "path": "/terms",
+      "state": "page",
+      "violations": []
+    },
+    {
+      "colorScheme": "light",
+      "path": "/missing-verification-8",
+      "state": "page",
+      "violations": []
+    },
+    {
+      "colorScheme": "dark",
+      "path": "/",
+      "state": "page",
+      "violations": []
+    },
+    {
+      "colorScheme": "dark",
+      "path": "/demo",
+      "state": "page",
+      "violations": []
+    },
+    {
+      "colorScheme": "dark",
+      "path": "/demo",
+      "state": "populated labels",
+      "violations": []
+    },
+    {
+      "colorScheme": "dark",
+      "path": "/demo",
+      "state": "meal dialog",
+      "violations": []
+    },
+    {
+      "colorScheme": "dark",
+      "path": "/privacy",
+      "state": "page",
+      "violations": []
+    },
+    {
+      "colorScheme": "dark",
+      "path": "/terms",
+      "state": "page",
+      "violations": []
+    },
+    {
+      "colorScheme": "dark",
+      "path": "/missing-verification-8",
+      "state": "page",
+      "violations": []
+    }
+  ],
+  "requests": [
+    {
+      "phase": "demo-isolation",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/",
+      "body": null
+    },
+    {
+      "phase": "demo-isolation",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-By_HTLc3.js",
+      "body": null
+    },
+    {
+      "phase": "demo-isolation",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-DUiOlgJo.css",
+      "body": null
+    },
+    {
+      "phase": "demo-isolation",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+      "body": null
+    },
+    {
+      "phase": "demo-isolation",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+      "body": null
+    },
+    {
+      "phase": "demo-isolation",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/",
+      "body": null
+    },
+    {
+      "phase": "demo-isolation",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-By_HTLc3.js",
+      "body": null
+    },
+    {
+      "phase": "demo-isolation",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-DUiOlgJo.css",
+      "body": null
+    },
+    {
+      "phase": "demo-isolation",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+      "body": null
+    },
+    {
+      "phase": "demo-isolation",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/demo",
+      "body": null
+    },
+    {
+      "phase": "demo-isolation",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-By_HTLc3.js",
+      "body": null
+    },
+    {
+      "phase": "demo-isolation",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-DUiOlgJo.css",
+      "body": null
+    },
+    {
+      "phase": "normal-flow",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/",
+      "body": null
+    },
+    {
+      "phase": "normal-flow",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-By_HTLc3.js",
+      "body": null
+    },
+    {
+      "phase": "normal-flow",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-DUiOlgJo.css",
+      "body": null
+    },
+    {
+      "phase": "normal-flow",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+      "body": null
+    },
+    {
+      "phase": "normal-flow",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+      "body": null
+    },
+    {
+      "phase": "normal-flow",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/",
+      "body": null
+    },
+    {
+      "phase": "normal-flow",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-By_HTLc3.js",
+      "body": null
+    },
+    {
+      "phase": "normal-flow",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-DUiOlgJo.css",
+      "body": null
+    },
+    {
+      "phase": "normal-flow",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+      "body": null
+    },
+    {
+      "phase": "normal-flow",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/",
+      "body": null
+    },
+    {
+      "phase": "normal-flow",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-By_HTLc3.js",
+      "body": null
+    },
+    {
+      "phase": "normal-flow",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/assets/index-DUiOlgJo.css",
+      "body": null
+    },
+    {
+      "phase": "normal-flow",
+      "method": "GET",
+      "url": "https://family-meal-lanes.sociobot.in/hero-risograph.webp",
+      "body": null
+    }
+  ],
+  "errors": [],
+  "hashes": [
+    {
+      "asset": "index.html",
+      "status": 200,
+      "local": "0c16b493e1ceccb640b89cdbae022f454b2d8db3ca18ff0d833e0b600f0704a1",
+      "live": "0c16b493e1ceccb640b89cdbae022f454b2d8db3ca18ff0d833e0b600f0704a1",
+      "matches": true
+    },
+    {
+      "asset": "sw.js",
+      "status": 200,
+      "local": "8d890ca9b38446646c15f30300a321db34cf45c2d8f0282c99d44dfa247a8697",
+      "live": "8d890ca9b38446646c15f30300a321db34cf45c2d8f0282c99d44dfa247a8697",
+      "matches": true
+    },
+    {
+      "asset": "manifest.webmanifest",
+      "status": 200,
+      "local": "5378159a06034a0b73482c4cd763d180e7c55ea4d2cf863a36041b0b423cdb87",
+      "live": "5378159a06034a0b73482c4cd763d180e7c55ea4d2cf863a36041b0b423cdb87",
+      "matches": true
+    },
+    {
+      "asset": "404.html",
+      "status": 200,
+      "local": "e77e23414ff22ba8edd1d25b14db678c279e9104957fa21cca1407de7e836042",
+      "live": "e77e23414ff22ba8edd1d25b14db678c279e9104957fa21cca1407de7e836042",
+      "matches": true
+    },
+    {
+      "asset": "404.css",
+      "status": 200,
+      "local": "3113d11320812f190bbf07f55976119c1fc1f1df8cdb81d2847ade48884607c7",
+      "live": "3113d11320812f190bbf07f55976119c1fc1f1df8cdb81d2847ade48884607c7",
+      "matches": true
+    },
+    {
+      "asset": "hero-risograph.webp",
+      "status": 200,
+      "local": "8a2a2700458cb89660d408de4831062b2db5dff3155d0053d77f1c02284a4bc8",
+      "live": "8a2a2700458cb89660d408de4831062b2db5dff3155d0053d77f1c02284a4bc8",
+      "matches": true
+    },
+    {
+      "asset": "assets/index-By_HTLc3.js",
+      "status": 200,
+      "local": "68427eb368d9a57ccf8d1679f91d2e42953e304c1db25ea2f770dde37855c12b",
+      "live": "68427eb368d9a57ccf8d1679f91d2e42953e304c1db25ea2f770dde37855c12b",
+      "matches": true
+    },
+    {
+      "asset": "assets/index-DUiOlgJo.css",
+      "status": 200,
+      "local": "3aedecbd6b690064dd3dcdf7e7bb392477ffb3f1ef693b670e36ea7218469096",
+      "live": "3aedecbd6b690064dd3dcdf7e7bb392477ffb3f1ef693b670e36ea7218469096",
+      "matches": true
+    }
+  ],
+  "summary": {
+    "total": 33,
+    "passed": 33,
+    "failed": 0
+  }
+}
